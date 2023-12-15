@@ -1,0 +1,22 @@
+
+@props(['title'])
+<div {{ $attributes->merge(['class' => 'bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg']) }}>
+    @isset($title)
+    <div  {{ $title->attributes->merge(['class' => 'p-6 text-gray-900']) }}>
+        <div class="flex justify-between h-5 items-center">
+            <div class="flex space-x-2 items-center leading-tight font-semibold">
+                    {{ $icon ?? '' }}
+                    <span>{{ $title ?? '' }}</span>
+            </div>
+            <div class="space-x-2 flex items-center">
+                {{ $buttons ?? '' }}
+            </div>
+        </div>
+    </div>
+    <x-ui.separator></x-ui.separator>
+    @endisset
+
+    <div {{ $content->attributes->merge(['class' => 'text-gray-900']) }}>
+        {{ $content }}
+    </div>
+</div>

@@ -12,17 +12,38 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    <x-ui.nav.link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Home') }}
+                    </x-ui.nav.link>
+                    <x-ui.nav.link :href="route('dashboard')" >
+                        {{ __('Regears') }}
+                    </x-ui.nav.link>
+                    <x-ui.nav.link :href="route('dashboard')" >
+                        {{ __('Character Info') }}
+                    </x-ui.nav.link>
+                    <x-ui.nav.dropdown :active="request()->routeIs('admin.*')">
+                        <x-slot:title>{{ __('Officer Stuff') }}</x-slot>
+                        <x-slot:content>
+                            <x-ui.dropdown.item :href="route('dashboard')" :active="request()->routeIs('admin.users.index')">
+                                {{ __('Member List') }}
+                            </x-ui.dropdown.item>
+                            <x-ui.dropdown.item :href="route('dashboard')" :active="request()->routeIs('admin.branch.*')">
+                                {{ __('Regear Management') }}
+                            </x-ui.dropdown.item>
+                            <x-ui.dropdown.item :href="route('dashboard')" :active="request()->routeIs('admin.branch.*')">
+                                {{ __('ZvZ Builds Setup') }}
+                            </x-ui.dropdown.item>
+                            </form>
+                        </x-slot>
+                    </x-ui.nav.dropdown>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <x-dropdown align="right" width="48">
+                <x-ui.dropdown.link align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <img class="h-8 w-8 rounded-full object-cover mr-2" src="{{ Auth::user()->getAvatar(['extension' => 'webp', 'size' => 32]) }}" alt="{{ Auth::user()->getTagAttribute() }}" />
 
                             <div style="display: flex; flex-direction: column; align-items: flex-start;">
@@ -39,24 +60,22 @@
                             </div>
                         </button>
                     </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                    <x-slot:content>
+                        <x-ui.dropdown.item :href="route('profile.edit')">
                             {{ __('Profile') }}
-                        </x-dropdown-link>
+                        </x-ui.dropdown.item>
 
-                        <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                             onclick="event.preventDefault();
+                            <x-ui.dropdown.item :href="route('logout')"
+                                    onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
-                            </x-dropdown-link>
+                            </x-ui.dropdown.item>
                         </form>
+
                     </x-slot>
-                </x-dropdown>
+                </x-ui.dropdown.link>
             </div>
 
             <!-- Hamburger -->
@@ -74,9 +93,9 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-ui.nav.responsive :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            </x-ui.nav.responsive>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -87,19 +106,19 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-ui.nav.responsive :href="route('profile.edit')">
                     {{ __('Profile') }}
-                </x-responsive-nav-link>
+                </x-ui.nav.responsive>
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
+                    <x-ui.nav.responsive :href="route('logout')"
                                            onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
-                    </x-responsive-nav-link>
+                    </x-ui.nav.responsive>
                 </form>
             </div>
         </div>
