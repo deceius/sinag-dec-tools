@@ -9,10 +9,10 @@
         </p>
     </header>
 
-    <x-danger-button
+    <x-ui.button
             x-data=""
             x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
+    >{{ __('Delete Account') }}</x-ui.button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
 
