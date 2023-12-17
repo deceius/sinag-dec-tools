@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Jakyeru\Larascord\Models\DiscordAccessToken;
 
@@ -21,7 +22,7 @@ class DiscordAccessTokenObserver
      */
     public function updated(DiscordAccessToken $discordAccessToken): void
     {
-        Auth::user()->refreshRoles();
+        $this->refreshRoles($discordAccessToken->user_id);
     }
 
     /**
@@ -29,7 +30,7 @@ class DiscordAccessTokenObserver
      */
     public function deleted(DiscordAccessToken $discordAccessToken): void
     {
-        //
+        $this->refreshRoles($discordAccessToken->user_id);
     }
 
     /**
@@ -46,5 +47,13 @@ class DiscordAccessTokenObserver
     public function forceDeleted(DiscordAccessToken $discordAccessToken): void
     {
         //
+    }
+
+    private function refreshRoles($id) {
+        $user = User::find($id);
+        $guildMember = $user->getGuildMember(1181672424836706355);
+        $roles = collect($guildMember->roles)->implode(",");
+        $user->roles = $roles;
+        $user->save();
     }
 }

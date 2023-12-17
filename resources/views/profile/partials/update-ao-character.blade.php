@@ -15,51 +15,54 @@
             <div class="overflow-x-auto" x-show="data.length == 0">
                 &nbsp;
             </div>
-            <div class="overflow-x-auto" x-show="data.length > 0">
-                <table id="table" class="min-w-full">
-                        <thead class="font-medium">
-                            <tr class="border-b-2 border-gray-700 dark:border-gray-700">
-                                <th scope="col" class="text-start py-3 px-5">
-                                    {{ __('Name') }}
-                                </th>
-                                <th scope="col" class="text-start py-3 px-5">
-                                    {{ __('Guild') }}
-                                </th>
-                                <th scope="col" class="text-start py-3 px-5">
-                                    {{ __('Kill Fame') }}
-                                </th>
-                                <th scope="col" class="text-start py-3 px-5">
-                                    &nbsp;
-                                </th>
-                                <th scope="col" class="text-start py-3 px-5">
-                                    &nbsp;
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        <template x-for="item in data">
-                                <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
-                                    <td class="border-t py-3 px-5" x-text='item.Name'></td>
-                                    <td class="border-t py-3 px-5" x-text='"[" + item.AllianceName +"] " + item.GuildName'></td>
-                                    <td class="border-t py-3 px-5" x-text='item.KillFame.toLocaleString("en-US")'></td>
-                                    <td class="border-t py-3 px-5 text-gray-400 italic" x-text='item.last'></td>
-                                    <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
-                                        <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
-                                            <form method="post" :action="'{{ Auth::user()->url }}' + '?id=' + item.Id + '&name=' + item.Name" >
-                                                @csrf
-                                                @method('patch')
-                                                <x-ui.button.button-icon type="submit" style="success">
-                                                    <x-icons.button.check/>
-                                                </x-ui.button>
-                                            </form>
-                                        </td>
-                                    </td>
+            <template x-if="data.length > 0">
+                <div class="overflow-x-auto" >
+                    <table id="table" class="min-w-full">
+                            <thead class="font-medium">
+                                <tr class="border-b-2 border-gray-700 dark:border-gray-700">
+                                    <th scope="col" class="text-start py-3 px-5">
+                                        {{ __('Name') }}
+                                    </th>
+                                    <th scope="col" class="text-start py-3 px-5">
+                                        {{ __('Guild') }}
+                                    </th>
+                                    <th scope="col" class="text-start py-3 px-5">
+                                        {{ __('Kill Fame') }}
+                                    </th>
+                                    <th scope="col" class="text-start py-3 px-5">
+                                        &nbsp;
+                                    </th>
+                                    <th scope="col" class="text-start py-3 px-5">
+                                        &nbsp;
+                                    </th>
                                 </tr>
-                        </template>
-                        </tbody>
-                    </table>
-            </div>
+                            </thead>
+                            <tbody>
+
+                            <template x-for="item in data">
+                                    <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
+                                        <td class="border-t py-3 px-5" x-text='item.Name'></td>
+                                        <td class="border-t py-3 px-5" x-text='parseGuildName(item.AllianceName, item.GuildName)'></td>
+                                        <td class="border-t py-3 px-5" x-text='item.KillFame.toLocaleString("en-US")'></td>
+                                        <td class="border-t py-3 px-5 text-gray-400 italic" x-text='item.last'></td>
+                                        <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
+                                            <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
+                                                <form method="post" :action="'{{ Auth::user()->url }}' + '?id=' + item.Id + '&name=' + item.Name" >
+                                                    @csrf
+                                                    @method('patch')
+                                                    <x-ui.button.button-icon type="submit" style="success">
+                                                        <x-icons.button.check/>
+                                                    </x-ui.button>
+                                                </form>
+                                            </td>
+                                        </td>
+                                    </tr>
+                            </template>
+                            </tbody>
+                        </table>
+                </div>
+            </template>
+
 
         </x-slot>
     </x-ui.card>

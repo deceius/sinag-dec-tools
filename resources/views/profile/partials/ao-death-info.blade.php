@@ -1,7 +1,7 @@
-<section x-data="profile"  x-init="init('{{ Auth::user()->ao_character_id }}')">
-    <x-ui.card.table    >
+<section >
+    <x-ui.card.table>
         <x-slot:title>
-            {{ __('AO Character Stats') }}
+            {{ __('AO Character Deaths') }}
         </x-slot>
         <x-slot:icon>
             <x-icons.master-table/>

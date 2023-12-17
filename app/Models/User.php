@@ -78,10 +78,5 @@ class User extends Authenticatable
         return url('member/'.$this->getKey());
     }
 
-    public function refreshRoles() {
-        $guildMember = $this->getGuildMember(1181672424836706355);
-        $roles = collect($guildMember->roles)->implode(",");
-        $this->roles = $roles;
-        $this->save();
-    }
+
 }

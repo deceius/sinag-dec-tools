@@ -11,13 +11,13 @@
                 <table id="table" class="min-w-full">
                         <tbody>
                             <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
-                                <td class="border-t py-3 px-5 font-medium"> Discord Name</td>
+                                <td class="border-t py-3 px-5 font-medium"  width="20%" > Discord Name</td>
                                 <td class="border-t py-3 px-5">{{ $user->global_name }}</td>
                             </tr>
-                            {{-- <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
+                            <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
                                 <td class="border-t py-3 px-5 font-medium"> Roles</td>
-                                <td class="border-t py-3 px-5">{{ collect($roles)->implode(",") }}</td>
-                            </tr> --}}
+                                <td class="border-t py-3 px-5">{{ $user->roles }}</td>
+                            </tr>
                         </tbody>
                     </table>
             </div>

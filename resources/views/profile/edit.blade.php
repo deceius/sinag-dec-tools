@@ -8,6 +8,7 @@
             @if(Auth::user()->ao_character_id)
                 @include('profile.partials.discord-account-info')
                 @include('profile.partials.ao-character-info')
+                @include('profile.partials.ao-death-info')
             @else
                 @include('profile.partials.update-ao-character')
             @endif
