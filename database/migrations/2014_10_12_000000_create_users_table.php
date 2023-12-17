@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->boolean('verified');
             $table->string('locale');
+            $table->string('roles')->nullable();
             $table->string('ao_character_id')->nullable()->unique();
+            $table->string('ao_character_name')->nullable();
             $table->boolean('mfa_enabled');
             $table->string('refresh_token')->nullable();
             $table->timestamps();

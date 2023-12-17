@@ -28,5 +28,17 @@ class AlbionAPIController extends Controller
         }
     }
 
+    public function loadCharacter(Request $request)
+    {
+        $id = $request->input('id');
+        $url = "https://gameinfo-sgp.albiononline.com/api/gameinfo/players/" . $id;
+
+        if ($request->ajax()) {
+            $response = Http::get($url);
+            $object = (array)json_decode($response->body());
+
+            return ['character' => $object];
+        }
+    }
 
 }

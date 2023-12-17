@@ -16,8 +16,9 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = auth()->user();
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $request->user()
         ]);
     }
 
@@ -32,6 +33,16 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+
+    public function bindCharacter(Request $request): RedirectResponse
+    {
+        $request->user()->ao_character_id = $request->input('id');
+        $request->user()->ao_character_name = $request->input('name');
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');

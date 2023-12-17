@@ -5,32 +5,29 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('home') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-ui.nav.link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-ui.nav.link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-ui.nav.link>
-                    <x-ui.nav.link :href="route('dashboard')" >
+                    <x-ui.nav.link :href="route('home')" >
                         {{ __('Regears') }}
-                    </x-ui.nav.link>
-                    <x-ui.nav.link :href="route('dashboard')" >
-                        {{ __('Character Info') }}
                     </x-ui.nav.link>
                     <x-ui.nav.dropdown :active="request()->routeIs('admin.*')">
                         <x-slot:title>{{ __('Officer Stuff') }}</x-slot>
                         <x-slot:content>
-                            <x-ui.dropdown.item :href="route('dashboard')" :active="request()->routeIs('admin.users.index')">
+                            <x-ui.dropdown.item :href="route('home')" :active="request()->routeIs('admin.users.index')">
                                 {{ __('Member List') }}
                             </x-ui.dropdown.item>
-                            <x-ui.dropdown.item :href="route('dashboard')" :active="request()->routeIs('admin.branch.*')">
+                            <x-ui.dropdown.item :href="route('home')" :active="request()->routeIs('admin.branch.*')">
                                 {{ __('Regear Management') }}
                             </x-ui.dropdown.item>
-                            <x-ui.dropdown.item :href="route('dashboard')" :active="request()->routeIs('admin.branch.*')">
+                            <x-ui.dropdown.item :href="route('home')" :active="request()->routeIs('admin.branch.*')">
                                 {{ __('ZvZ Builds Setup') }}
                             </x-ui.dropdown.item>
                             </form>
@@ -49,7 +46,7 @@
                             <div style="display: flex; flex-direction: column; align-items: flex-start;">
                                 {{ Auth::user()->getTagAttribute() }}
                                 @if (Auth::user()->global_name)
-                                    <small>{{ Auth::user()->username }}</small>
+                                    <small>Albion IGN: <u>{{ Auth::user()->ao_character_name ? Auth::user()->ao_character_name : '???' }}</u></small>
                                 @endif
                             </div>
 
@@ -93,8 +90,8 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-ui.nav.responsive :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-ui.nav.responsive :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('home') }}
             </x-ui.nav.responsive>
         </div>
 

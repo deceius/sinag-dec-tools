@@ -19,11 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/home', function () {
+    return view('home');
+})->middleware(['auth'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/member/{id}', [ProfileController::class, 'bindCharacter'])->name('profile.update');
     Route::get('/aosearch', [AlbionAPIController::class, 'searchIGN'])->name('ao.search');
+    Route::get('/loadchar', [AlbionAPIController::class, 'loadCharacter'])->name('ao.search');
 });

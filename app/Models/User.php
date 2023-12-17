@@ -34,6 +34,8 @@ class User extends Authenticatable
         'premium_type',
         'public_flags',
         'roles',
+        'ao_character_id',
+        'ao_character_name'
     ];
 
     /**
@@ -67,4 +69,19 @@ class User extends Authenticatable
         'public_flags' => 'integer',
         'roles' => 'json',
     ];
+
+    protected $appends = [
+        'url'
+    ];
+
+    public function getUrlAttribute() {
+        return url('member/'.$this->getKey());
+    }
+
+    public function refreshRoles() {
+        $guildMember = $this->getGuildMember(1181672424836706355);
+        $roles = collect($guildMember->roles)->implode(",");
+        $this->roles = $roles;
+        $this->save();
+    }
 }

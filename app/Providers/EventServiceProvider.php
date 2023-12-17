@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
+use App\Observers\DiscordAccessTokenObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
+use Jakyeru\Larascord\Models\DiscordAccessToken;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,16 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
     ];
+
+
+    /**
+ * The model observers for your application.
+ *
+ * @var array
+ */
+protected $observers = [
+    DiscordAccessToken::class => [DiscordAccessTokenObserver::class],
+];
 
     /**
      * Register any events for your application.

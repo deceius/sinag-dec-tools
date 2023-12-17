@@ -1,4 +1,4 @@
-<section x-data="profile"  x-init="init()">
+<section x-data="profile">
     <x-ui.card.table>
         <x-slot:title>
             {{ __('IGN Lookup') }}
@@ -37,15 +37,18 @@
                             </tr>
                         </thead>
                         <tbody>
+
                         <template x-for="item in data">
                                 <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
                                     <td class="border-t py-3 px-5" x-text='item.Name'></td>
-                                    <td class="border-t py-3 px-5" x-text=' "[" + item.AllianceName +"] " + item.GuildName'></td>
+                                    <td class="border-t py-3 px-5" x-text='"[" + item.AllianceName +"] " + item.GuildName'></td>
                                     <td class="border-t py-3 px-5" x-text='item.KillFame.toLocaleString("en-US")'></td>
                                     <td class="border-t py-3 px-5 text-gray-400 italic" x-text='item.last'></td>
                                     <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
                                         <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
-                                            <form method="get" :action="item.url + '/edit'" >
+                                            <form method="post" :action="'{{ Auth::user()->url }}' + '?id=' + item.Id + '&name=' + item.Name" >
+                                                @csrf
+                                                @method('patch')
                                                 <x-ui.button.button-icon type="submit" style="success">
                                                     <x-icons.button.check/>
                                                 </x-ui.button>
@@ -75,7 +78,7 @@
 
         </x-slot>
         <x-slot:content>
-            <form method="post" action="{{ route('dashboard') }}" >
+            <form method="post" action="{{ route('home') }}" >
                 @csrf
                 @method('put')
 
