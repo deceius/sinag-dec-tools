@@ -13,7 +13,7 @@ class DiscordAccessTokenObserver
      */
     public function created(DiscordAccessToken $discordAccessToken): void
     {
-        Auth::user()->refreshRoles();
+        $this->refreshRoles($discordAccessToken->user_id);
 
     }
 
