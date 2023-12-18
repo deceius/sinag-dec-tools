@@ -50,7 +50,7 @@
                                                     @csrf
                                                     @method('patch')
                                                     <x-ui.button type="submit" style="success" text="Request" x-bind:disabled="item.allowed_gears == 0">
-                                                        <x-slot:icon><x-icons.button.check/></x-slot>
+                                                        <x-slot:icon><x-icons.button.create/></x-slot>
                                                     </x-ui.button>
                                                 </form>
                                             </td>

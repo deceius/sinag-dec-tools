@@ -62,9 +62,7 @@ class AlbionAPIController extends Controller
 
     public function fetchDeathLog(Request $request)
     {
-        $ign = $request->input('id');
         $url = "https://gameinfo-sgp.albiononline.com/api/gameinfo/battles?range=month&offset=0&limit=51&sort=recent&guildId=" . env('INGAME_GUILD_ID', null);
-
         $response = Http::get($url);
         $battles = (array)json_decode($response->body());
         $deaths = [];
