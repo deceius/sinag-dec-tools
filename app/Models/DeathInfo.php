@@ -18,10 +18,14 @@ class DeathInfo extends Model
         'killer_equipment',
         'killer_guild',
         'death_fame',
+        'allowed_gears',
         'timestamp'
     ];
 
     protected $casts = [
         'timestamp' => 'datetime:Y-m-d H:i',
     ];
+
+
+
 }

@@ -1,7 +1,7 @@
 <section x-data="deathlog"  x-init="init('{{ Auth::user()->ao_character_id }}')">
     <x-ui.card.table    >
         <x-slot:title>
-            {{ __('Apply Regears') }}
+            {{ __('Regear') }}
         </x-slot>
         <x-slot:icon>
             <x-icons.master-table/>
@@ -39,7 +39,7 @@
                                         <td class="border-t py-3 px-5" x-text='item.name'></td>
                                         <td width=60% class="dark:border-gray-700 py-1 px-5 flex items-start">
                                             <template x-for="equips in item.equipment.split(',')">
-                                                <img :class="{'opacity-25 grayscale': equips.includes('!no_')}" x-bind:src="`https://render.albiononline.com/v1/item/${equips.includes('!no_') ? 'QUESTITEM_TOKEN_ADC_FRAME' : equips }?size=48`" alt="">
+                                                <img :class="{'opacity-25 grayscale': equips.includes('!') }" x-bind:src="`https://render.albiononline.com/v1/item/${equips.includes('!no_') ? 'QUESTITEM_TOKEN_ADC_FRAME' : equips.includes('!') ? equips.substring(1) : equips }?size=48`" alt="">
                                             </template>
                                         </td>
                                         <td class="py-3 px-5" x-text='item.killer_name + " | " + item.killer_guild'></td>
@@ -49,7 +49,7 @@
                                                 <form method="post" :action="'{{ Auth::user()->url }}' + '?id=' + item.Id + '&name=' + item.Name" >
                                                     @csrf
                                                     @method('patch')
-                                                    <x-ui.button type="submit" style="success" text="Request">
+                                                    <x-ui.button type="submit" style="success" text="Request" x-bind:disabled="item.allowed_gears == 0">
                                                         <x-slot:icon><x-icons.button.check/></x-slot>
                                                     </x-ui.button>
                                                 </form>

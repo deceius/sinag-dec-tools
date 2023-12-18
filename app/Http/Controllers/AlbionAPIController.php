@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\DeathInfo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
@@ -36,6 +37,26 @@ class AlbionAPIController extends Controller
     public function searchDeathLog(Request $request) {
         $id = $request->input('id');
         $deaths = $id ? DeathInfo::where('character_id', $id)->get() : DeathInfo::all();
+        $approvedGears = ['HEAD_LEATHER_SET3', '2H_AXE', 'HEAD_LEATHER_UNDEAD', '2H_DUALAXE_KEEPER', '2H_HAMMER_AVALON', 'HEAD_PLATE_SET2', 'CAPEITEM_FW_MARTLOCK', 'ARMOR_PLATE_KEEPER', 'ARMOR_LEATHER_HELL'];
+        foreach ($deaths as $death) {
+            $newGears = [];
+            $notAllowed = 0;
+            $gears = explode(',', $death->equipment);
+            foreach ($gears as $gear) {
+                $search = Arr::where($approvedGears, function ($value) use ($gear) {
+                    return preg_match("/{$value}/i", $gear);
+                });
+                if (count($search) == 0) {
+                    $gear = '!' . $gear;
+                    $notAllowed += 1;
+
+                }
+                array_push($newGears, $gear);
+            }
+            $death->equipment = implode(",", $newGears);
+            $death->allowed_gears = count($newGears) - $notAllowed;
+
+        }
         return [ 'deaths' => $deaths ];
     }
 
