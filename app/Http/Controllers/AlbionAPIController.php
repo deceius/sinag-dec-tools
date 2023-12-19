@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\DeathInfo;
-use Illuminate\Http\RedirectResponse;
+use App\Models\ItemInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 
 class AlbionAPIController extends Controller
 {
@@ -58,6 +56,29 @@ class AlbionAPIController extends Controller
 
         }
         return [ 'deaths' => $deaths ];
+    }
+
+    public function parseItems(Request $request) {
+        $file = File::get('assets/itemdata.json');
+        $data =  json_decode($file, true);
+        $forInsert = [];
+        foreach($data as $item) {
+            if ($item['LocalizedNames'] && $item['UniqueName'] && !Str::contains($item['UniqueName'], 'NONTRADABLE')) {
+                array_push($forInsert, [
+                    'item_id' => $item['UniqueName'],
+                    'item_name' => $item['LocalizedNames']['EN-US']
+                ]);
+            }
+        }
+        ItemInfo::upsert($forInsert, ['item_id']);
+    }
+
+    public function getItemList(Request $request) {
+        if ($request->ajax()) {
+            $keyword = $request->input('keyword');
+            $items = ItemInfo::where('item_name', 'LIKE', '%'.$keyword.'%')->get();
+            return $items;
+        }
     }
 
     public function fetchDeathLog(Request $request)

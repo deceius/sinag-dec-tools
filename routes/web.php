@@ -29,4 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/aosearch', [AlbionAPIController::class, 'searchIGN'])->name('ao.search');
     Route::get('/loadchar', [AlbionAPIController::class, 'loadCharacter'])->name('ao.loadchar');
     Route::get('/deathlog', [AlbionAPIController::class, 'searchDeathLog'])->name('ao.death');
+
+
+    Route::get('/parseitems', [AlbionAPIController::class, 'parseItems'])->name('ao.parseitems');
+    Route::get('/getitems', [AlbionAPIController::class, 'getItemList'])->name('ao.getitems');
 });

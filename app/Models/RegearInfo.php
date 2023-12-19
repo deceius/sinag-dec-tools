@@ -12,9 +12,12 @@ class RegearInfo extends Model
     protected $fillable = [
         'id',
         'death_id',
+        'allowed_gears',
         'equipment',
-        'is_oc_regear',
-        'status'
+        'is_oc',
+        'is_scout',
+        'status',
+        'remarks'
     ];
 
 }

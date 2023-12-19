@@ -16,8 +16,10 @@ return new class extends Migration
             $table->bigInteger('death_id')->default(0);
             $table->string('equipment');
             $table->tinyInteger('allowed_gears')->default(0);
-            $table->tinyInteger('is_oc_regear')->default(0);
+            $table->tinyInteger('is_oc')->default(0);
+            $table->tinyInteger('is_scout')->default(0);
             $table->tinyInteger('status')->default(0);
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }

@@ -37,9 +37,9 @@
                             <template x-for="item in data">
                                     <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
                                         <td class="border-t py-3 px-5" x-text='item.name'></td>
-                                        <td width=60% class="dark:border-gray-700 py-1 px-5 flex items-start">
+                                        <td class="dark:border-gray-700 py-1 px-5">
                                             <template x-for="equips in item.equipment.split(',')">
-                                                <img :class="{'opacity-25 grayscale': equips.includes('!') }" x-bind:src="`https://render.albiononline.com/v1/item/${equips.includes('!no_') ? 'QUESTITEM_TOKEN_ADC_FRAME' : equips.includes('!') ? equips.substring(1) : equips }?size=48`" alt="">
+                                                <img :class="{'opacity-25 grayscale': equips.includes('!') }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${equips.includes('!no_') ? 'QUESTITEM_TOKEN_ADC_FRAME' : equips.includes('!') ? equips.substring(1) : equips }?size=48`" alt="">
                                             </template>
                                         </td>
                                         <td class="py-3 px-5" x-text='item.killer_name + " | " + item.killer_guild'></td>
