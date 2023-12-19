@@ -27,7 +27,7 @@
                                         {{ __('Equipment') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Consumables') }}
+                                        {{ __('Others') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
                                         &nbsp;
@@ -48,12 +48,29 @@
                                     <td class="border-t py-3 px-5 align-top">
                                         <template x-for="item in equipment">
                                             <div class="mb-2">
-                                                <img :class="{'opacity-25 grayscale': item.item_id == null, 'animate-pulse': isLoading }" class="inline mb-2" x-bind:src="`https://render.albiononline.com/v1/item/${ item.item_id ? item.item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32&quality=4`" tooltip="item.type">
+                                                <img x-show="item.items.length == 0" class="opacity-25 grayscale" x-bind:src="`https://render.albiononline.com/v1/item/QUESTITEM_TOKEN_ADC_FRAME?size=32`">
+                                                <div :class="{'animate-pulse': isLoading}">
+                                                    <template x-for="item_id in item.items">
+                                                        <img x-on:click="removeItem(item, item_id)" :class="{'opacity-25 grayscale': item_id == null }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ item_id ? item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32`" tooltip="item.type">
+                                                    </template>
+                                                </div>
                                                 <x-ui.search model="item.filter" click-method="load(item)" x-bind:placeholder="item.type" x-bind:disabled="item.disabled"/>
                                             </div>
                                         </template>
                                     </td>
-
+                                    <td class="border-t py-3 px-5 align-top">
+                                        <template x-for="item in consumables">
+                                            <div class="mb-2">
+                                                <img x-show="item.items.length == 0" class="opacity-25 grayscale" x-bind:src="`https://render.albiononline.com/v1/item/QUESTITEM_TOKEN_ADC_FRAME?size=32`">
+                                                <div :class="{'animate-pulse': isLoading}">
+                                                    <template x-for="item_id in item.items">
+                                                        <img x-on:click="removeItem(item, item_id)" :class="{'opacity-25 grayscale': item_id == null }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ item_id ? item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32`" tooltip="item.type">
+                                                    </template>
+                                                </div>
+                                                <x-ui.search model="item.filter" click-method="load(item)" x-bind:placeholder="item.type" x-bind:disabled="item.disabled"/>
+                                            </div>
+                                        </template>
+                                    </td>
                                 </tr>
                                 <tr class="border-t-2 border-transparent dark:border-transparent text-start ">
                                     <td class="border-t py-3 px-5 align-top" colspan="4">
