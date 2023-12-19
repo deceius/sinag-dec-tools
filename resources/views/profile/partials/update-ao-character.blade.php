@@ -7,7 +7,7 @@
             <x-icons.master-table/>
         </x-slot>
         <x-slot:buttons>
-            <x-ui.search model="filter.ign" click-method="loadFromAPI()" />
+            <x-ui.search model="filter.ign" click-method="loadFromAPI()" placeholder="Search..."/>
 
         </x-slot>
         <x-slot:content ::class="{ 'opacity-50' : isLoading }">

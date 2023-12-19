@@ -76,8 +76,14 @@ class AlbionAPIController extends Controller
     public function getItemList(Request $request) {
         if ($request->ajax()) {
             $keyword = $request->input('keyword');
-            $items = ItemInfo::where('item_name', 'LIKE', '%'.$keyword.'%')->get();
-            return $items;
+            if (empty($keyword) || strlen($keyword) < 3) {
+                return abort(500, 'error');
+            }
+            $item = ItemInfo::where('item_name', 'LIKE', '%'.$keyword.'%')->first();
+            if (!$item) {
+                return abort(404, 'error');
+            }
+            return ['item' => $item];
         }
     }
 
