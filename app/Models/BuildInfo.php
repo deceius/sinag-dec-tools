@@ -14,4 +14,28 @@ class BuildInfo extends Model
         'consumables',
         'notes',
     ];
+
+    protected $appends = [
+        'consumable_list',
+        'equipment_list'
+    ];
+
+    function parseEquipmentArray ($items) {
+        $result = [];
+        foreach ($items as $item) {
+            array_push($result, explode('|', $item));
+        }
+        return $result;
+    }
+
+    public function getConsumableListAttribute() {
+        $attribute = $this->parseEquipmentArray(explode(',', $this->consumables));
+        return $attribute;
+    }
+
+
+    public function getEquipmentListAttribute() {
+        $attribute = $this->parseEquipmentArray(explode(',', $this->equipment));
+        return $attribute;
+    }
 }

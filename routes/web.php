@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AlbionAPIController;
+use App\Http\Controllers\BuildController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/get-builds', [BuildController::class, 'index'])->name('builds.fetch');
+
 Route::get('/home', function () {
     return view('home');
 })->middleware(['auth'])->name('home');
@@ -33,4 +36,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/parseitems', [AlbionAPIController::class, 'parseItems'])->name('ao.parseitems');
     Route::get('/getitems', [AlbionAPIController::class, 'getItemList'])->name('ao.getitems');
+
+    Route::get('/officer/build/index', [BuildController::class, 'index'])->name('build.index');
+    Route::post('/officer/build/save', [BuildController::class, 'store'])->name('build.save');
 });

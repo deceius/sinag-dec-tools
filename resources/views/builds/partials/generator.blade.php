@@ -1,5 +1,5 @@
 <section x-data="builds">
-    <x-ui.card.table>
+    <x-ui.card.table class="mt-6">
         <x-slot:title>
             {{ __('Build Generator') }}
         </x-slot>
@@ -10,7 +10,7 @@
             <form method="post"  >
                 @csrf
                 @method('patch')
-                <x-ui.button type="submit" style="success" text="Create Build" >
+                <x-ui.button  x-bind:disabled="isLoading" x-on:click="saveBuild()" style="success" text="Create Build" >
                     <x-slot:icon><x-icons.button.create/></x-slot>
                 </x-ui.button>
             </form>
@@ -38,11 +38,11 @@
                             <tbody>
                                 <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start ">
                                     <td class="border-t py-3 px-5 align-top">
-                                        <x-ui.form.select>
-                                            <option value="0" >Tank</option>
-                                            <option value="1" >DPS</option>
-                                            <option value="2" >Support</option>
-                                            <option value="3" >Healer</option>
+                                        <x-ui.form.select x-model="data.role_id">
+                                            <option value=0 >Tank</option>
+                                            <option value=1 >DPS</option>
+                                            <option value=2 >Support</option>
+                                            <option value=3 >Healer</option>
                                         </x-ui.form.select>
                                     </td>
                                     <td class="border-t py-3 px-5 align-top">

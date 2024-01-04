@@ -1,5 +1,12 @@
 export default () => ({
     isLoading: false,
+    builds: [],
+    data: {
+        'role_id': 0,
+        'notes' : '',
+        'equipment': '',
+        'consumables': ''
+    },
     equipment: [
         {'type': 'Weapon', 'items': [], 'filter': '', 'disabled': false },
         {'type': 'Offhand', 'items': [], 'filter': '', 'disabled': false },
@@ -12,6 +19,16 @@ export default () => ({
         {'type': 'Food', 'items': [], 'filter': '', 'disabled': false },
         {'type': 'Mount', 'items': [], 'filter': '', 'disabled': false },
     ],
+    init() {
+        axios.get('/get-builds').then(
+            response => {
+                this.builds = response.data.builds;
+                console.log(this.builds);
+            }
+        ).catch(
+            error => {}
+        );
+    },
     removeItem(item, item_id) {
         item.filter = '';
         if (item_id == null) { return; }
@@ -25,6 +42,32 @@ export default () => ({
             this.equipment[1].disabled = this.equipment[0].items ? isTwoHanded : false;
         }
     },
+    saveBuild(){
+        this.isLoading = true;
+        var strEquipment = [];
+        var strConsumables = [];
+        this.equipment.forEach(item => {
+            strEquipment.push(item.items.join('|'));
+        });
+        this.consumables.forEach(item => {
+            strConsumables.push(item.items.join('|'));
+        });
+
+        this.data.equipment = strEquipment.join(',');
+        this.data.consumables = strConsumables.join(',');
+
+        let url = "/officer/build/save";
+        axios.post(url, this.data).then(
+            response => {
+                location.href = '/home';
+            }
+        ).catch(error => {
+            }
+        );
+
+
+
+    },
     load(item){
         this.isLoading = true;
         let url = '/getitems?keyword=' + item.filter;
@@ -32,7 +75,12 @@ export default () => ({
             response => {
                 item.filter = '';
                 let foundItem = response.data.item;
-                item.items.push(foundItem.item_id);
+                if (item.items.length <= 2) {
+                    item.items.push(foundItem.item_id);
+                }
+                else {
+
+                }
                 if (item.type == "Weapon") {
                     console.log(item);
                     let isTwoHanded = item.items.some(v => v.includes('_2H_'));
