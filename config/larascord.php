@@ -140,10 +140,9 @@ return [
     // WARNING: This feature makes one request to the Discord API for each guild you specify. (Because you need to fetch the roles for each guild)
 
     'guild_roles' => [
-        // 'guild_id' => [
-        //     'role_id',
-        //     'role_id',
-        // ],
+        '1181672424836706355' => [
+            '11818331059260130112',
+        ],
     ],
 
     /*

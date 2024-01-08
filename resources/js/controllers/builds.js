@@ -1,6 +1,15 @@
 export default () => ({
     isLoading: false,
     builds: [],
+    roles: [
+        "Off Tanks",
+        "Def Tanks",
+        "Healers",
+        "Supports",
+        "Debuff",
+        "RDPS",
+        "MDPS",
+    ],
     data: {
         'role_id': 0,
         'notes' : '',
@@ -13,6 +22,7 @@ export default () => ({
         {'type': 'Head', 'items': [], 'filter': '' , 'disabled': false },
         {'type': 'Armor', 'items': [], 'filter': '' , 'disabled': false },
         {'type': 'Shoes', 'items': [], 'filter': '' , 'disabled': false },
+        {'type': 'Cape', 'items': [], 'filter': '' , 'disabled': false },
     ],
     consumables: [
         {'type': 'Potion', 'items': [], 'filter': '', 'disabled': false },
@@ -28,6 +38,9 @@ export default () => ({
         ).catch(
             error => {}
         );
+    },
+    parseImage(item) {
+        return item ? item : 'QUESTITEM_TOKEN_ADC_FRAME';
     },
     removeItem(item, item_id) {
         item.filter = '';
@@ -55,6 +68,7 @@ export default () => ({
 
         this.data.equipment = strEquipment.join(',');
         this.data.consumables = strConsumables.join(',');
+        console.log(this.data);
 
         let url = "/officer/build/save";
         axios.post(url, this.data).then(

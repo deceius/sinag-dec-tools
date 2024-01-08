@@ -39,10 +39,9 @@
                                 <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start ">
                                     <td class="border-t py-3 px-5 align-top">
                                         <x-ui.form.select x-model="data.role_id">
-                                            <option value=0 >Tank</option>
-                                            <option value=1 >DPS</option>
-                                            <option value=2 >Support</option>
-                                            <option value=3 >Healer</option>
+                                            <template x-for="(role, index) in roles">
+                                                <option x-bind:value="index" x-text="role"/>
+                                            </template>
                                         </x-ui.form.select>
                                     </td>
                                     <td class="border-t py-3 px-5 align-top">
@@ -74,7 +73,7 @@
                                 </tr>
                                 <tr class="border-t-2 border-transparent dark:border-transparent text-start ">
                                     <td class="border-t py-3 px-5 align-top" colspan="4">
-                                        <x-ui.form.input.text placeholder="Notes" class="min-w-full"/>
+                                        <x-ui.form.input.text placeholder="Notes" x-model="data.notes" class="min-w-full"/>
                                     </td>
 
                                 </tr>
