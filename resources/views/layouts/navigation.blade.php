@@ -27,7 +27,7 @@
                             <x-ui.dropdown.item :href="route('home')" :active="request()->routeIs('admin.branch.*')">
                                 {{ __('Regear Management') }}
                             </x-ui.dropdown.item>
-                            <x-ui.dropdown.item :href="route('home')" :active="request()->routeIs('admin.branch.*')">
+                            <x-ui.dropdown.item :href="route('build.index')" :active="request()->routeIs('build.*')">
                                 {{ __('ZvZ Builds Setup') }}
                             </x-ui.dropdown.item>
                             </form>

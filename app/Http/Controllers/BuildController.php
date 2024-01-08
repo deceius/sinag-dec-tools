@@ -18,7 +18,10 @@ class BuildController extends Controller
         if ($request->ajax()){
             return ['builds' => BuildInfo::all()];
         }
+
+        return view('builds.index');
     }
+
     /**
      * Display the user's profile form.
      */
