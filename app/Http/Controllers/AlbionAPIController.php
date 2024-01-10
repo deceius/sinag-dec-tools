@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Spatie\DiscordAlerts\Facades\DiscordAlert;
 
 class AlbionAPIController extends Controller
 {
@@ -35,7 +36,7 @@ class AlbionAPIController extends Controller
     public function searchDeathLog(Request $request) {
         $id = $request->input('id');
         $deaths = $id ? DeathInfo::where('character_id', $id)->get() : DeathInfo::all();
-        $approvedGears = ['HEAD_LEATHER_SET3', '2H_AXE', 'HEAD_LEATHER_UNDEAD', '2H_DUALAXE_KEEPER', '2H_HAMMER_AVALON', 'HEAD_PLATE_SET2', 'CAPEITEM_FW_MARTLOCK', 'ARMOR_PLATE_KEEPER', 'ARMOR_LEATHER_HELL'];
+        $approvedGears = []; //['HEAD_LEATHER_SET3', '2H_AXE', 'HEAD_LEATHER_UNDEAD', '2H_DUALAXE_KEEPER', '2H_HAMMER_AVALON', 'HEAD_PLATE_SET2', 'CAPEITEM_FW_MARTLOCK', 'ARMOR_PLATE_KEEPER', 'ARMOR_LEATHER_HELL'];
         foreach ($deaths as $death) {
             $newGears = [];
             $notAllowed = 0;
@@ -44,11 +45,7 @@ class AlbionAPIController extends Controller
                 $search = Arr::where($approvedGears, function ($value) use ($gear) {
                     return preg_match("/{$value}/i", $gear);
                 });
-                if (count($search) == 0) {
-                    $gear = '!' . $gear;
-                    $notAllowed += 1;
 
-                }
                 array_push($newGears, $gear);
             }
             $death->equipment = implode(",", $newGears);
@@ -79,12 +76,85 @@ class AlbionAPIController extends Controller
             if (empty($keyword) || strlen($keyword) < 3) {
                 return abort(500, 'error');
             }
-            $item = ItemInfo::where('item_name', 'LIKE', '%'.$keyword.'%')->first();
+            $item = ItemInfo::where('item_name', 'LIKE', '%'.$keyword.'%')->orWhere('item_id', 'LIKE', '%'.$keyword.'%')->first();
             if (!$item) {
                 return abort(404, 'error');
             }
             return ['item' => $item];
         }
+    }
+
+    public function fetchDeathLogByBattleId(Request $request) {
+        if (!$request->input('battleIds')) {
+            return;
+        }
+        $result = [];
+        $battleIds = explode(',', $request->input('battleIds'));
+        $formattedBattleIds = [];
+        foreach($battleIds as $battleId) {
+            array_push($formattedBattleIds, trim($battleId));
+            $offset = 0;
+            $events = [];
+            do {
+                $url = "https://gameinfo-sgp.albiononline.com/api/gameinfo/events/battle/". trim($battleId) ."?offset=" . $offset ."&limit=51";
+                $battle = Http::get($url);
+                $events = (array)json_decode($battle->body());
+                foreach ($events as $event) {
+                    if ($event->Victim->GuildId == env('INGAME_GUILD_ID', null)) {
+                        $rawData = [
+                            'id' => $event->EventId,
+                            'battle_id' => trim($battleId),
+                            'character_id' => $event->Victim->Id,
+                            'name' => $event->Victim->Name,
+                            'guild' => $event->Victim->GuildName,
+                            'equipment' => $this->parseEquipment($event->Victim->Equipment)->implode(","),
+                            'killer_name' => $event->Killer->Name,
+                            'killer_guild' => $event->Killer->GuildName,
+                            'killer_equipment' => $this->parseEquipment($event->Killer->Equipment)->implode(","),
+                            'death_fame' => $event->TotalVictimKillFame,
+                            'timestamp' => $event->TimeStamp,
+                            'regear_cost' => $this->fetchRegearCost($this->parseEquipment($event->Victim->Equipment)),
+                        ];
+                        $death = DeathInfo::firstOrCreate(
+                            ['id' => $event->EventId],
+                            $rawData);
+                        array_push($result, $death);
+
+                    }
+                }
+
+                $offset += 51;
+            } while (count($events) > 1);
+
+
+        }
+        $battleTotalCost = DeathInfo::whereIn('battle_id', $formattedBattleIds)->sum('regear_cost');
+        DiscordAlert::message("<@" . Auth()->user()->id . "> opened regears for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). The regears in the battleboard has an estimated cost of " . number_format($battleTotalCost) . ".");
+        // DiscordAlert::message("<@" . Auth()->user()->id . ">'s regear has been fulfilled by <@" . Auth()->user()->id . ">. Please check your designated chest.");
+
+    }
+
+    public function fetchRegearCost($forRegears) {
+        $result = [];
+        $url = "https://west.albion-online-data.com/api/v2/stats/prices/" . $forRegears->implode(",") ."?qualities=1";
+        $battle = Http::get($url);
+        $costData = (array)json_decode($battle->body());
+        foreach ($forRegears as $item) {
+            $costArray = [];
+            foreach ($costData as $data) {
+               if ($data->item_id == $item) {
+                if ($data->sell_price_min > 0) {
+                    array_push($costArray, $data->sell_price_min);
+
+                }
+               }
+            }
+
+            $avgCost = (array_sum($costArray) == 0) ? 0 : array_sum($costArray)/count($costArray);
+            array_push($result, $avgCost);
+        }
+       return array_sum($result);
+
     }
 
     public function fetchDeathLog(Request $request)

@@ -1,7 +1,7 @@
 <section x-data="deathlog"  x-init="init('{{ Auth::user()->ao_character_id }}')">
-    <x-ui.card.table    >
+    <x-ui.card.table>
         <x-slot:title>
-            {{ __('Regear') }}
+            {{ __('Pending Regears') }}
         </x-slot>
         <x-slot:icon>
             <x-icons.master-table/>
@@ -25,7 +25,7 @@
                                         {{ __('Killer') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Timestamp') }}
+                                        {{ __('Death Timestamp') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
                                         &nbsp;

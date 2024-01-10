@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('death_infos', function (Blueprint $table) {
             $table->id();
             $table->string('character_id');
+            $table->string('battle_id');
             $table->string('name');
             $table->string('guild');
             $table->string('equipment');
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->string('killer_guild');
             $table->string('death_fame');
             $table->string('timestamp');
+            $table->double('regear_cost');
             $table->timestamps();
         });
     }

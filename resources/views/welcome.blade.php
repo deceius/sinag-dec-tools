@@ -56,7 +56,7 @@
 
         <div class="flex justify-center ">
             <div class="w-full">
-                @include('builds.partials.list')
+                @include('builds.partials.grid')
             </div>
         </div>
 

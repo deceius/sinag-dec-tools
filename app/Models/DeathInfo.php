@@ -9,6 +9,7 @@ class DeathInfo extends Model
 {
     protected $fillable = [
         'id',
+        'battle_id',
         'character_id',
         'name',
         'guild',
@@ -19,7 +20,8 @@ class DeathInfo extends Model
         'killer_guild',
         'death_fame',
         'allowed_gears',
-        'timestamp'
+        'timestamp',
+        'regear_cost'
     ];
 
     protected $casts = [

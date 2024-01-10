@@ -15,16 +15,13 @@
                     <x-ui.nav.link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-ui.nav.link>
-                    <x-ui.nav.link :href="route('home')" >
-                        {{ __('Regears') }}
-                    </x-ui.nav.link>
                     <x-ui.nav.dropdown :active="request()->routeIs('admin.*')">
                         <x-slot:title>{{ __('Officer Stuff') }}</x-slot>
                         <x-slot:content>
                             <x-ui.dropdown.item :href="route('home')" :active="request()->routeIs('admin.users.index')">
                                 {{ __('Member List') }}
                             </x-ui.dropdown.item>
-                            <x-ui.dropdown.item :href="route('home')" :active="request()->routeIs('admin.branch.*')">
+                            <x-ui.dropdown.item :href="route('regear.index')" :active="request()->routeIs('regear.*')">
                                 {{ __('Regear Management') }}
                             </x-ui.dropdown.item>
                             <x-ui.dropdown.item :href="route('build.index')" :active="request()->routeIs('build.*')">

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->tinyInteger('is_oc')->default(0);
             $table->tinyInteger('is_scout')->default(0);
             $table->tinyInteger('status')->default(0);
+            $table->bigInteger('regeared_by')->default(0);
             $table->string('remarks')->nullable();
             $table->timestamps();
         });

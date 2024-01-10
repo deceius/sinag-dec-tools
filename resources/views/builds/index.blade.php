@@ -1,8 +1,17 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Builds Setup') }}
-        </h2>
+    <x-slot:header>
+        <x-ui.header title="{{ __('Builds Management') }}">
+            <x-slot:icon>
+                <x-icons.branch-group/>
+            </x-slot>
+            <x-slot:buttons>
+                <x-ui.button.link href="{{ route('build.create') }}" style="success" text="{{ __('Add New Build') }}">
+                    <x-slot:icon>
+                        <x-icons.button.create/>
+                    </x-slot>
+                </x-ui.button.link>
+            </x-slot>
+        </x-ui.header>
     </x-slot>
 
     <div class="py-12">

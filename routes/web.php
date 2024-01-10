@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AlbionAPIController;
 use App\Http\Controllers\BuildController;
+use App\Http\Controllers\RegearController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,11 +33,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/aosearch', [AlbionAPIController::class, 'searchIGN'])->name('ao.search');
     Route::get('/loadchar', [AlbionAPIController::class, 'loadCharacter'])->name('ao.loadchar');
     Route::get('/deathlog', [AlbionAPIController::class, 'searchDeathLog'])->name('ao.death');
+    Route::get('/fetchdeathlog', [AlbionAPIController::class, 'fetchDeathLog'])->name('ao.death');
 
-
+    Route::get('/parseDeaths', [AlbionAPIController::class, 'fetchDeathLogByBattleId']);
     Route::get('/parseitems', [AlbionAPIController::class, 'parseItems'])->name('ao.parseitems');
     Route::get('/getitems', [AlbionAPIController::class, 'getItemList'])->name('ao.getitems');
 
+
+    Route::get('/officer/regear/index', [RegearController::class, 'index'])->name('regear.index');
+
     Route::get('/officer/build/index', [BuildController::class, 'index'])->name('build.index');
+    Route::get('/officer/build/create', [BuildController::class, 'create'])->name('build.create');
+    Route::get('/officer/build/{buildInfo}/edit', [BuildController::class, 'edit'])->name('build.edit');
     Route::post('/officer/build/save', [BuildController::class, 'store'])->name('build.save');
 });

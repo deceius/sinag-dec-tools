@@ -1,41 +1,44 @@
 <section x-data="builds" x-init="init()">
-    <div >
-<template x-for="(role, index) in roles">
+    <div>
      <x-ui.card.table class="mb-6">
         <x-slot:title>
-            <span x-text="role"/>
+            <span x-text="'Approved Builds'"/>
         </x-slot>
         <x-slot:icon>
             <x-icons.master-table/>
         </x-slot>
+        <x-slot:buttons>
+            <x-ui.form.select x-model="filter.role_id">
+                <template x-for="(role, index) in ['All Roles'].concat(roles)">
+                    <option x-bind:value="index" x-text="role"/>
+                </template>
+            </x-ui.form.select>
+
+        </x-slot>
         <x-slot:content>
-            <table class="min-w-full">
+            <table class="min-w-full" x-show="builds.length > 1">
+                <thead>
+                    <th class="text-start py-3 px-5">Weapon</th>
+                    <th class="text-start py-3 px-5">Role</th>
+                    <th class="text-start py-3 px-5">Created Date</th>
+                    <th class="text-start py-3 px-5">Notes</th>
+                    <th class="text-start py-3 px-5"></th>
+                </thead>
                 <tbody>
                     <template x-for="build in builds">
-                        <tr class=" flex border-t border-gray-700 dark:border-gray-700" x-show="build.role_id == index">
+                        <tr class="  border-t border-gray-700 dark:border-gray-700">
                             <td class="py-2 px-5">
-                                <div class=" align-top">
-                                    <div class="grid xl:grid-cols-9 grid-cols-5">
-                                        <template x-for="item in build.equipment_list">
-                                            <div class="grid grid-cols-1 align-top">
-                                                <template x-for="(sub, index) in item">
-                                                        <div class="w-16 h-16">
-                                                            <img :class="{'opacity-25 grayscale': !sub, 'opacity-50' : index != 0}" x-bind:src="`https://render.albiononline.com/v1/item/${ sub ? sub : 'QUESTITEM_TOKEN_ADC_FRAME' }?size=64`">
-                                                        </div>
-                                                </template>
-                                            </div>
-                                        </template>
-                                        <template x-for="item in build.consumable_list">
-                                            <div class="grid grid-cols-1">
-                                                <template x-for="(sub, index) in item">
-                                                        <div class="w-16">
-                                                            <img :class="{'opacity-25 grayscale': !sub, 'opacity-50' : index != 0}" x-bind:src="`https://render.albiononline.com/v1/item/${ sub ? sub : 'QUESTITEM_TOKEN_ADC_FRAME' }?size=64`">
-                                                        </div>
-                                                </template>
-                                            </div>
-                                        </template>
-                                    </div>
-                                </div>
+                                <img x-bind:src="`https://render.albiononline.com/v1/item/${  build.equipment_list[0][0] }?size=64`">
+                            </td>
+                            <td class="py-2 px-5" x-text="roles[build.role_id]"/>
+                            <td class="py-2 px-5" x-text="build.created_at"/>
+                            <td class="py-2 px-5" x-text="build.notes"/>
+                            <td class=" whitespace-nowrap py-3 px-5 text-end">
+                                <form method="get" :action="build.url + '/edit'" >
+                                    <x-ui.button.button-icon type="submit" style="primary">
+                                        <x-icons.button.edit/>
+                                    </x-ui.button>
+                                </form>
                             </td>
                         </tr>
                     </template>
@@ -45,7 +48,6 @@
 
         </x-slot>
     </x-ui.card>
-</template>
 </div>
 {{--
     <x-ui.card>

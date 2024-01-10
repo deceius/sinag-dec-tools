@@ -1,4 +1,4 @@
-<section x-data="builds">
+<section x-data="builds" x-init="editInit({{$buildInfo}})">
     <x-ui.card.table class="mt-6">
         <x-slot:title>
             {{ __('Build Generator') }}
@@ -7,13 +7,9 @@
             <x-icons.master-table/>
         </x-slot>
         <x-slot:buttons>
-            <form method="post"  >
-                @csrf
-                @method('patch')
-                <x-ui.button  x-bind:disabled="isLoading" x-on:click="saveBuild()" style="success" text="Create Build" >
-                    <x-slot:icon><x-icons.button.create/></x-slot>
-                </x-ui.button>
-            </form>
+            <x-ui.button  x-bind:disabled="isLoading" x-on:click="saveBuild()" style="success" text="Save Changes" >
+                <x-slot:icon><x-icons.button.create/></x-slot>
+            </x-ui.button>
         </x-slot>
         <x-slot:content>
                 <div class="overflow-x-auto" >
@@ -40,7 +36,7 @@
                                     <td class="border-t py-3 px-5 align-top">
                                         <x-ui.form.select x-model="data.role_id">
                                             <template x-for="(role, index) in roles">
-                                                <option x-bind:value="index" x-text="role"/>
+                                                <option x-bind:value="index" x-text="role" :selected="data.role_id == index"/>
                                             </template>
                                         </x-ui.form.select>
                                     </td>
@@ -50,7 +46,7 @@
                                                 <img x-show="item.items.length == 0" class="opacity-25 grayscale" x-bind:src="`https://render.albiononline.com/v1/item/QUESTITEM_TOKEN_ADC_FRAME?size=32`">
                                                 <div :class="{'animate-pulse': isLoading}">
                                                     <template x-for="item_id in item.items">
-                                                        <img x-on:click="removeItem(item, item_id)" :class="{'opacity-25 grayscale': item_id == null }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ item_id ? item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32`" tooltip="item.type">
+                                                        <img x-on:click="removeItem(item, item_id)" :class="{'opacity-25 grayscale': item_id.length === 0 }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ item_id ? item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32`" tooltip="item.type">
                                                     </template>
                                                 </div>
                                                 <x-ui.search model="item.filter" click-method="load(item)" x-bind:placeholder="item.type" x-bind:disabled="item.disabled"/>
@@ -63,7 +59,7 @@
                                                 <img x-show="item.items.length == 0" class="opacity-25 grayscale" x-bind:src="`https://render.albiononline.com/v1/item/QUESTITEM_TOKEN_ADC_FRAME?size=32`">
                                                 <div :class="{'animate-pulse': isLoading}">
                                                     <template x-for="item_id in item.items">
-                                                        <img x-on:click="removeItem(item, item_id)" :class="{'opacity-25 grayscale': item_id == null }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ item_id ? item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32`" tooltip="item.type">
+                                                        <img x-on:click="removeItem(item, item_id)" :class="{'opacity-25 grayscale':  item_id.length === 0 }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ item_id ? item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32`" tooltip="item.type">
                                                     </template>
                                                 </div>
                                                 <x-ui.search model="item.filter" click-method="load(item)" x-bind:placeholder="item.type" x-bind:disabled="item.disabled"/>

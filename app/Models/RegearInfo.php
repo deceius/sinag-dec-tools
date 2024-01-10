@@ -17,6 +17,7 @@ class RegearInfo extends Model
         'is_oc',
         'is_scout',
         'status',
+        'regeared_by',
         'remarks'
     ];
 

@@ -16,10 +16,23 @@ class BuildController extends Controller
     public function index(Request $request) {
 
         if ($request->ajax()){
-            return ['builds' => BuildInfo::all()];
+            $roleId = $request->input('role_id');
+            $builds = $roleId != null ? BuildInfo::where('role_id', $roleId)->orderBy('role_id')->get() : BuildInfo::orderBy('role_id')->get();
+            return ['builds' => $builds];
         }
 
         return view('builds.index');
+    }
+
+    public function create(Request $request) {
+
+
+        return view('builds.create', ['buildInfo' => null]);
+    }
+
+
+    public function edit(Request $request, BuildInfo $buildInfo): View {
+        return view('builds.edit', ['buildInfo' => $buildInfo]);
     }
 
     /**
@@ -30,8 +43,22 @@ class BuildController extends Controller
 
         $build = new BuildInfo();
         $build->fill($request->all());
-        $build->save();
+        if($build->id > 0) {
+           BuildInfo::whereId($build->id)->update($request->all());
+        }
+        else {
+            $build->save();
+        }
 
+        return ['data' => $request->all()];
+    }
+
+        /**
+     * Display the user's profile form.
+     */
+    public function update(Request $request, BuildInfo $build)
+    {
+        $build->save();
         return ['data' => $request->all()];
     }
 

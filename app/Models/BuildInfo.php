@@ -15,9 +15,13 @@ class BuildInfo extends Model
         'notes',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i',
+    ];
     protected $appends = [
         'consumable_list',
-        'equipment_list'
+        'equipment_list',
+        'url'
     ];
 
     function parseEquipmentArray ($items) {
@@ -27,6 +31,11 @@ class BuildInfo extends Model
         }
         return $result;
     }
+
+    protected function getUrlAttribute() {
+        return url('officer/build/'.$this->getKey());
+    }
+
 
     public function getConsumableListAttribute() {
         $attribute = $this->parseEquipmentArray(explode(',', $this->consumables));

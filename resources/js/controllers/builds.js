@@ -1,5 +1,6 @@
 export default () => ({
     isLoading: false,
+    filter: {'role_id' : 0 },
     builds: [],
     roles: [
         "Off Tanks",
@@ -30,17 +31,43 @@ export default () => ({
         {'type': 'Mount', 'items': [], 'filter': '', 'disabled': false },
     ],
     init() {
-        axios.get('/get-builds').then(
+        this.$watch('filter.role_id', () => {
+            console.log(this.filter.role_id - 1);
+            this.loadBuilds();
+        });
+        this.loadBuilds();
+    },
+    editInit(buildInfo) {
+        this.data.id = buildInfo.id;
+        this.data.role_id = buildInfo.role_id;
+        this.data.notes = buildInfo.notes;
+        for (var i = 0; i < this.equipment.length; i++) {
+            buildInfo.equipment_list[i].forEach(element => {
+                this.silentLoad(this.equipment[i], element);
+            });
+        }
+        for (var i = 0; i < this.consumables.length; i++) {
+            buildInfo.consumable_list[i].forEach(element => {
+                this.silentLoad(this.consumables[i], element);
+            });
+        }
+    },
+    loadBuilds(){
+        this.isLoading = true;
+        let roleIdFilter = this.filter.role_id - 1;
+        this.builds = [];
+        let url = '/get-builds' +  (roleIdFilter >= 0 ? '?role_id=' + roleIdFilter : '');
+        axios.get(url).then(
             response => {
+                this.isLoading = false;
                 this.builds = response.data.builds;
-                console.log(this.builds);
             }
         ).catch(
             error => {}
         );
     },
     parseImage(item) {
-        return item ? item : 'QUESTITEM_TOKEN_ADC_FRAME';
+        return item.length === 0 ? item : 'QUESTITEM_TOKEN_ADC_FRAME';
     },
     removeItem(item, item_id) {
         item.filter = '';
@@ -73,18 +100,52 @@ export default () => ({
         let url = "/officer/build/save";
         axios.post(url, this.data).then(
             response => {
-                location.href = '/home';
+                location.href = '/officer/build/index';
             }
         ).catch(error => {
+            console.log(error);
             }
         );
-
-
-
     },
     load(item){
         this.isLoading = true;
         let url = '/getitems?keyword=' + item.filter;
+        axios.get(url).then(
+            response => {
+                item.filter = '';
+                let foundItem = response.data.item;
+                if (item.items.length <= 2) {
+                    item.items.push(foundItem.item_id);
+                }
+                else {
+
+                }
+                if (item.type == "Weapon") {
+                    console.log(item);
+                    let isTwoHanded = item.items.some(v => v.includes('_2H_'));
+                    if (isTwoHanded) {
+                        this.equipment[1].disabled = true;
+                        this.equipment[1].items = [];
+                        this.equipment[1].filter = '';
+                    } else {
+                        this.equipment[1].disabled = false;
+                    }
+                }
+                this.isLoading = false;
+            }
+        ).catch(error => {
+                this.isLoading = false;
+                item.item_id = [];
+                item.filter = '';
+
+                let isTwoHanded = this.equipment[0].items.some(v => v.includes('_2H_'));
+                this.equipment[1].disabled = this.equipment[0].items ? isTwoHanded : false;
+            }
+        );
+    },
+    silentLoad(item, filter){
+        this.isLoading = true;
+        let url = '/getitems?keyword=' + filter;
         axios.get(url).then(
             response => {
                 item.filter = '';
