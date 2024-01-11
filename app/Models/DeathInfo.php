@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DeathInfo extends Model
 {
@@ -19,14 +21,34 @@ class DeathInfo extends Model
         'killer_equipment',
         'killer_guild',
         'death_fame',
+        'regeared_by',
         'allowed_gears',
+        'is_oc',
         'timestamp',
         'regear_cost'
     ];
 
+
+
     protected $casts = [
         'timestamp' => 'datetime:Y-m-d H:i',
+        'is_oc' => 'boolean'
     ];
+
+    protected $appends = [
+        'url'
+    ];
+
+    protected function getUrlAttribute() {
+        return url('regear/'.$this->getKey());
+    }
+
+    public function regearingOfficer()
+    {
+        return $this->belongsTo(User::class, 'regeared_by');
+    }
+
+
 
 
 

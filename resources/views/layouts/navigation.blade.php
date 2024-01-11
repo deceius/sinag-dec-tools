@@ -15,16 +15,13 @@
                     <x-ui.nav.link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-ui.nav.link>
-                    <x-ui.nav.dropdown :active="request()->routeIs('admin.*')">
+                    <x-ui.nav.dropdown :active="request()->routeIs('officer.*')">
                         <x-slot:title>{{ __('Officer Stuff') }}</x-slot>
                         <x-slot:content>
-                            <x-ui.dropdown.item :href="route('home')" :active="request()->routeIs('admin.users.index')">
-                                {{ __('Member List') }}
-                            </x-ui.dropdown.item>
-                            <x-ui.dropdown.item :href="route('regear.index')" :active="request()->routeIs('regear.*')">
+                            <x-ui.dropdown.item :href="route('officer.regear.index')" :active="request()->routeIs('officer.regear.*')">
                                 {{ __('Regear Management') }}
                             </x-ui.dropdown.item>
-                            <x-ui.dropdown.item :href="route('build.index')" :active="request()->routeIs('build.*')">
+                            <x-ui.dropdown.item :href="route('officer.build.index')" :active="request()->routeIs('officer.build.*')">
                                 {{ __('ZvZ Builds Setup') }}
                             </x-ui.dropdown.item>
                             </form>

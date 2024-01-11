@@ -1,4 +1,4 @@
-<section x-data="builds" x-init="init()">
+<section x-data="builds" x-init="editInit({{$buildInfo}})">
     <x-ui.card.table class="mt-6">
         <x-slot:title>
             {{ __('Build Generator') }}

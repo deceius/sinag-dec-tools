@@ -17,7 +17,7 @@ class BuildController extends Controller
 
         if ($request->ajax()){
             $roleId = $request->input('role_id');
-            $builds = $roleId != null ? BuildInfo::where('role_id', $roleId)->orderBy('role_id')->get() : BuildInfo::orderBy('role_id')->get();
+            $builds = $roleId != null ? BuildInfo::where('role_id', $roleId)->get() : BuildInfo::orderBy('role_id')->get();
             return ['builds' => $builds];
         }
 

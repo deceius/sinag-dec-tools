@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BuildInfo;
 use App\Models\DeathInfo;
 use App\Models\ItemInfo;
 use Illuminate\Http\Request;
@@ -35,22 +36,26 @@ class AlbionAPIController extends Controller
 
     public function searchDeathLog(Request $request) {
         $id = $request->input('id');
-        $deaths = $id ? DeathInfo::where('character_id', $id)->get() : DeathInfo::all();
-        $approvedGears = []; //['HEAD_LEATHER_SET3', '2H_AXE', 'HEAD_LEATHER_UNDEAD', '2H_DUALAXE_KEEPER', '2H_HAMMER_AVALON', 'HEAD_PLATE_SET2', 'CAPEITEM_FW_MARTLOCK', 'ARMOR_PLATE_KEEPER', 'ARMOR_LEATHER_HELL'];
-        foreach ($deaths as $death) {
-            $newGears = [];
-            $notAllowed = 0;
-            $gears = explode(',', $death->equipment);
-            foreach ($gears as $gear) {
-                $search = Arr::where($approvedGears, function ($value) use ($gear) {
-                    return preg_match("/{$value}/i", $gear);
-                });
+        $deaths = [];
+        if ($id) {
+            $deaths = DeathInfo::where('character_id', $id)->orderBy('status', 'asc')->get();
+            $approvedGears = BuildInfo::all(['equipment'])->pluck('equipment')->toArray();
+            foreach ($deaths as $death) {
+                $newGears = [];
+                $notAllowed = 0;
+                $gears = explode(',', $death->equipment);
+                foreach ($gears as $gear) {
+                    $search = BuildInfo::where('equipment', 'like', '%' . substr(explode("@", $gear)[0], 3) . '%')->get();
+                    if (count($search) == 0) {
+                        $gear = '!' . $gear;
+                    }
+                    array_push($newGears, $gear);
+                }
+                $death->equipment = implode(",", $newGears);
+                $death->allowed_gears = count($newGears) - $notAllowed;
+                $death->regearing_officer = $death->regearingOfficer;
 
-                array_push($newGears, $gear);
             }
-            $death->equipment = implode(",", $newGears);
-            $death->allowed_gears = count($newGears) - $notAllowed;
-
         }
         return [ 'deaths' => $deaths ];
     }
@@ -129,7 +134,7 @@ class AlbionAPIController extends Controller
 
         }
         $battleTotalCost = DeathInfo::whereIn('battle_id', $formattedBattleIds)->sum('regear_cost');
-        DiscordAlert::message("<@" . Auth()->user()->id . "> opened regears for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). The regears in the battleboard has an estimated cost of " . number_format($battleTotalCost) . ".");
+        // DiscordAlert::message("<@" . Auth()->user()->id . "> opened regears for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). The regears in the battleboard has an estimated cost (in buy orders) of " . number_format($battleTotalCost) . ".");
         // DiscordAlert::message("<@" . Auth()->user()->id . ">'s regear has been fulfilled by <@" . Auth()->user()->id . ">. Please check your designated chest.");
 
     }
@@ -143,9 +148,8 @@ class AlbionAPIController extends Controller
             $costArray = [];
             foreach ($costData as $data) {
                if ($data->item_id == $item) {
-                if ($data->sell_price_min > 0) {
-                    array_push($costArray, $data->sell_price_min);
-
+                if ($data->buy_price_max > 0) {
+                    array_push($costArray, $data->buy_price_max);
                 }
                }
             }

@@ -1,7 +1,7 @@
 <section x-data="deathlog"  x-init="init('{{ Auth::user()->ao_character_id }}')">
     <x-ui.card.table>
         <x-slot:title>
-            {{ __('Pending Regears') }}
+            {{ __('Regears') }}
         </x-slot>
         <x-slot:icon>
             <x-icons.master-table/>
@@ -16,16 +16,16 @@
                             <thead class="font-medium">
                                 <tr class=" border-gray-700 dark:border-gray-700">
                                     <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Name') }}
+                                        {{ __('Battle ID') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
                                         {{ __('Equipment Lost') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Killer') }}
+                                        {{ __('Death (UTC)') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Death Timestamp') }}
+                                        {{ __('Regeared By') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
                                         &nbsp;
@@ -36,22 +36,28 @@
 
                             <template x-for="item in data">
                                     <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
-                                        <td class="border-t py-3 px-5" x-text='item.name'></td>
+
+                                        <td class="border-t py-3 px-5"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
                                         <td class="dark:border-gray-700 py-1 px-5">
                                             <template x-for="equips in item.equipment.split(',')">
                                                 <img :class="{'opacity-25 grayscale': equips.includes('!') }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${equips.includes('!no_') ? 'QUESTITEM_TOKEN_ADC_FRAME' : equips.includes('!') ? equips.substring(1) : equips }?size=48`" alt="">
                                             </template>
                                         </td>
-                                        <td class="py-3 px-5" x-text='item.killer_name + " | " + item.killer_guild'></td>
-
                                         <td class="py-3 px-5" x-text='item.timestamp'></td>
+                                        <td class="py-3 px-5" x-text='item.regearing_officer ? item.regearing_officer.username : ""'></td>
                                             <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
-                                                <form method="post" :action="'{{ Auth::user()->url }}' + '?id=' + item.Id + '&name=' + item.Name" >
+                                                <form method="post" :action="item.url + '/update?oc=' + item.is_oc" >
                                                     @csrf
                                                     @method('patch')
-                                                    <x-ui.button type="submit" style="success" text="Request" x-bind:disabled="item.allowed_gears == 0">
+                                                    <x-ui.button type="submit" style="success" text="Request" x-show="item.status == 0">
                                                         <x-slot:icon><x-icons.button.create/></x-slot>
                                                     </x-ui.button>
+                                                    <x-ui.icon-pill x-show="item.status == 2">
+                                                        <x-icons.button.doc-text/>
+                                                     </x-ui.icon-pill>
+                                                    <x-ui.icon-pill  x-show="item.status == 1">
+                                                        <x-icons.button.check/>
+                                                     </x-ui.icon-pill>
                                                 </form>
                                             </td>
                                     </tr>

@@ -40,9 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/getitems', [AlbionAPIController::class, 'getItemList'])->name('ao.getitems');
 
 
-    Route::get('/officer/regear/index', [RegearController::class, 'index'])->name('regear.index');
+    Route::patch('/regear/{regearInfo}/update', [RegearController::class, 'processRegear'])->name('process.regear');
+    Route::get('/officer/regear/index', [RegearController::class, 'index'])->name('officer.regear.index');
+    Route::get('/officer/regear/fetch', [RegearController::class, 'fetchAllRegears'])->name('regear.fetch');
 
-    Route::get('/officer/build/index', [BuildController::class, 'index'])->name('build.index');
+    Route::get('/officer/build/index', [BuildController::class, 'index'])->name('officer.build.index');
     Route::get('/officer/build/create', [BuildController::class, 'create'])->name('build.create');
     Route::get('/officer/build/{buildInfo}/edit', [BuildController::class, 'edit'])->name('build.edit');
     Route::post('/officer/build/save', [BuildController::class, 'store'])->name('build.save');

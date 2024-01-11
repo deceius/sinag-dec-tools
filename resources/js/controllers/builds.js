@@ -61,6 +61,7 @@ export default () => ({
             response => {
                 this.isLoading = false;
                 this.builds = response.data.builds;
+                console.log(this.builds);
             }
         ).catch(
             error => {}

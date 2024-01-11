@@ -10,6 +10,7 @@ export default () => ({
         axios.get(url).then(
             response => {
                 this.data = response.data.deaths;
+                console.log(this.data);
                 this.isLoading = false;
             }
         ).catch(error => {

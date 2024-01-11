@@ -20,7 +20,7 @@
                                 </tr>
                                 <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
                                     <td class="border-t py-3 px-5 font-medium" x-text='"Guild"'></td>
-                                    <td class="border-t py-3 px-5" x-text='data.GuildName ? "[" + data.AllianceName +"] " + data.GuildName : ""'></td>
+                                    <td class="border-t py-3 px-5" x-text='data.GuildName ? (data.AllianceName ? "[" + data.AllianceName +"] " : "") + data.GuildName : ""'></td>
                                 </tr>
                                 <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
                                     <td class="border-t py-3 px-5 font-medium" x-text='"Kill Fame"'></td>

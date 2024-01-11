@@ -16,7 +16,7 @@
 
         </x-slot>
         <x-slot:content>
-            <table class="min-w-full" x-show="builds.length > 1">
+            <table class="min-w-full" x-show="builds.length != 0">
                 <thead>
                     <th class="text-start py-3 px-5">Weapon</th>
                     <th class="text-start py-3 px-5">Role</th>

@@ -2,7 +2,7 @@
     <div class="text-lg font-medium text-gray-900 dark:text-gray-100">
         {{ $title }}
     </div>
-   <div class="space-x-2 flex items-center ">
+   <div class="space-x-2 flex items-center h-5">
         {{ $buttons ?? ''}}
     </div>
 </h2>
