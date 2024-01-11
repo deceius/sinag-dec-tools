@@ -25,7 +25,7 @@ class RegearController extends Controller
 
     public function processRegear(Request $request, DeathInfo $regearInfo) {
         // 2 - pending, 1 - regeared, 0 - not filed
-        if ($regearInfo->status == 2) {
+        if (Auth::user()->is_regear_officer && $regearInfo->status == 2) {
             $regearInfo->regeared_by = Auth::user()->id;
             $regearInfo->status = 1;
             $member = User::where('ao_character_id', $regearInfo->character_id)->first();
@@ -33,13 +33,13 @@ class RegearController extends Controller
 
         }
         else {
-            $regearInfo->is_oc = $request->input('oc') ? 1 : 0;
             $regearInfo->status = 2;
         }
         $regearInfo->save();
 
         return redirect()->back();
     }
+
     public function fetchAllRegears(Request $request) {
         $deaths = [];
             $deaths = DeathInfo::orderBy('status', 'desc')->orderBy('timestamp', 'desc')->get();
