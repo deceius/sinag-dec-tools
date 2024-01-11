@@ -15,18 +15,26 @@
                     <x-ui.nav.link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-ui.nav.link>
+                    @if(Auth::user()->is_officer)
                     <x-ui.nav.dropdown :active="request()->routeIs('officer.*')">
                         <x-slot:title>{{ __('Officer Stuff') }}</x-slot>
                         <x-slot:content>
+
+                            @if(Auth::user()->is_regear_officer)
                             <x-ui.dropdown.item :href="route('officer.regear.index')" :active="request()->routeIs('officer.regear.*')">
                                 {{ __('Regear Management') }}
                             </x-ui.dropdown.item>
+                            @endif
+
+                            @if(Auth::user()->is_build_officer)
                             <x-ui.dropdown.item :href="route('officer.build.index')" :active="request()->routeIs('officer.build.*')">
                                 {{ __('ZvZ Builds Setup') }}
                             </x-ui.dropdown.item>
+                            @endif
                             </form>
                         </x-slot>
                     </x-ui.nav.dropdown>
+                    @endif
                 </div>
             </div>
 

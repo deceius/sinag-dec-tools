@@ -28,12 +28,12 @@
                                         {{ __('Death (UTC)') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Regeared By') }}
-                                    </th>
-                                    <th scope="col" class="text-start py-3 px-5">
                                         <div class="flex gap-2">
                                             <abbr title="Estimated via parsing max value buy orders, and did an average through all markets that have the item available.">{{ __('Est. Regear Cost') }} </abbr>
                                         </div>
+                                    </th>
+                                    <th scope="col" class="text-start py-3 px-5">
+                                        {{ __('Regeared By') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
                                         &nbsp;
@@ -53,9 +53,10 @@
                                             </template>
                                         </td>
                                         <td class="py-3 px-5" x-text='item.timestamp'></td>
-                                        <td class="py-3 px-5" x-text='item.regearing_officer ? item.regearing_officer.username : ""'></td>
                                        <td class="py-3 px-5" x-text='parseInt(item.regear_cost.toFixed(0)).toLocaleString("en-US")'></td>
-                                            <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
+                                       <td class="py-3 px-5" x-text='item.regearing_officer ? item.regearing_officer.username : ""'></td>
+
+                                       <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
                                                 <form method="post" :action="item.url + '/update'" >
                                                     @csrf
                                                     @method('patch')

@@ -134,8 +134,7 @@ class AlbionAPIController extends Controller
 
         }
         $battleTotalCost = DeathInfo::whereIn('battle_id', $formattedBattleIds)->sum('regear_cost');
-        // DiscordAlert::message("<@" . Auth()->user()->id . "> opened regears for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). The regears in the battleboard has an estimated cost (in buy orders) of " . number_format($battleTotalCost) . ".");
-        // DiscordAlert::message("<@" . Auth()->user()->id . ">'s regear has been fulfilled by <@" . Auth()->user()->id . ">. Please check your designated chest.");
+        DiscordAlert::message("<@" . Auth()->user()->id . "> opened regears for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). The regears in the battleboard has an estimated cost (in buy orders) of " . number_format($battleTotalCost) . ".");
 
     }
 

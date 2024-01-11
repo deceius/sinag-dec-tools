@@ -71,13 +71,36 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'url'
+        'url',
+        'is_officer',
+        'is_build_officer',
+        'is_regear_officer'
     ];
 
     public function getUrlAttribute() {
         return url('member/'.$this->getKey());
     }
 
+    function getIsOfficerAttribute(){
+        $roles = explode(",", $this->roles);
+        $regearOfficerRole = env('OFFICER_REGEAR_DISCORD_ROLE');
+        $buildsOfficerRole = env('OFFICER_BUILDS_DISCORD_ROLE');
 
+        return in_array($regearOfficerRole, $roles) || in_array($buildsOfficerRole, $roles);
+    }
+
+    function getIsBuildOfficerAttribute(){
+        $roles = explode(",", $this->roles);
+        $buildsOfficerRole = env('OFFICER_BUILDS_DISCORD_ROLE');
+
+        return in_array($buildsOfficerRole, $roles);
+    }
+
+    function getIsRegearOfficerAttribute(){
+        $roles = explode(",", $this->roles);
+        $regearOfficerRole = env('OFFICER_REGEAR_DISCORD_ROLE');
+
+        return in_array($regearOfficerRole, $roles) ;
+    }
 
 }

@@ -49,10 +49,10 @@ class RegearController extends Controller
                 $notAllowed = 0;
                 $gears = explode(',', $death->equipment);
                 foreach ($gears as $gear) {
-                    $search = Arr::where($approvedGears, function ($value) use ($gear) {
-                        return preg_match("/{$value}/i", $gear);
-                    });
-
+                    $search = BuildInfo::where('equipment', 'like', '%' . substr(explode("@", $gear)[0], 3) . '%')->get();
+                    if (count($search) == 0) {
+                        $gear = '!' . $gear;
+                    }
                     array_push($newGears, $gear);
                 }
                 $death->equipment = implode(",", $newGears);

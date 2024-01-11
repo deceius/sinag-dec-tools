@@ -35,16 +35,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/deathlog', [AlbionAPIController::class, 'searchDeathLog'])->name('ao.death');
     Route::get('/fetchdeathlog', [AlbionAPIController::class, 'fetchDeathLog'])->name('ao.death');
 
+    Route::patch('/regear/{regearInfo}/update', [RegearController::class, 'processRegear'])->name('process.regear');
+});
+
+Route::middleware('auth', 'officer')->group(function () {
     Route::get('/parseDeaths', [AlbionAPIController::class, 'fetchDeathLogByBattleId']);
     Route::get('/parseitems', [AlbionAPIController::class, 'parseItems'])->name('ao.parseitems');
     Route::get('/getitems', [AlbionAPIController::class, 'getItemList'])->name('ao.getitems');
 
 
-    Route::patch('/regear/{regearInfo}/update', [RegearController::class, 'processRegear'])->name('process.regear');
+
     Route::get('/officer/regear/index', [RegearController::class, 'index'])->name('officer.regear.index');
     Route::get('/officer/regear/fetch', [RegearController::class, 'fetchAllRegears'])->name('regear.fetch');
 
     Route::get('/officer/build/index', [BuildController::class, 'index'])->name('officer.build.index');
+
     Route::get('/officer/build/create', [BuildController::class, 'create'])->name('build.create');
     Route::get('/officer/build/{buildInfo}/edit', [BuildController::class, 'edit'])->name('build.edit');
     Route::post('/officer/build/save', [BuildController::class, 'store'])->name('build.save');
