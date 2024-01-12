@@ -16,24 +16,16 @@
                         {{ __('Home') }}
                     </x-ui.nav.link>
                     @if(Auth::user()->is_officer)
-                    <x-ui.nav.dropdown :active="request()->routeIs('officer.*')">
-                        <x-slot:title>{{ __('Officer Stuff') }}</x-slot>
-                        <x-slot:content>
-
-                            @if(Auth::user()->is_regear_officer)
-                            <x-ui.dropdown.item :href="route('officer.regear.index')" :active="request()->routeIs('officer.regear.*')">
-                                {{ __('Regear Management') }}
-                            </x-ui.dropdown.item>
-                            @endif
-
-                            @if(Auth::user()->is_build_officer)
-                            <x-ui.dropdown.item :href="route('officer.build.index')" :active="request()->routeIs('officer.build.*')">
-                                {{ __('ZvZ Builds Setup') }}
-                            </x-ui.dropdown.item>
-                            @endif
-                            </form>
-                        </x-slot>
-                    </x-ui.nav.dropdown>
+                    @if(Auth::user()->is_regear_officer)
+                    <x-ui.nav.link :href="route('officer.regear.index')" :active="request()->routeIs('officer.regear.*')">
+                        {{ __('Regear Management') }}
+                    </x-ui.nav.link>
+                    @endif
+                    @if(Auth::user()->is_build_officer)
+                    <x-ui.nav.link :href="route('officer.build.index')" :active="request()->routeIs('officer.build.*')">
+                        {{ __('Builds Setup') }}
+                    </x-ui.nav.link>
+                    @endif
                     <x-ui.nav.dropdown :active="request()->routeIs('reports.*')">
                         <x-slot:title>{{ __('Reports') }}</x-slot>
                         <x-slot:content>
@@ -101,8 +93,20 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-ui.nav.responsive :href="route('home')" :active="request()->routeIs('home')">
-                {{ __('home') }}
+                {{ __('Home') }}
             </x-ui.nav.responsive>
+            @if(Auth::user()->is_officer)
+                @if(Auth::user()->is_regear_officer)
+                    <x-ui.nav.responsive :href="route('officer.regear.index')" :active="request()->routeIs('officer.regear.*')">
+                        {{ __('Regear Management') }}
+                    </x-ui.nav.responsive>
+                @endif
+                @if(Auth::user()->is_build_officer)
+                    <x-ui.nav.responsive :href="route('officer.build.index')" :active="request()->routeIs('officer.build.*')">
+                        {{ __('Builds Setup') }}
+                    </x-ui.nav.responsive>
+                @endif
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
