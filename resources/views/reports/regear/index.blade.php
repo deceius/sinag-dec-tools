@@ -8,7 +8,7 @@
             <section>
                 <x-ui.card.table>
                     <x-slot:title>
-                        {{ __('Est. Regear Costs (Per Battle ID)') }}
+                        {{ __('Regear Costs') }}
                     </x-slot>
                     <x-slot:icon>
                         <x-icons.master-table/>
@@ -32,6 +32,9 @@
                                                     {{ __('Total Death Fame') }}
                                                 </th>
                                                 <th scope="col" class="text-start py-3 px-5">
+                                                    {{ __('Qty. Lost') }}
+                                                </th>
+                                                <th scope="col" class="text-start py-3 px-5">
                                                     {{ __('Est. Regear Cost') }}
                                                 </th>
                                             </tr>
@@ -43,6 +46,7 @@
                                                     <td class="border-t py-3 px-5"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
                                                     <td class="border-t py-3 px-5" x-text='item.death_count'></td>
                                                     <td class="border-t py-3 px-5" x-text='item.death_fame.toLocaleString("en-US")'></td>
+                                                    <td class="border-t py-3 px-5" x-text='item.unit.toLocaleString("en-US")'></td>
                                                     <td class="border-t py-3 px-5" x-text='parseInt(item.cost).toLocaleString("en-US")'></td>
                                                 </tr>
                                         </template>

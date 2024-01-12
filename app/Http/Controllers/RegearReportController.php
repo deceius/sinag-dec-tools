@@ -29,7 +29,7 @@ class RegearReportController extends Controller
         $result = DeathInfo::select('battle_id',
                 DB::raw('SUM(regear_cost) as cost'),
                 DB::raw('SUM(death_fame) as death_fame'),
-                DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as unit_gears"),
+                DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as unit"),
                 DB::raw('COUNT(1) as death_count'))
         ->groupBy('battle_id')
         ->get();
