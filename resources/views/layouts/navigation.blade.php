@@ -15,6 +15,9 @@
                     <x-ui.nav.link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-ui.nav.link>
+                    <x-ui.nav.link :href="route('market')" :active="request()->routeIs('market')">
+                        {{ __('Price Checker') }}
+                    </x-ui.nav.link>
                     @if(Auth::user()->is_officer)
                     @if(Auth::user()->is_regear_officer)
                     <x-ui.nav.link :href="route('officer.regear.index')" :active="request()->routeIs('officer.regear.*')">

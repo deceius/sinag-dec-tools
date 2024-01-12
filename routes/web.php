@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AlbionAPIController;
 use App\Http\Controllers\BuildController;
+use App\Http\Controllers\MarketController;
 use App\Http\Controllers\RegearController;
 use App\Http\Controllers\RegearReportController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/fetchdeathlog', [AlbionAPIController::class, 'fetchDeathLog'])->name('ao.death');
 
     Route::patch('/regear/{regearInfo}/update', [RegearController::class, 'processRegear'])->name('process.regear');
+
+
+    Route::get('/market', [MarketController::class, 'index'])->name('market');
 });
 
 Route::middleware('auth', 'officer')->group(function () {
