@@ -25,9 +25,15 @@ class RegearReportController extends Controller
                     $formattedItem = explode('@', substr($item, 3))[0];
                     if (!Str::contains($item, '!')) {
                         if (!isset($result[$formattedItem])) {
-                            $result[$formattedItem] = [];
+                            $itemInfo = ItemInfo::where('item_id', $item)->first();
+                            $name = explode(" ", $itemInfo->item_name);
+                            array_shift($name);
+                            $result[$formattedItem] = [
+                                'items' => [],
+                                'name' => implode(" ", $name)
+                            ];
                         }
-                        array_push($result[$formattedItem], $item);
+                        array_push($result[$formattedItem]['items'], $item);
 
                     }
                 }

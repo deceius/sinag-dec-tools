@@ -23,10 +23,13 @@
                                         <thead class="font-medium">
                                             <tr class=" border-gray-700 dark:border-gray-700">
                                                 <th scope="col" class="text-start py-3 px-5">
-                                                    {{ __('Item') }}
+                                                    {{ __('') }}
                                                 </th>
                                                 <th scope="col" class="text-start py-3 px-5">
-                                                    {{ __('Item_ID') }}
+                                                    {{ __('Item ID') }}
+                                                </th>
+                                                <th scope="col" class="text-start py-3 px-5">
+                                                    {{ __('Name') }}
                                                 </th>
                                                 <th scope="col" class="text-start py-3 px-5">
                                                     {{ __('Count') }}
@@ -41,7 +44,8 @@
                                                         <img  class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ 'T8_' + key }?size=48`" alt="">
                                                     </td>
                                                     <td class="border-t py-1 px-5" x-text='key'></td>
-                                                    <td class="border-t py-1 px-5" x-text='item.length'></td>
+                                                    <td class="border-t py-1 px-5" x-text='item.name'></td>
+                                                    <td class="border-t py-1 px-5" x-text='item.items.length'></td>
                                                 </tr>
                                         </template>
                                         </tbody>
