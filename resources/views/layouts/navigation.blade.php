@@ -34,6 +34,14 @@
                             </form>
                         </x-slot>
                     </x-ui.nav.dropdown>
+                    <x-ui.nav.dropdown :active="request()->routeIs('reports.*')">
+                        <x-slot:title>{{ __('Reports') }}</x-slot>
+                        <x-slot:content>
+                            <x-ui.dropdown.item :href="route('reports.regear.index')" :active="request()->routeIs('reports.regear.index')">
+                                {{ __('Regear Summary') }}
+                            </x-ui.dropdown.item>
+                        </x-slot>
+                    </x-ui.nav.dropdown>
                     @endif
                 </div>
             </div>

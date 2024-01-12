@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AlbionAPIController;
 use App\Http\Controllers\BuildController;
 use App\Http\Controllers\RegearController;
+use App\Http\Controllers\RegearReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +45,8 @@ Route::middleware('auth', 'officer')->group(function () {
     Route::get('/getitems', [AlbionAPIController::class, 'getItemList'])->name('ao.getitems');
 
 
+    Route::get('reports/regear', [RegearReportController::class, 'index'])->name('reports.regear.index');
+    Route::get('reports/regear/fetch', [RegearReportController::class, 'fetch'])->name('reports.regear.fetch');
 
     Route::get('/officer/regear/index', [RegearController::class, 'index'])->name('officer.regear.index');
     Route::get('/officer/regear/fetch', [RegearController::class, 'fetchAllRegears'])->name('regear.fetch');
