@@ -10,11 +10,11 @@
             <div class="overflow-x-auto">
                 <table id="table" class="min-w-full">
                         <tbody>
-                            <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
+                            <tr class="border-t-2 border-gray-700 text-start">
                                 <td class="border-t py-3 px-5 font-medium"  width="20%" > Discord Name</td>
                                 <td class="border-t py-3 px-5">{{ $user->global_name }}</td>
                             </tr>
-                            <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
+                            <tr class="border-t-2 border-gray-700 text-start">
                                 <td class="border-t py-3 px-5 font-medium"> Roles</td>
                                 <td class="border-t py-3 px-5">{{ $user->roles }}</td>
                             </tr>
@@ -26,7 +26,7 @@
     </x-ui.card>
 {{--
     <x-ui.card>
-        <x-slot:title><h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <x-slot:title><h2 class="text-lg font-medium text-gray-100">
             {{ __('Bind Albion Online Character') }}
 
         </h2>
@@ -58,7 +58,7 @@
                             x-show="show"
                             x-transition
                             x-init="setTimeout(() => show = false, 2000)"
-                            class="text-sm text-gray-600 dark:text-gray-400"
+                            class="text-sm text-gray-400"
                         >{{ __('Saved.') }}</p>
                     @endif
                 </div>

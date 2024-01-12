@@ -1,4 +1,4 @@
-@props(['active', 'align' => 'left', 'width' => '48', 'contentClasses' => 'py-1 bg-white dark:bg-gray-700'])
+@props(['active', 'align' => 'left', 'width' => '48', 'contentClasses' => 'py-1 bg-gray-700'])
 
 @php
 switch ($align) {
@@ -24,13 +24,13 @@ switch ($width) {
 
 @php
 $classes = ($active ?? false)
-            ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 dark:border-indigo-600 text-sm font-medium leading-5 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
-            : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out';
+            ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-600 text-sm font-medium leading-5 text-gray-100 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
+            : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-400 hover:text-gray-300 hover:border-gray-700 focus:outline-none focus:text-gray-300 focus:border-gray-700 transition duration-150 ease-in-out';
 @endphp
 <div {{ $attributes->merge(['class' => $classes]) }}>
     <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
         <div @click="open = ! open">
-            <button class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-400 bg-transparent dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+            <button class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-400 hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                 <div>{{ $title }}</div>
                 <div class="ml-1">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

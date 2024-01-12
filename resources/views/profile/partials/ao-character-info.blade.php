@@ -14,19 +14,19 @@
                 <div class="overflow-x-auto">
                     <table id="table" class="min-w-full">
                             <tbody>
-                                <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
+                                <tr class="border-t-2 border-gray-700 text-start">
                                     <td width="20%" class="border-t py-3 px-5 font-medium" x-text='"Character Name"'></td>
                                     <td class="border-t py-3 px-5" x-text='data.Name'></td>
                                 </tr>
-                                <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
+                                <tr class="border-t-2 border-gray-700 text-start">
                                     <td class="border-t py-3 px-5 font-medium" x-text='"Guild"'></td>
                                     <td class="border-t py-3 px-5" x-text='data.GuildName ? (data.AllianceName ? "[" + data.AllianceName +"] " : "") + data.GuildName : ""'></td>
                                 </tr>
-                                <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
+                                <tr class="border-t-2 border-gray-700 text-start">
                                     <td class="border-t py-3 px-5 font-medium" x-text='"Kill Fame"'></td>
                                     <td class="border-t py-3 px-5" x-text='data.KillFame.toLocaleString("en-US") + " (KD Ratio: " + data.FameRatio + ")"'></td>
                                 </tr>
-                                <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
+                                <tr class="border-t-2 border-gray-700 text-start">
                                     <td class="border-t py-3 px-5 font-medium" x-text='"PvE Fame"'></td>
                                     <td class="border-t py-3 px-5" x-text='data.LifetimeStatistics.PvE.Total.toLocaleString("en-US")'></td>
                                 </tr>
@@ -40,7 +40,7 @@
     </x-ui.card>
 {{--
     <x-ui.card>
-        <x-slot:title><h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <x-slot:title><h2 class="text-lg font-medium text-gray-100">
             {{ __('Bind Albion Online Character') }}
 
         </h2>
@@ -72,7 +72,7 @@
                             x-show="show"
                             x-transition
                             x-init="setTimeout(() => show = false, 2000)"
-                            class="text-sm text-gray-600 dark:text-gray-400"
+                            class="text-sm text-gray-400"
                         >{{ __('Saved.') }}</p>
                     @endif
                 </div>

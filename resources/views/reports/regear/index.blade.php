@@ -21,7 +21,7 @@
                             <div class="overflow-x-auto">
                                 <table id="table" class="min-w-full table-auto">
                                         <thead class="font-medium">
-                                            <tr class=" border-gray-700 dark:border-gray-700">
+                                            <tr class="border-gray-700">
                                                 <th scope="col" class="text-start py-3 px-5">
                                                     {{ __('') }}
                                                 </th>
@@ -39,7 +39,7 @@
                                         <tbody>
 
                                         <template x-for="(item, key) in data">
-                                                <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start" :class="{'opacity-50' : item.status == 0}">
+                                                <tr class="border-t-2 border-gray-700 text-start" :class="{'opacity-50' : item.status == 0}">
                                                     <td class="py-1 px-5">
                                                         <img  class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ 'T8_' + key }?size=48`" alt="">
                                                     </td>

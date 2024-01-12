@@ -20,16 +20,16 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased">
-<div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+<div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-center bg-dots-lighter bg-gray-900 selection:bg-red-500 selection:text-white">
     @if (Route::has('login'))
         <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
             @auth
-                <a href="{{ route('home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('Login') }}</a>
+                <a href="{{ route('home') }}" class="font-semibold text-gray-400 hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('Login') }}</a>
             @else
-                <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('Log in via Discord') }}</a>
+                <a href="{{ route('login') }}" class="font-semibold text-gray-400 hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('Log in via Discord') }}</a>
 
                 @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('Register') }}</a>
+                    <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-400 hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('Register') }}</a>
                 @endif
             @endauth
         </div>
@@ -44,7 +44,7 @@
 
         @if (session()->has('error'))
             <div class="w-full my-3">
-                <div class="dark:bg-red-800/20 rounded-lg p-4 mb-4 text-sm mt-16" style="color: rgba(247, 0, 0, 0.7); padding: 15px 15px;" role="alert">
+                <div class="bg-red-800/20 rounded-lg p-4 mb-4 text-sm mt-16" style="color: rgba(247, 0, 0, 0.7); padding: 15px 15px;" role="alert">
                     <svg class="w-5 h-5 inline-flex mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
 
                     <span class="font-medium">
@@ -76,7 +76,7 @@
 
         <div class="mt-16">
 
-            <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400">
+            <div class="ml-4 text-center text-sm text-gray-400">
                 SINAG Tools v1.6 <br>
             </div>
         </div>

@@ -12,7 +12,7 @@
             <table class="min-w-full">
                 <tbody>
                     <template x-for="build in builds">
-                        <tr class=" flex border-t border-gray-700 dark:border-gray-700" x-show="build.role_id == index">
+                        <tr class=" flex border-t border-gray-700 " x-show="build.role_id == index">
                             <td class="py-2 px-5">
                                 <div class=" align-top">
                                     <div class="grid xl:grid-cols-9 grid-cols-5">

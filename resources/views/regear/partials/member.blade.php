@@ -14,7 +14,7 @@
                 <div class="overflow-x-auto" >
                     <table id="table" class="min-w-full table-auto">
                             <thead class="font-medium">
-                                <tr class=" border-gray-700 dark:border-gray-700">
+                                <tr class="border-gray-700">
                                     <th scope="col" class="text-start py-3 px-5">
                                         {{ __('Battle ID') }}
                                     </th>
@@ -32,10 +32,10 @@
                             <tbody>
 
                             <template x-for="item in data">
-                                    <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start" :class="{'opacity-50' : item.status < 0}">
+                                    <tr class="border-t-2 border-gray-700 text-start" :class="{'opacity-50' : item.status < 0}">
 
                                         <td class="border-t py-3 px-5"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
-                                        <td class="dark:border-gray-700 py-1 px-5">
+                                        <td class="border-gray-700 py-1 px-5">
                                             <template x-for="equips in item.equipment.split(',')">
                                                 <img :class="{'opacity-25 grayscale': equips.includes('!') }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${equips.includes('!no_') ? 'QUESTITEM_TOKEN_ADC_FRAME' : equips.includes('!') ? equips.substring(1) : equips }?size=48`" alt="">
                                             </template>
@@ -72,7 +72,7 @@
     </x-ui.card>
 {{--
     <x-ui.card>
-        <x-slot:title><h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <x-slot:title><h2 class="text-lg font-medium text-gray-100">
             {{ __('Bind Albion Online Character') }}
 
         </h2>
@@ -104,7 +104,7 @@
                             x-show="show"
                             x-transition
                             x-init="setTimeout(() => show = false, 2000)"
-                            class="text-sm text-gray-600 dark:text-gray-400"
+                            class="text-sm text-gray-400"
                         >{{ __('Saved.') }}</p>
                     @endif
                 </div>

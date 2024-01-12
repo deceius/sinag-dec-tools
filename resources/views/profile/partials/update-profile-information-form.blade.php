@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <h2 class="text-lg font-medium text-gray-100">
             {{ __('Profile Information') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="mt-1 text-sm text-gray-400">
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
@@ -38,7 +38,7 @@
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->verified)
                 <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
+                    <p class="text-sm mt-2 text-gray-800 text-gray-200">
                         {{ __('Your email address is unverified.') }}
                     </p>
                 </div>
