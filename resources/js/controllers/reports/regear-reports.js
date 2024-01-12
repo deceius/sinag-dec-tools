@@ -9,13 +9,14 @@ export default () => ({
         'battleIds': '',
     },
     data: [],
+    losses: [],
     init() {
         this.isLoading = true;
         let url = '/reports/regear/fetch';
         axios.get(url).then(
             response => {
                 this.data = response.data.gears;
-                console.log(this.data);
+                this.losses = response.data.losses;
                 this.isLoading = false;
             }
         ).catch(error => {

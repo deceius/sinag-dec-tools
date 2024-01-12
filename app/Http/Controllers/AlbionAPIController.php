@@ -201,12 +201,12 @@ class AlbionAPIController extends Controller
 
     function parseEquipment($equipment) {
         return collect([
-            $equipment->MainHand ? $equipment->MainHand->Type : "!no_weapon",
-            $equipment->OffHand ? $equipment->OffHand->Type : "!no_offhand",
-            $equipment->Head ? $equipment->Head->Type : "!no_offhand",
-            $equipment->Armor ? $equipment->Armor->Type : "!no_armor",
-            $equipment->Shoes ? $equipment->Shoes->Type : "!no_shoes",
-            $equipment->Cape ? $equipment->Cape->Type : "!no_cape",
+            $equipment->MainHand ? $equipment->MainHand->Type : "!no_equip",
+            $equipment->OffHand ? $equipment->OffHand->Type : "!no_equip",
+            $equipment->Head ? $equipment->Head->Type : "!no_equip",
+            $equipment->Armor ? $equipment->Armor->Type : "!no_equip",
+            $equipment->Shoes ? $equipment->Shoes->Type : "!no_equip",
+            $equipment->Cape ? $equipment->Cape->Type : "!no_equip",
         ]);
 
     }
