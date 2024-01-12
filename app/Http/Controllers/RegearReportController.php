@@ -17,7 +17,7 @@ class RegearReportController extends Controller
 
     public function fetch(Request $request) {
         if ($request->ajax()){
-            $deathlogs = DeathInfo::all();//where('status', 2)->get();
+            $deathlogs = DeathInfo::where('status', 2)->get();
             $result = [];
             foreach ($deathlogs as $log) {
                 $items = explode(",", $log->equipment);

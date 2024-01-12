@@ -35,7 +35,7 @@
                             <tbody>
 
                             <template x-for="item in data">
-                                    <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start">
+                                    <tr class="border-t-2 border-gray-700 dark:border-gray-700 text-start" :class="{'opacity-50' : item.status < 0}">
 
                                         <td class="border-t py-3 px-5"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
                                         <td class="dark:border-gray-700 py-1 px-5">
@@ -57,6 +57,9 @@
                                                      </x-ui.icon-pill>
                                                     <x-ui.icon-pill  x-show="item.status == 1">
                                                         <x-icons.button.check/>
+                                                     </x-ui.icon-pill>
+                                                     <x-ui.icon-pill  x-show="item.status == -1">
+                                                        <x-icons.button.close/>
                                                      </x-ui.icon-pill>
                                                 </form>
                                             </td>

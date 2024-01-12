@@ -27,10 +27,15 @@ class RegearController extends Controller
         // 2 - pending, 1 - regeared, 0 - not filed
         if (Auth::user()->is_regear_officer && $regearInfo->status == 2) {
             $regearInfo->regeared_by = Auth::user()->id;
-            $regearInfo->status = 1;
             $member = User::where('ao_character_id', $regearInfo->character_id)->first();
-            DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been fulfilled by <@" . Auth()->user()->id . ">. Please check out the designated chest.");
+            if ($request->input("reject")){
+                $regearInfo->status = -1;
 
+                DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been rejected. If you think this is a mistake, coordinate with your regearing officer.");
+            } else {
+                $regearInfo->status = 1;
+                DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been fulfilled by <@" . Auth()->user()->id . ">. Please check out the designated chest.");
+            }
         }
         else {
             $regearInfo->status = 2;
