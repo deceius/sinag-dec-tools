@@ -25,9 +25,6 @@
                                         {{ __('Death (UTC)') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Regeared By') }}
-                                    </th>
-                                    <th scope="col" class="text-start py-3 px-5">
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -44,7 +41,7 @@
                                             </template>
                                         </td>
                                         <td class="py-3 px-5" x-text='item.timestamp'></td>
-                                        <td class="py-3 px-5" x-text='item.regearing_officer ? item.regearing_officer.username : ""'></td>
+                                        {{-- <td class="py-3 px-5" x-text='item.regearing_officer ? item.regearing_officer.username : ""'></td> --}}
                                             <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
                                                 <form method="post" :action="item.url + '/update?oc=' + item.is_oc" >
                                                     @csrf
