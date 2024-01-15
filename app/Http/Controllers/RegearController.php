@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Spatie\DiscordAlerts\Facades\DiscordAlert;
@@ -27,14 +28,17 @@ class RegearController extends Controller
         // 2 - pending, 1 - regeared, 0 - not filed
         if (Auth::user()->is_regear_officer && $regearInfo->status == 2) {
             $regearInfo->regeared_by = Auth::user()->id;
+            $regearInfo->remarks = $request->input('remarks');
             $member = User::where('ao_character_id', $regearInfo->character_id)->first();
+
             if ($request->input("reject")){
                 $regearInfo->status = -1;
 
-                DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been rejected. If you think this is a mistake, coordinate with your regearing officer.");
+                DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been rejected. Reason: " . $regearInfo->remarks);
             } else {
                 $regearInfo->status = 1;
-                DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been fulfilled by <@" . Auth()->user()->id . ">. Please check out the designated chest.");
+                $regearInfo->remarks = $request->input('remarks');
+                DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks);
             }
         }
         else {
@@ -46,8 +50,22 @@ class RegearController extends Controller
     }
 
     public function fetchAllRegears(Request $request) {
-        $deaths = [];
-            $deaths = DeathInfo::orderBy('status', 'desc')->orderBy('timestamp', 'desc')->get();
+            $deaths = [];
+            $deaths = DeathInfo::from("death_infos as di")->select( DB::raw( 'di.*' ) )->orderBy('status', 'desc')->orderBy('timestamp', 'desc');
+
+            if ($request->input('status')) {
+                $deaths->where('status', $request->input('status'));
+            }
+            $deaths->addSelect(DB::raw('COALESCE(bi.role_id, -1) as role_id'));
+            $deaths->leftJoin('build_infos AS bi', function ($join) {
+                $join->on(DB::raw('bi.equipment'), "LIKE", DB::raw("CONCAT('%', SUBSTRING(SUBSTRING_INDEX(SUBSTRING_INDEX(di.equipment, ',', 1), '@', 1), 4), '%')"));
+            });
+            if ($request->input('role_id') != null) {
+                $deaths->where('role_id', $request->input('role_id'));
+            }
+
+
+            $deaths = $deaths->paginate(10);
             $approvedGears = []; //['HEAD_LEATHER_SET3', '2H_AXE', 'HEAD_LEATHER_UNDEAD', '2H_DUALAXE_KEEPER', '2H_HAMMER_AVALON', 'HEAD_PLATE_SET2', 'CAPEITEM_FW_MARTLOCK', 'ARMOR_PLATE_KEEPER', 'ARMOR_LEATHER_HELL'];
             foreach ($deaths as $death) {
                 $newGears = [];

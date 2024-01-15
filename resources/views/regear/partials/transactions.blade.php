@@ -6,11 +6,24 @@
         <x-slot:icon>
             <x-icons.master-table/>
         </x-slot>
+        <x-slot:buttons>
+            <x-ui.form.select x-model="filter.status">
+                <template x-for="(status, name) in status">
+                    <option x-bind:value="status" x-text="name"/>
+                </template>
+            </x-ui.form.select>
+
+            <x-ui.form.select x-model="filter.role_id">
+                <template x-for="(role, index) in ['All Roles'].concat(roles)">
+                    <option x-bind:value="index" x-text="role"/>
+                </template>
+            </x-ui.form.select>
+        </x-slot>
         <x-slot:content>
-            <div class="overflow-x-auto" x-show="data.length == 0">
+            <div class="overflow-x-auto" x-show="!result.data">
                 &nbsp;
             </div>
-            <template x-if="data.length > 0">
+            <template x-if="result.data">
                 <div class="overflow-x-auto" >
                     <table id="table" class="min-w-full table-auto">
                             <thead class="font-medium">
@@ -22,15 +35,16 @@
                                         {{ __('Name') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
+                                        {{ __('Role ID') }}
+                                    </th>
+                                    <th scope="col" class="text-start py-3 px-5">
                                         {{ __('Equipment Lost') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
                                         {{ __('Death (UTC)') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
-                                        <div class="flex gap-2">
-                                            <abbr title="Estimated via parsing max value buy orders, and did an average through all markets that have the item available.">{{ __('Est. Regear Cost') }} </abbr>
-                                        </div>
+                                        {{ __('Chest # / Reason') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
                                         {{ __('Processed By') }}
@@ -42,39 +56,32 @@
                             </thead>
                             <tbody>
 
-                            <template x-for="item in data">
+                            <template x-for="item in result.data">
                                     <tr class="border-t-2 border-gray-700 text-start" :class="{'opacity-50' : item.status <= 0}">
 
                                         <td class="border-t py-3 px-5"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
                                         <td class="border-t py-3 px-5" x-text='item.name'></td>
+                                        <td class="border-t py-3 px-5" x-text='item.role_id == -1 ? "N/A" : roles[item.role_id]'></td>
                                         <td class="border-gray-700 py-1 px-5">
                                             <template x-for="equips in item.equipment.split(',')">
-                                                <img :class="{'opacity-25 grayscale': equips.includes('!') }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${equips.includes('!no_') ? 'QUESTITEM_TOKEN_ADC_FRAME' : equips.includes('!') ? equips.substring(1) : equips }?size=48`" alt="">
+                                                <img :class="{'opacity-25 grayscale': equips.includes('!') }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${equips.includes('!no_') ? 'QUESTITEM_TOKEN_ADC_FRAME' : equips.includes('!') ? equips.substring(1) : equips }?size=32`" alt="">
                                             </template>
                                         </td>
                                         <td class="py-3 px-5" x-text='item.timestamp'></td>
-                                       <td class="py-3 px-5" x-text='parseInt(item.regear_cost.toFixed(0)).toLocaleString("en-US")'></td>
+                                       <td class="py-3 px-5" x-text='item.remarks'></td>
                                        <td class="py-3 px-5" x-text='item.regearing_officer ? item.regearing_officer.username : ""'></td>
 
-                                       <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
-                                                <div class="space-x-2 flex ">
-                                                    <form method="post" :action="item.url + '/update'" >
-                                                        @csrf
-                                                        @method('patch')
-                                                        <x-ui.button.button-icon type="submit" style="success" x-bind:disabled="item.status == 0 || isLoading" x-show="item.status == 2">
-                                                           <x-icons.button.approve/>
-                                                        </x-ui.button.button-icon>
-                                                        <x-ui.icon-pill  x-show="item.status == 1">
-                                                           <x-icons.button.check/>
-                                                        </x-ui.icon-pill>
-                                                    </form>
-                                                    <form method="post" :action="item.url + '/update?reject=1'"  x-show="item.status == 2">
-                                                        @csrf
-                                                        @method('patch')
-                                                        <x-ui.button.button-icon type="submit" style="danger"  x-bind:disabled="item.status == 0 || isLoading" x-show="item.status == 2">
-                                                           <x-icons.button.close/>
-                                                        </x-ui.button.button-icon>
-                                                    </form>
+                                       <td class=" whitespace-nowrap border-t py-3 px-5">
+                                                <div class="space-x-2 flex justify-end">
+                                                    <x-ui.button.button-icon type="submit" x-on:click="confirmRegear(item.url)" style="success" x-bind:disabled="item.status == 0 || isLoading" x-show="item.status == 2">
+                                                        <x-icons.button.approve/>
+                                                     </x-ui.button.button-icon>
+                                                     <x-ui.icon-pill  x-show="item.status == 1">
+                                                        <x-icons.button.check/>
+                                                     </x-ui.icon-pill>
+                                                     <x-ui.button.button-icon type="submit" style="danger" x-on:click="confirmRegear(item.url, false)" x-bind:disabled="item.status == 0 || isLoading" x-show="item.status == 2">
+                                                        <x-icons.button.close/>
+                                                     </x-ui.button.button-icon>
                                                     <x-ui.icon-pill  x-show="item.status == -1">
                                                         <x-icons.button.close/>
                                                      </x-ui.icon-pill>
@@ -87,10 +94,40 @@
                         </table>
                 </div>
             </template>
-
+            <div class="p-6 flex justify-end" x-show="result.last_page > 1">
+                <x-ui.pagination links="result.links"></x-ui.pagination>
+            </div>
 
         </x-slot>
     </x-ui.card>
 
+    <x-ui.modal name="confirm-regear" focusable>
+        <div class="p-6">
+
+            <h2 class="text-lg font-medium text-gray-100">
+                <span x-text="ui.confirmHeader"/>
+            </h2>
+
+            <div class="mt-6">
+                <x-ui.form.input.text
+                    class="mt-1 block w-full"
+                    x-model="ui.remarks"
+                    x-bind:placeholder="ui.confirmPlaceholder"
+                />
+
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <x-ui.button style="secondary" text="{{ __('Cancel') }}" x-on:click="$dispatch('close')">
+                </x-ui.button>
+                <form method="post" :action="ui.url + '/update?remarks=' + ui.remarks + (ui.isApprove ? '' : '&reject=1')" >
+                    @csrf
+                    @method('patch')
+                    <x-ui.button type="submit" style="success" class="ml-3" text="{{ __('Proceed') }}">
+                    </x-ui.button>
+                </form>
+            </div>
+        </div>
+    </x-ui.modal>
 
 </section>

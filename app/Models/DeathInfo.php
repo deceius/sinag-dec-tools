@@ -25,7 +25,8 @@ class DeathInfo extends Model
         'allowed_gears',
         'is_oc',
         'timestamp',
-        'regear_cost'
+        'regear_cost',
+        'role_id'
     ];
 
 

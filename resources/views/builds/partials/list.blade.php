@@ -13,7 +13,6 @@
                     <option x-bind:value="index" x-text="role"/>
                 </template>
             </x-ui.form.select>
-
         </x-slot>
         <x-slot:content>
             <table class="min-w-full" x-show="builds.length != 0">
