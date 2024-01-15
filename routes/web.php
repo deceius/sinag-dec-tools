@@ -8,6 +8,7 @@ use App\Http\Controllers\MarketController;
 use App\Http\Controllers\RegearController;
 use App\Http\Controllers\RegearReportController;
 use Illuminate\Support\Facades\Route;
+use Spatie\DiscordAlerts\Facades\DiscordAlert;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +20,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/get-guild-data', [HomeController::class, 'getGuildData'])->name('welcome.guild-data');
