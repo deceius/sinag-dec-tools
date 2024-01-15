@@ -21,6 +21,7 @@ class MarketController extends Controller
             $itemSearch = $request->input('itemSearch');
             $city = $request->input('locationSearch');
             $tier = $request->input('tierSearch');
+            $enchantment = $request->input('enchantmentSearch');
             $collection = [];
             $cities = [
                 'All Cities' => '',
@@ -33,26 +34,40 @@ class MarketController extends Controller
                 'Caerleon' => 'Caerleon',
             ];
             $tiers = ["All Tiers", 1, 2, 3, 4, 5, 6, 7, 8];
+            $enchantments = ["All Enchantments", 1, 2, 3, 4];
             $tier = ($tier == "All Tiers") ? "" : $tier;
-            $value = $this->searchItem($itemSearch, ($tier == null) ? "" : $tier);
-
+            $enchantment = ($enchantment == "All Enchantments") ? "" : $enchantment;
+            $value = $this->searchItem($itemSearch, ($tier == null) ? "" : $tier, ($enchantment == null) ? "" :$enchantment);
         if ($request->ajax()) {
-            $response = Http::get('https://east.albion-online-data.com/api/v2/stats/prices/'.$value.'?locations='.$city);
+            $url = 'https://east.albion-online-data.com/api/v2/stats/prices/'.$value.'?locations='.$city;
+            $response = Http::get($url);
             $object = (array)json_decode($response->body());
             $collection = MarketPrice::hydrate($object);
 
             return ['market_data' => $collection];
         }
 
-        return view('market.index', ['data' => $collection, 'searchKeyword' => ($itemSearch) ? $itemSearch : '', 'city' => ($city) ? $city : '', 'tier' => ($tier) ? $tier : '', 'cities' => $cities, 'tiers' => $tiers]);
+        return view('market.index', [
+            'data' => $collection,
+            'searchKeyword' => ($itemSearch) ? $itemSearch : '',
+            'enchantment' => ($enchantment) ? $enchantment : '',
+            'city' => ($city) ? $city : '',
+            'tier' => ($tier) ? $tier : '',
+            'enchantment' => ($enchantment) ? $enchantment : '',
+            'cities' => $cities,
+            'enchantments' => $enchantments,
+            'tiers' => $tiers]);
     }
 
 
-    function searchItem($searchWord, $tier = "")
+    function searchItem($searchWord, $tier = "", $enchant = "")
     {
         $itemDump = ItemInfo::where('item_name', 'like', '%'.$searchWord.'%');
         if (!empty($tier)){
             $itemDump->where('item_id', 'like', 'T'.$tier.'%');
+        }
+        if (!empty($enchant)){
+            $itemDump->where('item_id', 'like', '%@'.$enchant);
         }
         return implode(",", collect($itemDump->get())->pluck('item_id')->all());
     }

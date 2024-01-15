@@ -22,6 +22,11 @@
                                 <option value="{{ $value }}" {{$value == $tier ? 'selected' : '' }}>{{ $value }}</option>
                             @endforeach
                         </x-ui.form.select>
+                        <x-ui.form.select x-model="filter.enchantment" class="mt-4" >
+                            @foreach ($enchantments as $value)
+                                <option value="{{ $value }}" {{$value == $enchantment ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
+                        </x-ui.form.select>
                         <x-ui.button x-on:click="filter()" class="mt-4 text-center" text="Search"/>
                     </div>
                 </form>
