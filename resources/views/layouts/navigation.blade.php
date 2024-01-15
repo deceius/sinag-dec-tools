@@ -15,20 +15,28 @@
                     <x-ui.nav.link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-ui.nav.link>
+                    <x-ui.nav.link :href="route('builds')" :active="request()->routeIs('builds')">
+                        {{ __('ZvZ Builds') }}
+                    </x-ui.nav.link>
                     <x-ui.nav.link :href="route('market')" :active="request()->routeIs('market')">
                         {{ __('Price Checker') }}
                     </x-ui.nav.link>
                     @if(Auth::user()->is_officer)
-                    @if(Auth::user()->is_regear_officer)
-                    <x-ui.nav.link :href="route('officer.regear.index')" :active="request()->routeIs('officer.regear.*')">
-                        {{ __('Regear Management') }}
-                    </x-ui.nav.link>
-                    @endif
-                    @if(Auth::user()->is_build_officer)
-                    <x-ui.nav.link :href="route('officer.build.index')" :active="request()->routeIs('officer.build.*')">
-                        {{ __('Builds Setup') }}
-                    </x-ui.nav.link>
-                    @endif
+                    <x-ui.nav.dropdown :active="request()->routeIs('officer.*')">
+                        <x-slot:title>{{ __('Officer') }}</x-slot>
+                        <x-slot:content>
+                            @if(Auth::user()->is_regear_officer)
+                            <x-ui.dropdown.item :href="route('officer.regear.index')" :active="request()->routeIs('officer.regear.*')">
+                                {{ __('Regear Management') }}
+                            </x-ui.dropdown.item>
+                            @endif
+                            @if(Auth::user()->is_build_officer)
+                            <x-ui.dropdown.item :href="route('officer.build.index')" :active="request()->routeIs('officer.build.*')">
+                                {{ __('Builds Setup') }}
+                            </x-ui.dropdown.item>
+                            @endif
+                        </x-slot>
+                    </x-ui.nav.dropdown>
                     <x-ui.nav.dropdown :active="request()->routeIs('reports.*')">
                         <x-slot:title>{{ __('Reports') }}</x-slot>
                         <x-slot:content>

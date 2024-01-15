@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AlbionAPIController;
 use App\Http\Controllers\BuildController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\RegearController;
 use App\Http\Controllers\RegearReportController;
@@ -23,7 +24,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
+Route::get('/get-guild-data', [HomeController::class, 'getGuildData'])->name('welcome.guild-data');
+
 Route::get('/get-builds', [BuildController::class, 'index'])->name('builds.fetch');
+
 
 Route::get('/home', function () {
     return view('home');
@@ -41,6 +46,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/market', [MarketController::class, 'index'])->name('market');
+    Route::get('/get-builds', [BuildController::class, 'index'])->name('builds.fetch');
+    Route::get('/builds', function () { return view('builds.member-index'); })->name('builds');
 });
 
 Route::middleware('auth', 'officer')->group(function () {

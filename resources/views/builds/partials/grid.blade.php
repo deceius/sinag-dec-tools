@@ -37,6 +37,8 @@
                                     </div>
                                 </div>
                             </td>
+
+                            <td class="py-2 px-5" x-text="build.notes"/>
                         </tr>
                     </template>
                 </tbody>

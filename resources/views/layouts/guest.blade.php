@@ -14,17 +14,35 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-900">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-900">
+            @if (session()->has('error'))
+                        <div class="p-4 bg-red-600 font-semibold text-sm text-gray-200 leading-tight">
+                            {!! session()->get('error') !!}
+                        </div>
+                    @endif
+            @include('layouts.guest-navigation')
+
+            <!-- Page Heading -->
+            @if (isset($header))
+                <header class="bg-gray-800 shadow">
+
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+
+                </header>
+            @endif
+
+            <div class="p-4 bg-green-600 font-semibold text-sm text-gray-200 leading-tight">
+                Do you want to be a part of SINAG? Click <a class="underline text-gray-100" href="https://discord.gg/b79UkkQcNa" target="_blank">here</a> to join us at our Discord server.
+
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            <!-- Page Content -->
+            <main>
                 {{ $slot }}
-            </div>
+            </main>
         </div>
     </body>
 </html>
