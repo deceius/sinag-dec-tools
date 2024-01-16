@@ -40,7 +40,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            <tr class="border-t-2 border-gray-700 text-start">
+                                                <td class="border-t py-3 px-5" x-text='"All CTAs"'/>
+                                                <td class="border-t py-3 px-5" x-text='losses.reduce((accumulator, currentValue) => accumulator + currentValue.death_count, 0).toLocaleString("en-US")'></td>
+                                                <td class="border-t py-3 px-5" x-text='losses.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue.death_fame), 0).toLocaleString("en-US")'></td>
+                                                <td class="border-t py-3 px-5" x-text='losses.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue.unit), 0).toLocaleString("en-US")'></td>
+                                                <td class="border-t py-3 px-5" x-text='losses.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue.cost), 0).toLocaleString("en-US")'></td>
+                                            </tr>
                                         <template x-for="item in losses">
                                                 <tr class="border-t-2 border-gray-700 text-start">
                                                     <td class="border-t py-3 px-5"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
