@@ -53,9 +53,9 @@ export default () => ({
         this.$dispatch('open-modal', 'confirm-regear');
     },
     processFilters(){
-        let filters = (this.filter.status ? "status=" + this.filter.status : "");
+        let filters = (this.filter.status ? "status=" + this.filter.status + "&" : "");
         let roleId = parseInt(this.filter.role_id) - 1;
-        filters = filters +  (roleId >= 0 ? "&role_id=" + (roleId) : "");
+        filters = filters +  (roleId >= 0 ? "role_id=" + (roleId) + "&" : "");
         console.log(filters)
         return filters;
     },
@@ -89,7 +89,7 @@ export default () => ({
     },
     loadPage(url){
         if (url) {
-            this.loadRegear(url + this.processFilters());
+            this.loadRegear(url + "&" + this.processFilters());
         }
     },
 
