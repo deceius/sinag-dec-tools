@@ -58,8 +58,8 @@ class RegearController extends Controller
                 $join->on(DB::raw('bi.equipment'), "LIKE", DB::raw("CONCAT('%', SUBSTRING(SUBSTRING_INDEX(SUBSTRING_INDEX(di.equipment, ',', 1), '@', 1), 4), '%')"));
             });
 
-            $unfiltered = DeathInfo::select(DB::raw("CONCAT(battle_id, ' > ', DATE_FORMAT(timestamp, '%Y-%m-%d')) as battle_time"))->groupBy("battle_time")->get();
 
+            $unfiltered = DeathInfo::select(DB::raw("CONCAT(battle_id, ' > ', DATE_FORMAT(timestamp, '%Y-%m-%d')) as battle_time"))->groupBy("battle_time")->orderBy('timestamp', 'desc')->limit('20')->get();
             if ($request->input('status')) {
                 $deaths->where('status', $request->input('status'));
             }
