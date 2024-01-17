@@ -11,7 +11,7 @@
                     <div class="flex justify-between h-5 items-center">
                         <div class="flex space-x-2 items-center leading-tight font-semibold">
                                 <x-icons.clipboard/>
-                                <span>Fetch Battles</span>
+                                <span>Open Regears</span>
                         </div>
                         <div class="space-x-1 flex items-center" >
                             <span x-show="isLoading" class="animate-spin mr-2"><x-icons.button.refresh /></span>

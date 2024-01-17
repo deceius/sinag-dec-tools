@@ -9,14 +9,14 @@ export default () => ({
         "MDPS",
     ],
     status: {
-        "All": 0,
+        "All Status": 0,
         "Pending": "2",
         "Regeared" : "1",
         "Rejected": "-1",
     },
     isLoading: false,
     filter: {
-        'battleIds': '',
+        'battle_id': '',
         'status': '',
         'role_id' : ''
     },
@@ -29,6 +29,7 @@ export default () => ({
         'url' : ''
     },
     result: [],
+    ctaList: [],
     parseBattles() {
         this.isLoading = true;
         let url = "/parseDeaths?battleIds=" + this.filter.battleIds;
@@ -43,6 +44,7 @@ export default () => ({
             }
         );
     },
+
     confirmRegear(url, approve = true) {
         this.ui.url = url;
         this.ui.remarks = '';
@@ -55,8 +57,10 @@ export default () => ({
     processFilters(){
         let filters = (this.filter.status ? "status=" + this.filter.status + "&" : "");
         let roleId = parseInt(this.filter.role_id) - 1;
-        filters = filters +  (roleId >= 0 ? "role_id=" + (roleId)  : "");
-        console.log(filters)
+        let battleIdFilterArray = this.filter.battle_id.split(" > ");
+        let battleId = battleIdFilterArray.length > 1 ? battleIdFilterArray[0] : "";
+        filters = filters +  (roleId >= 0 ? "role_id=" + (roleId) + "&"  : "");
+        filters = filters +  (battleId ? "battle_id=" + (battleId)  : "");
         return filters;
     },
     init() {
@@ -71,6 +75,12 @@ export default () => ({
             let url = '/officer/regear/fetch?' + this.processFilters();
             this.loadRegear(url);
         });
+
+        this.$watch('filter.battle_id', () => {
+            this.result = [];
+            let url = '/officer/regear/fetch?' + this.processFilters();
+            this.loadRegear(url);
+        });
         let url = '/officer/regear/fetch?' + this.processFilters();
         this.loadRegear(url);
     },
@@ -79,7 +89,8 @@ export default () => ({
         axios.get(url).then(
             response => {
                 this.result = response.data.deaths;
-                console.log(this.result.data);
+                this.ctaList =  Object.groupBy(response.data.unfiltered, ({ battle_time }) => battle_time);
+                console.log(this.ctaList);
                 this.isLoading = false;
             }
         ).catch(error => {

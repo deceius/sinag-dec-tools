@@ -7,6 +7,12 @@
             <x-icons.master-table/>
         </x-slot>
         <x-slot:buttons>
+            <x-ui.form.select x-model="filter.battle_id">
+                <template x-for="cta in ['All Battles'].concat(Object.keys(ctaList))">
+                    <option x-bind:value="cta" x-text="cta"/>
+                </template>
+            </x-ui.form.select>
+
             <x-ui.form.select x-model="filter.status">
                 <template x-for="(status, name) in status">
                     <option x-bind:value="status" x-text="name"/>

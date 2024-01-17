@@ -53,17 +53,23 @@ class RegearController extends Controller
             $deaths = [];
             $deaths = DeathInfo::from("death_infos as di")->select( DB::raw( 'di.*' ) )->orderBy('status', 'desc')->orderBy('timestamp', 'desc');
 
-            if ($request->input('status')) {
-                $deaths->where('status', $request->input('status'));
-            }
             $deaths->addSelect(DB::raw('COALESCE(bi.role_id, -1) as role_id'));
             $deaths->leftJoin('build_infos AS bi', function ($join) {
                 $join->on(DB::raw('bi.equipment'), "LIKE", DB::raw("CONCAT('%', SUBSTRING(SUBSTRING_INDEX(SUBSTRING_INDEX(di.equipment, ',', 1), '@', 1), 4), '%')"));
             });
+
+            $unfiltered = DeathInfo::select(DB::raw("CONCAT(battle_id, ' > ', DATE_FORMAT(timestamp, '%Y-%m-%d')) as battle_time"))->groupBy("battle_time")->get();
+
+            if ($request->input('status')) {
+                $deaths->where('status', $request->input('status'));
+            }
             if ($request->input('role_id') != null) {
                 $deaths->where('role_id', $request->input('role_id'));
             }
 
+            if ($request->input('battle_id') != null) {
+                $deaths->where('battle_id', $request->input('battle_id'));
+            }
 
             $deaths = $deaths->paginate(10);
             $approvedGears = []; //['HEAD_LEATHER_SET3', '2H_AXE', 'HEAD_LEATHER_UNDEAD', '2H_DUALAXE_KEEPER', '2H_HAMMER_AVALON', 'HEAD_PLATE_SET2', 'CAPEITEM_FW_MARTLOCK', 'ARMOR_PLATE_KEEPER', 'ARMOR_LEATHER_HELL'];
@@ -83,7 +89,7 @@ class RegearController extends Controller
                 $death->regearing_officer = $death->regearingOfficer;
 
             }
-        return [ 'deaths' => $deaths ];
+        return [ 'deaths' => $deaths, 'unfiltered' => $unfiltered ];
     }
 
     public function store(Request $request)
