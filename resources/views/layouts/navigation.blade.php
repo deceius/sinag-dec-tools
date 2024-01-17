@@ -83,6 +83,7 @@
                                 {{ __('Log Out') }}
                             </x-ui.dropdown.item>
                         </form>
+                        <x-ui.dropdown.version/>
 
                     </x-slot>
                 </x-ui.dropdown.link>
