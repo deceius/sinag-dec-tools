@@ -18,7 +18,7 @@
         <div class="min-h-screen bg-gray-900">
             @if (!Auth::user()->ao_character_id)
                         <div class="p-4 bg-red-600 font-semibold text-sm text-gray-200 leading-tight">
-                            It appears that you haven't registered you AO character. Click <a class="underline text-gray-100" href="/profile">here</a> to register.
+                            It appears that you haven't registered you AO character. Click <a class="underline text-gray-100" href="/home">here</a> to register.
                         </div>
                     @endif
             @include('layouts.navigation')

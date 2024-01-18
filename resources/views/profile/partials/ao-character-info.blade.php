@@ -19,15 +19,15 @@
                                     <td class="border-t py-3 px-5" x-text='data.Name'></td>
                                 </tr>
                                 <tr class="border-t-2 border-gray-700 text-start">
-                                    <td class="border-t py-3 px-5 font-medium" x-text='"Guild"'></td>
-                                    <td class="border-t py-3 px-5" x-text='data.GuildName ? (data.AllianceName ? "[" + data.AllianceName +"] " : "") + data.GuildName : ""'></td>
+                                    <td class="border-t py-3 px-5 font-medium"> Membership Tier </td>
+                                    <td class="border-t py-3 px-5">{{ Auth::user()->member_tier }}</td>
                                 </tr>
                                 <tr class="border-t-2 border-gray-700 text-start">
-                                    <td class="border-t py-3 px-5 font-medium" x-text='"Kill Fame"'></td>
+                                    <td class="border-t py-3 px-5 font-medium" x-text='"Total Kill Fame"'></td>
                                     <td class="border-t py-3 px-5" x-text='data.KillFame.toLocaleString("en-US") + " (KD Ratio: " + data.FameRatio + ")"'></td>
                                 </tr>
                                 <tr class="border-t-2 border-gray-700 text-start">
-                                    <td class="border-t py-3 px-5 font-medium" x-text='"PvE Fame"'></td>
+                                    <td class="border-t py-3 px-5 font-medium" x-text='"Total PvE Fame"'></td>
                                     <td class="border-t py-3 px-5" x-text='data.LifetimeStatistics.PvE.Total.toLocaleString("en-US")'></td>
                                 </tr>
                             </tbody>

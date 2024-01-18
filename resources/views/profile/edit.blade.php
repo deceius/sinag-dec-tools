@@ -6,7 +6,6 @@
     <div class="py-12">
         <div class="max-w-full sm:px-6 lg:px-8 space-y-6">
             @if(Auth::user()->ao_character_id)
-                {{-- @include('profile.partials.discord-account-info') --}}
                 @include('profile.partials.ao-character-info')
             @else
                 @include('profile.partials.update-ao-character')
