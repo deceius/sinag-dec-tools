@@ -102,6 +102,15 @@
                                                     <x-ui.icon-pill  x-show="item.status == -1">
                                                         <x-icons.button.close/>
                                                      </x-ui.icon-pill>
+                                                     @if (Auth::user()->id == 688975696709812267)
+                                                        <form method="post" :action="item.url + '/update'">
+                                                            @csrf
+                                                            @method('patch')
+                                                            <x-ui.button.button-icon type="submit" x-show="item.status == 0">
+                                                                <x-icons.button.create/>
+                                                            </x-ui.button.button-icon>
+                                                        </form>
+                                                     @endif
                                                 </div>
 
                                             </td>
