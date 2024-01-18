@@ -4,7 +4,7 @@
     </x-slot>
     <div class="py-12"  x-data="regearReports"  x-init="init()">
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-6">
+        <div class="max-w-full sm:px-6 lg:px-8 mb-6">
             <section>
                 <x-ui.card.table>
                     <x-slot:title>
@@ -66,7 +66,7 @@
                 </x-ui.card>
             </section>
         </div>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-full sm:px-6 lg:px-8">
             <section>
                 <x-ui.card.table>
                     <x-slot:title>

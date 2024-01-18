@@ -5,7 +5,7 @@
 
 
     <div class="py-12"  x-data="manageRegears"  x-init="init()">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-6">
+        <div class="max-w-full sm:px-6 lg:px-8 mb-6">
             <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div  class="p-6 text-gray-400">
                     <div class="flex justify-between h-5 items-center">
@@ -28,7 +28,7 @@
             </div>
 
         </div>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-full sm:px-6 lg:px-8">
             @include('regear.partials.transactions')
         </div>
     </div>

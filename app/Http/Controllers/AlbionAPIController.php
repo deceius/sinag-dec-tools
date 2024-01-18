@@ -54,6 +54,7 @@ class AlbionAPIController extends Controller
                 $death->equipment = implode(",", $newGears);
                 $death->allowed_gears = count($newGears) - $notAllowed;
                 $death->regearing_officer = $death->regearingOfficer;
+                $death->member_info = $death->memberInfo;
 
             }
         }

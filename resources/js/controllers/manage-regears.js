@@ -18,7 +18,8 @@ export default () => ({
     filter: {
         'battle_id': '',
         'status': '',
-        'role_id' : ''
+        'role_id' : '',
+        'tier': ''
     },
     ui: {
         'isApprove' : true,
@@ -59,13 +60,20 @@ export default () => ({
         let roleId = parseInt(this.filter.role_id) - 1;
         let battleIdFilterArray = this.filter.battle_id.split(" > ");
         let battleId = battleIdFilterArray.length > 1 ? battleIdFilterArray[0] : "";
+        let tier = this.filter.tier ? this.filter.tier : "";
         filters = filters +  (roleId >= 0 ? "role_id=" + (roleId) + "&"  : "");
-        filters = filters +  (battleId ? "battle_id=" + (battleId)  : "");
+        filters = filters +  (battleId ? "battle_id=" + (battleId) + "&" : "");
+        filters = filters +  (tier ? "tier=" + (tier)  : "");
         return filters;
     },
     init() {
         this.isLoading = true;
         this.$watch('filter.status', () => {
+            this.result = [];
+            let url = '/officer/regear/fetch?' + this.processFilters();
+            this.loadRegear(url);
+        });
+        this.$watch('filter.tier', () => {
             this.result = [];
             let url = '/officer/regear/fetch?' + this.processFilters();
             this.loadRegear(url);

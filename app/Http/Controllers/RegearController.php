@@ -21,7 +21,14 @@ class RegearController extends Controller
 
     public function index(Request $request) {
 
-        return view('regear.index');
+        $tiers = [
+            'Mentor'    => env('MEMBER_ROLE_MENTOR'),
+            'Core'      => env('MEMBER_ROLE_CORE'),
+            'Senior'    => env('MEMBER_ROLE_SENIOR'),
+            'Sinag'     => env('MEMBER_ROLE_SINAG'),
+            'Trial'     => env('MEMBER_ROLE_TRIAL')
+        ];
+        return view('regear.index', ['tiers' => $tiers]);
     }
 
     public function processRegear(Request $request, DeathInfo $regearInfo) {
@@ -70,7 +77,14 @@ class RegearController extends Controller
             if ($request->input('battle_id') != null) {
                 $deaths->where('battle_id', $request->input('battle_id'));
             }
+            $deaths->join('users', 'ao_character_id', '=', 'character_id');
 
+            if ($request->input('tier') != null) {
+
+                $deaths->where('users.roles', 'like', '%' . $request->input('tier') . '%');
+            }
+
+            // dd($deaths->toSql());
             $deaths = $deaths->paginate(10);
             $approvedGears = []; //['HEAD_LEATHER_SET3', '2H_AXE', 'HEAD_LEATHER_UNDEAD', '2H_DUALAXE_KEEPER', '2H_HAMMER_AVALON', 'HEAD_PLATE_SET2', 'CAPEITEM_FW_MARTLOCK', 'ARMOR_PLATE_KEEPER', 'ARMOR_LEATHER_HELL'];
             foreach ($deaths as $death) {
@@ -87,6 +101,7 @@ class RegearController extends Controller
                 $death->equipment = implode(",", $newGears);
                 $death->allowed_gears = count($newGears) - $notAllowed;
                 $death->regearing_officer = $death->regearingOfficer;
+                $death->member_info = $death->memberInfo;
 
             }
         return [ 'deaths' => $deaths, 'unfiltered' => $unfiltered ];

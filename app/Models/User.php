@@ -72,6 +72,8 @@ class User extends Authenticatable
 
     protected $appends = [
         'url',
+        'member_tier',
+        'member_tier_icon',
         'is_officer',
         'is_build_officer',
         'is_regear_officer'
@@ -101,6 +103,50 @@ class User extends Authenticatable
         $regearOfficerRole = env('OFFICER_REGEAR_DISCORD_ROLE');
 
         return in_array($regearOfficerRole, $roles) ;
+    }
+
+    function getMemberTierAttribute(){
+        $roles = explode(",", $this->roles);
+        if (in_array(env('MEMBER_ROLE_MENTOR'), $roles)) {
+            return "Mentor";
+        }
+        elseif (in_array(env('MEMBER_ROLE_CORE'), $roles)) {
+            return "Core";
+        }
+        elseif (in_array(env('MEMBER_ROLE_SENIOR'), $roles)) {
+            return "Senior";
+        }
+        elseif (in_array(env('MEMBER_ROLE_SINAG'), $roles)) {
+            return "Sinag";
+        }
+        elseif (in_array(env('MEMBER_ROLE_TRIAL'), $roles)) {
+            return "Trial";
+        }
+        else {
+            return "";
+        }
+    }
+
+    function getMemberTierIconAttribute(){
+        $roles = explode(",", $this->roles);
+        if (in_array(env('MEMBER_ROLE_MENTOR'), $roles)) {
+            return "🎖️";
+        }
+        elseif (in_array(env('MEMBER_ROLE_CORE'), $roles)) {
+            return "⚔️";
+        }
+        elseif (in_array(env('MEMBER_ROLE_SENIOR'), $roles)) {
+            return "🛡️";
+        }
+        elseif (in_array(env('MEMBER_ROLE_SINAG'), $roles)) {
+            return "☀️";
+        }
+        elseif (in_array(env('MEMBER_ROLE_TRIAL'), $roles)) {
+            return "🌱";
+        }
+        else {
+            return "";
+        }
     }
 
 }

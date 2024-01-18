@@ -49,8 +49,9 @@ class DeathInfo extends Model
         return $this->belongsTo(User::class, 'regeared_by');
     }
 
-
-
-
+    public function memberInfo()
+    {
+        return $this->belongsTo(User::class, 'character_id', 'ao_character_id');
+    }
 
 }
