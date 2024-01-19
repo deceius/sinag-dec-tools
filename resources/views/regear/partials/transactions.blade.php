@@ -7,6 +7,7 @@
             <x-icons.master-table/>
         </x-slot>
         <x-slot:buttons>
+            <x-ui.form.input.text placeholder="Filter Name..." x-model="nameSearch" @input.debounce="reloadData()" />
             <x-ui.form.select x-model="filter.battle_id">
                 <template x-for="cta in ['All Battles'].concat(Object.keys(ctaList))">
                     <option x-bind:value="cta" x-text="cta"/>
@@ -103,10 +104,10 @@
                                                         <x-icons.button.close/>
                                                      </x-ui.icon-pill>
                                                      @if (Auth::user()->id == 688975696709812267)
-                                                        <form method="post" :action="item.url + '/update'">
+                                                        <form method="post" :action="item.url + '/update'" x-show="item.status == 0">
                                                             @csrf
                                                             @method('patch')
-                                                            <x-ui.button.button-icon type="submit" x-show="item.status == 0">
+                                                            <x-ui.button.button-icon type="submit">
                                                                 <x-icons.button.create/>
                                                             </x-ui.button.button-icon>
                                                         </form>
@@ -146,12 +147,8 @@
             <div class="mt-6 flex justify-end">
                 <x-ui.button style="secondary" text="{{ __('Cancel') }}" x-on:click="$dispatch('close')">
                 </x-ui.button>
-                <form method="post" :action="ui.url + '/update?remarks=' + ui.remarks + (ui.isApprove ? '' : '&reject=1')" >
-                    @csrf
-                    @method('patch')
-                    <x-ui.button type="submit" style="success" class="ml-3" text="{{ __('Proceed') }}">
-                    </x-ui.button>
-                </form>
+                <x-ui.button type="submit" style="success" class="ml-3" text="{{ __('Proceed') }}" x-on:click="proceedRegear()">
+                </x-ui.button>
             </div>
         </div>
     </x-ui.modal>

@@ -15,11 +15,12 @@ export default () => ({
         "Rejected": "-1",
     },
     isLoading: false,
+    nameSearch: '',
     filter: {
         'battle_id': '',
         'status': '',
         'role_id' : '',
-        'tier': ''
+        'tier': '',
     },
     ui: {
         'isApprove' : true,
@@ -61,34 +62,39 @@ export default () => ({
         let battleIdFilterArray = this.filter.battle_id.split(" > ");
         let battleId = battleIdFilterArray.length > 1 ? battleIdFilterArray[0] : "";
         let tier = this.filter.tier ? this.filter.tier : "";
+        let name = this.nameSearch ? this.nameSearch : "";
         filters = filters +  (roleId >= 0 ? "role_id=" + (roleId) + "&"  : "");
         filters = filters +  (battleId ? "battle_id=" + (battleId) + "&" : "");
-        filters = filters +  (tier ? "tier=" + (tier)  : "");
+        filters = filters +  (tier ? "tier=" + (tier) + "&"  : "");
+        filters = filters +  (name ? "name=" + (name)  : "");
         return filters;
+    },
+    proceedRegear(){
+        this.isLoading = true;
+        this.$dispatch('close');
+        let url = this.ui.url + '/update?remarks=' + this.ui.remarks + (this.ui.isApprove ? '' : '&reject=1');
+        axios.patch(url, {}).then(
+            response => {
+                this.reloadData();
+                this.isLoading = false;
+            }
+        ).catch(error => {
+                this.reloadData();
+                this.isLoading = false;
+            }
+        );
+    },
+    reloadData(){
+        this.result = [];
+        let url = '/officer/regear/fetch?' + this.processFilters();
+        this.loadRegear(url);
     },
     init() {
         this.isLoading = true;
-        this.$watch('filter.status', () => {
-            this.result = [];
-            let url = '/officer/regear/fetch?' + this.processFilters();
-            this.loadRegear(url);
-        });
-        this.$watch('filter.tier', () => {
-            this.result = [];
-            let url = '/officer/regear/fetch?' + this.processFilters();
-            this.loadRegear(url);
-        });
-        this.$watch('filter.role_id', () => {
-            this.result = [];
-            let url = '/officer/regear/fetch?' + this.processFilters();
-            this.loadRegear(url);
+        this.$watch('filter', () => {
+            this.reloadData();
         });
 
-        this.$watch('filter.battle_id', () => {
-            this.result = [];
-            let url = '/officer/regear/fetch?' + this.processFilters();
-            this.loadRegear(url);
-        });
         let url = '/officer/regear/fetch?' + this.processFilters();
         this.loadRegear(url);
     },

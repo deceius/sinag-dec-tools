@@ -41,19 +41,17 @@ class RegearController extends Controller
             if ($request->input("reject")){
                 $regearInfo->status = -1;
 
-                DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been rejected. Reason: " . $regearInfo->remarks);
+                // DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been rejected. Reason: " . $regearInfo->remarks);
             } else {
                 $regearInfo->status = 1;
                 $regearInfo->remarks = $request->input('remarks');
-                DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks);
+                // DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks);
             }
         }
         else {
             $regearInfo->status = 2;
         }
         $regearInfo->save();
-
-        return redirect()->back();
     }
 
     public function fetchAllRegears(Request $request) {
@@ -80,9 +78,16 @@ class RegearController extends Controller
             $deaths->join('users', 'ao_character_id', '=', 'character_id');
 
             if ($request->input('tier') != null) {
-
                 $deaths->where('users.roles', 'like', '%' . $request->input('tier') . '%');
             }
+
+
+            if ($request->input('name') != null) {
+                $deaths->where('name', 'like', '%' . $request->input('name') . '%');
+            }
+
+
+            $deaths->groupBy('di.timestamp', 'di.battle_id', 'di.character_id');
 
             // dd($deaths->toSql());
             $deaths = $deaths->paginate(10);
