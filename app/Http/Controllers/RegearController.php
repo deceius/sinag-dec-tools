@@ -32,7 +32,6 @@ class RegearController extends Controller
     }
 
     public function processRegear(Request $request, DeathInfo $regearInfo) {
-        // 2 - pending, 1 - regeared, 0 - not filed
         if (Auth::user()->is_regear_officer && $regearInfo->status == 2) {
             $regearInfo->regeared_by = Auth::user()->id;
             $regearInfo->remarks = $request->input('remarks');
@@ -40,18 +39,21 @@ class RegearController extends Controller
 
             if ($request->input("reject")){
                 $regearInfo->status = -1;
-
                 DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been rejected. Reason: " . $regearInfo->remarks);
             } else {
                 $regearInfo->status = 1;
                 $regearInfo->remarks = $request->input('remarks');
                 DiscordAlert::message("<@" . $member->id . ">'s regear [request](". url('/home') .") has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks);
             }
+
+            $regearInfo->save();
         }
         else {
             $regearInfo->status = 2;
+            $regearInfo->save();
+            return redirect()->back();
         }
-        $regearInfo->save();
+
     }
 
     public function fetchAllRegears(Request $request) {
