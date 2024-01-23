@@ -10,24 +10,24 @@
 
             <div class="p-4 sm:p-8 bg-gray-800 shadow sm:rounded-lg">
                 <form @submit.prevent=""  action="{{ url('market') }}">
-                    <div class="mt-4 flex flex-col sm:flex-row  md:space-x-4">
-                        <x-ui.form.input.text x-model="filter.keyword" value="{{ $searchKeyword }}" type="text" placeholder="Search Item..." class="w-full mt-4" />
-                        <x-ui.form.select x-model="filter.city" class="mt-4">
+                    <div class="flex flex-col sm:flex-row md:space-x-4">
+                        <x-ui.form.input.text x-model="filter.keyword" value="{{ $searchKeyword }}" type="text" placeholder="Search Item..." class="w-full lg:mt-0 mt-4 " />
+                        <x-ui.form.select x-model="filter.city" class="lg:mt-0 mt-4 ">
                             @foreach ($cities as $key => $value)
                                 <option value="{{ $value }}" {{$value == $city ? 'selected' : '' }}>{{ $key }}</option>
                             @endforeach
                         </x-ui.form.select>
-                        <x-ui.form.select x-model="filter.tier" class="mt-4" >
+                        <x-ui.form.select x-model="filter.tier" class="lg:mt-0 mt-4 ">
                             @foreach ($tiers as $value)
                                 <option value="{{ $value }}" {{$value == $tier ? 'selected' : '' }}>{{ $value }}</option>
                             @endforeach
                         </x-ui.form.select>
-                        <x-ui.form.select x-model="filter.enchantment" class="mt-4" >
+                        <x-ui.form.select x-model="filter.enchantment" class="lg:mt-0 mt-4 ">
                             @foreach ($enchantments as $value)
                                 <option value="{{ $value }}" {{$value == $enchantment ? 'selected' : '' }}>{{ $value }}</option>
                             @endforeach
                         </x-ui.form.select>
-                        <x-ui.button x-on:click="filter()" class="mt-4 text-center" text="Search"/>
+                        <x-ui.button x-on:click="filter()" class="text-center lg:mt-0 mt-4 " text="Search"/>
                     </div>
                 </form>
             </div>
