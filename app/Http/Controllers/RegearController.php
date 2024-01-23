@@ -28,16 +28,24 @@ class RegearController extends Controller
     }
 
     public function processRegear(Request $request, DeathInfo $regearInfo) {
+
+        $member = User::where('ao_character_id', $regearInfo->character_id)->first();
+
         if ($request->input('req')) {
             $regearInfo->status = 2;
             $regearInfo->save();
+            $prompt = "<@" . $member->id . ">'s regear request for Battle ID # `" . $regearInfo->battle_id . "` has been successfully sent. You will be pinged once this request has been processed.";
+            if (App::environment('production')) {
+                DiscordAlert::message($prompt);
+            } else {
+                Log::info($prompt);
+            }
             return redirect()->back();
         }
 
         if (Auth::user()->is_regear_officer && $regearInfo->status == 2) {
             $regearInfo->regeared_by = Auth::user()->id;
             $regearInfo->remarks = $request->input('remarks');
-            $member = User::where('ao_character_id', $regearInfo->character_id)->first();
             $prompt = "<@" . $member->id . ">'s regear request for Battle ID # `" . $regearInfo->battle_id . "` ";
             if ($request->input("reject")){
                 $regearInfo->status = -1;
