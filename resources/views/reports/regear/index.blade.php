@@ -14,12 +14,9 @@
                         <x-icons.master-table/>
                     </x-slot>
                     <x-slot:content>
-                        <div class="overflow-x-auto" x-show="losses.length == 0 && isLoading">
-                            &nbsp;
-                        </div>
                         <template x-if="true">
                             <div class="overflow-x-auto">
-                                <table id="table" class="min-w-full table-auto">
+                                <table id="table" class="min-w-full table-auto" :class="{ 'opacity-50' : isLoading}">
                                         <thead class="font-medium">
                                             <tr class="border-gray-700">
                                                 <th scope="col" class="text-start py-3 px-5">
@@ -40,14 +37,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="border-t-2 border-gray-700 text-start">
-                                                <td class="border-t py-3 px-5" x-text='"All CTAs"'/>
-                                                <td class="border-t py-3 px-5" x-text='losses.reduce((accumulator, currentValue) => accumulator + currentValue.death_count, 0).toLocaleString("en-US")'></td>
-                                                <td class="border-t py-3 px-5" x-text='losses.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue.death_fame), 0).toLocaleString("en-US")'></td>
-                                                <td class="border-t py-3 px-5" x-text='losses.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue.unit), 0).toLocaleString("en-US")'></td>
-                                                <td class="border-t py-3 px-5" x-text='losses.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue.cost), 0).toLocaleString("en-US")'></td>
-                                            </tr>
-                                        <template x-for="item in losses">
+                                        <template x-for="item in losses.data">
                                                 <tr class="border-t-2 border-gray-700 text-start">
                                                     <td class="border-t py-3 px-5"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
                                                     <td class="border-t py-3 px-5" x-text='item.death_count'></td>
@@ -58,6 +48,10 @@
                                         </template>
                                         </tbody>
                                     </table>
+
+                                    <div class="p-6 flex justify-end" x-show="losses.last_page > 1">
+                                        <x-ui.pagination links="losses.links" click-method="loadLosses(link.url)"></x-ui.pagination>
+                                    </div>
                             </div>
                         </template>
 
@@ -76,7 +70,7 @@
                         <x-icons.master-table/>
                     </x-slot>
                     <x-slot:content>
-                        <div class="overflow-x-auto" x-show="data.length == 0">
+                        <div class="overflow-x-auto" x-show="!data && isLoading">
                             &nbsp;
                         </div>
                         <template x-if="true">

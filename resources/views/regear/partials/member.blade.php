@@ -1,16 +1,16 @@
 <section x-data="deathlog"  x-init="init('{{ Auth::user()->ao_character_id }}')">
     <x-ui.card.table>
         <x-slot:title>
-            {{ __('Regears') }}
+            {{ __('Request Regears') }}
         </x-slot>
         <x-slot:icon>
             <x-icons.master-table/>
         </x-slot>
         <x-slot:content>
-            <div class="overflow-x-auto" x-show="data.length == 0">
+            <div class="overflow-x-auto" x-show="!result.data">
                 &nbsp;
             </div>
-            <template x-if="data.length > 0">
+            <template x-if="result.data">
                 <div class="overflow-x-auto" >
                     <table id="table" class="min-w-full table-auto">
                             <thead class="font-medium">
@@ -31,7 +31,7 @@
                             </thead>
                             <tbody>
 
-                            <template x-for="item in data">
+                            <template x-for="item in result.data">
                                     <tr class="border-t-2 border-gray-700 text-start" :class="{'opacity-50' : item.status < 0}">
 
                                         <td class="border-t py-3 px-5"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
@@ -67,50 +67,10 @@
                 </div>
             </template>
 
-
+            <div class="p-6 flex justify-end" x-show="result.last_page > 1">
+                <x-ui.pagination links="result.links" click-method="loadDeathLog(link.url, albionId)"></x-ui.pagination>
+            </div>
         </x-slot>
     </x-ui.card>
-{{--
-    <x-ui.card>
-        <x-slot:title><h2 class="text-lg font-medium text-gray-100">
-            {{ __('Bind Albion Online Character') }}
-
-        </h2>
-       </x-slot>
-        <x-slot:icon>
-           <x-icons.form/>
-        </x-slot>
-        <x-slot:buttons>
-            <x-ui.search model="filter.search" click-method="load()"/>
-
-        </x-slot>
-        <x-slot:content>
-            <form method="post" action="{{ route('home') }}" >
-                @csrf
-                @method('put')
-
-                <div class="mb-6">
-                    <x-ui.form.input.label for="update_ao_character" :value="__('Search IGN')" />
-                    <x-ui.form.input.text id="update_ao_character" name="ao_character" type="text" class="mt-1 block w-full" />
-                    <x-ui.form.input.error :messages="$errors->updatePassword->get('ao_character')" class="mt-2" />
-                </div>
-
-                <div class="flex items-center gap-4">
-                    <x-ui.button text="Search"/>
-
-                    @if (session('status') === 'password-updated')
-                        <p
-                            x-data="{ show: true }"
-                            x-show="show"
-                            x-transition
-                            x-init="setTimeout(() => show = false, 2000)"
-                            class="text-sm text-gray-400"
-                        >{{ __('Saved.') }}</p>
-                    @endif
-                </div>
-            </form>
-        </x-slot>
-    </x-ui.card> --}}
-
 
 </section>

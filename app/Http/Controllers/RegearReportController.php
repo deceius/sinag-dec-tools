@@ -16,15 +16,7 @@ class RegearReportController extends Controller
         return view('reports.regear.index');
     }
 
-    public function fetch(Request $request) {
-        if (true){
-            $pendingRegears = $this->fetchPendingRegears();
-            $guildLosses = $this->fetchGuildLosses();
-            return ['gears' => $pendingRegears, 'losses' => $guildLosses];
-        }
-    }
-
-    public function fetchGuildLosses() {
+    public function fetchRoleRegearStats() {
         $result = [];
         $result = DeathInfo::select('battle_id',
                 DB::raw('SUM(regear_cost) as cost'),
@@ -32,11 +24,23 @@ class RegearReportController extends Controller
                 DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as unit"),
                 DB::raw('COUNT(1) as death_count'))
         ->groupBy('battle_id')
-        ->get();
+        ->paginate(5);
         return $result;
     }
 
-    public function fetchPendingRegears() {
+    public function fetchGuildLosses(Request $request) {
+
+        $result = DeathInfo::select('battle_id',
+                DB::raw('SUM(regear_cost) as cost'),
+                DB::raw('SUM(death_fame) as death_fame'),
+                DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as unit"),
+                DB::raw('COUNT(1) as death_count'))
+        ->groupBy('battle_id')
+        ->paginate(5);
+        return ['result' => $result];
+    }
+
+    public function fetchPendingRegears(Request $request) {
         $result = [];
         $deathlogs = DeathInfo::where('status', 2)->get();
             foreach ($deathlogs as $log) {
@@ -59,6 +63,6 @@ class RegearReportController extends Controller
                 }
             }
 
-        return $result;
+        return ['result' => $result];
     }
 }

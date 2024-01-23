@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\BuildInfo;
 use App\Models\DeathInfo;
-use App\Models\RegearInfo;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 use Spatie\DiscordAlerts\Facades\DiscordAlert;
 
 class RegearController extends Controller
@@ -54,7 +48,7 @@ class RegearController extends Controller
                 $prompt =  $prompt . "has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks;
             }
 
-            if (App::environtment('production')) {
+            if (App::environment('production')) {
                 DiscordAlert::message($prompt);
             } else {
                 Log::info($prompt);

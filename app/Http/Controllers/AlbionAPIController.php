@@ -38,8 +38,7 @@ class AlbionAPIController extends Controller
         $id = $request->input('id');
         $deaths = [];
         if ($id) {
-            $deaths = DeathInfo::where('character_id', $id)->orderBy('status', 'asc')->get();
-            $approvedGears = BuildInfo::all(['equipment'])->pluck('equipment')->toArray();
+            $deaths = DeathInfo::where('character_id', $id)->orderBy('status', 'asc')->paginate(5);
             foreach ($deaths as $death) {
                 $newGears = [];
                 $notAllowed = 0;
@@ -58,7 +57,7 @@ class AlbionAPIController extends Controller
 
             }
         }
-        return [ 'deaths' => $deaths ];
+        return [ 'result' => $deaths ];
     }
 
     public function parseItems(Request $request) {

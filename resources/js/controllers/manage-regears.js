@@ -95,12 +95,11 @@ export default () => ({
             this.reloadData();
         });
 
-        let url = '/officer/regear/fetch?' + this.processFilters();
+        let url = '/officer/regear/fetch?';
         this.loadRegear(url);
     },
     loadRegear(url) {
-        console.log(url);
-        axios.get(url).then(
+        axios.get(url + "&" + this.processFilters()).then(
             response => {
                 this.result = response.data.deaths;
                 this.ctaList =  Object.groupBy(response.data.unfiltered, ({ battle_time }) => battle_time);
@@ -111,11 +110,6 @@ export default () => ({
                this.isLoading = false;
             }
         );
-    },
-    loadPage(url){
-        if (url) {
-            this.loadRegear(url + "&" + this.processFilters());
-        }
     },
 
 

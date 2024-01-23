@@ -39,7 +39,7 @@
             </div>
             <template x-if="result.data">
                 <div class="overflow-x-auto" >
-                    <table id="table" class="min-w-full table-auto">
+                    <table id="table" class="min-w-full table-auto" >
                             <thead class="font-medium">
                                 <tr class="border-gray-700">
                                     <th scope="col" class="text-start py-3 px-5">
@@ -120,7 +120,7 @@
                 </div>
             </template>
             <div class="p-6 flex justify-end" x-show="result.last_page > 1">
-                <x-ui.pagination links="result.links"></x-ui.pagination>
+                <x-ui.pagination links="result.links" click-method="loadRegear(link.url)"></x-ui.pagination>
             </div>
 
         </x-slot>
