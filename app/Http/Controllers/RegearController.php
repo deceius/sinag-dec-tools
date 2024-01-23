@@ -32,6 +32,12 @@ class RegearController extends Controller
     }
 
     public function processRegear(Request $request, DeathInfo $regearInfo) {
+        if ($request->input('req')) {
+            $regearInfo->status = 2;
+            $regearInfo->save();
+            return redirect()->back();
+        }
+
         if (Auth::user()->is_regear_officer && $regearInfo->status == 2) {
             $regearInfo->regeared_by = Auth::user()->id;
             $regearInfo->remarks = $request->input('remarks');
@@ -39,19 +45,15 @@ class RegearController extends Controller
             $prompt = "<@" . $member->id . ">'s regear request for Battle ID # `" . $regearInfo->battle_id . "` ";
             if ($request->input("reject")){
                 $regearInfo->status = -1;
-                DiscordAlert::message($prompt . "has been rejected. Reason: " . $regearInfo->remarks);
+                $prompt = $prompt . "has been rejected. Reason: " . $regearInfo->remarks;
             } else {
                 $regearInfo->status = 1;
                 $regearInfo->remarks = $request->input('remarks');
-                DiscordAlert::message( $prompt . "has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks);
+                $prompt =  $prompt . "has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks;
             }
 
+            DiscordAlert::message($prompt);
             $regearInfo->save();
-        }
-        else {
-            $regearInfo->status = 2;
-            $regearInfo->save();
-            return redirect()->back();
         }
 
     }

@@ -103,7 +103,7 @@
                                                     <x-ui.icon-pill  x-show="item.status == -1">
                                                         <x-icons.button.close/>
                                                      </x-ui.icon-pill>
-                                                     <form method="post" :action="item.url + '/update'" x-show="item.status == 0">
+                                                     <form method="post" :action="item.url + '/update?req=1'" x-show="item.status == 0">
                                                         @csrf
                                                         @method('patch')
                                                         <x-ui.button.button-icon type="submit">
