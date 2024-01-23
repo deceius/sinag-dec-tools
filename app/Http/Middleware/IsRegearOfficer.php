@@ -26,7 +26,7 @@ class IsRegearOfficer
 
     function hasOfficerRole($user){
         $roles = explode(",", $user->roles);
-        $regearOfficerRole = env('OFFICER_REGEAR_DISCORD_ROLE');
+        $regearOfficerRole = config('app.discord_roles.officer.regear');
 
         return in_array($roles, $regearOfficerRole);
     }

@@ -26,7 +26,7 @@ class IsBuildsOfficer
 
     function hasOfficerRole($user){
         $roles = explode(",", $user->roles);
-        $buildsOfficerRole = env('OFFICER_BUILDS_DISCORD_ROLE');
+        $buildsOfficerRole = config('app.discord_roles.officer.builds');
 
         return in_array($buildsOfficerRole, $roles);
     }

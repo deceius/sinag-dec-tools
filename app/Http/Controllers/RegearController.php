@@ -10,8 +10,10 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Spatie\DiscordAlerts\Facades\DiscordAlert;
@@ -22,11 +24,11 @@ class RegearController extends Controller
     public function index(Request $request) {
 
         $tiers = [
-            'Mentor'    => env('MEMBER_ROLE_MENTOR'),
-            'Core'      => env('MEMBER_ROLE_CORE'),
-            'Senior'    => env('MEMBER_ROLE_SENIOR'),
-            'Sinag'     => env('MEMBER_ROLE_SINAG'),
-            'Trial'     => env('MEMBER_ROLE_TRIAL')
+            'Mentor'    => config('app.roles.mentor'),
+            'Core'      => config('app.roles.core'),
+            'Senior'    => config('app.roles.senior'),
+            'Sinag'     => config('app.roles.sinag'),
+            'Trial'     => config('app.roles.trial')
         ];
         return view('regear.index', ['tiers' => $tiers]);
     }
@@ -52,7 +54,11 @@ class RegearController extends Controller
                 $prompt =  $prompt . "has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks;
             }
 
-            DiscordAlert::message($prompt);
+            if (App::environtment('production')) {
+                DiscordAlert::message($prompt);
+            } else {
+                Log::info($prompt);
+            }
             $regearInfo->save();
         }
 
