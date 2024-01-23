@@ -107,6 +107,10 @@
             <x-ui.nav.responsive :href="route('home')" :active="request()->routeIs('home')">
                 {{ __('Home') }}
             </x-ui.nav.responsive>
+
+            <x-ui.nav.responsive :href="route('market')" :active="request()->routeIs('market')">
+                {{ __('Price Checker') }}
+            </x-ui.nav.responsive>
             @if(Auth::user()->is_officer)
                 @if(Auth::user()->is_regear_officer)
                     <x-ui.nav.responsive :href="route('officer.regear.index')" :active="request()->routeIs('officer.regear.*')">
@@ -124,8 +128,8 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-600">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-200">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-gray-200">{{ Auth::user()->username }}</div>
+                <div class="font-medium text-sm text-gray-500">Albion IGN: <u>{{ Auth::user()->ao_character_name ? Auth::user()->ao_character_name : '???' }}</u></div>
             </div>
 
             <div class="mt-3 space-y-1">
