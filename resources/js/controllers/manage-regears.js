@@ -103,7 +103,7 @@ export default () => ({
             this.reloadData();
         });
 
-        let url = '/officer/regear/fetch?' + this.processFilters();
+        let url = '/officer/regear/fetch?';
         this.loadRegear(url);
     },
     fetchRoleIcon(index){
@@ -126,11 +126,6 @@ export default () => ({
                this.isLoading = false;
             }
         );
-    },
-    loadPage(url){
-        if (url) {
-            this.loadRegear(url + "&" + this.processFilters());
-        }
     },
 
 

@@ -185,4 +185,24 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'version' => '2.4.2',
+    'version_name' => 'Clarent',
+
+    'ingame_guild_id' => env('INGAME_GUILD_ID', null),
+
+    'roles' => [
+        'mentor' => env('MEMBER_ROLE_MENTOR', 0),
+        'core' => env('MEMBER_ROLE_CORE', 0),
+        'senior' => env('MEMBER_ROLE_SENIOR', 0),
+        'sinag' => env('MEMBER_ROLE_SINAG', 0),
+        'trial' => env('MEMBER_ROLE_TRIAL', 0),
+    ],
+
+    'discord_roles' => [
+        'officer' => [
+            'regear' => env('OFFICER_REGEAR_DISCORD_ROLE', 0),
+            'builds' => env('OFFICER_BUILDS_DISCORD_ROLE', 0)
+        ]
+    ],
+
 ];

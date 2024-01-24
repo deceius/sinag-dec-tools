@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\BuildInfo;
 use App\Models\DeathInfo;
-use App\Models\RegearInfo;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,11 +20,11 @@ class RegearController extends Controller
     public function index(Request $request) {
 
         $tiers = [
-            'Mentor'    => env('MEMBER_ROLE_MENTOR'),
-            'Core'      => env('MEMBER_ROLE_CORE'),
-            'Senior'    => env('MEMBER_ROLE_SENIOR'),
-            'Sinag'     => env('MEMBER_ROLE_SINAG'),
-            'Trial'     => env('MEMBER_ROLE_TRIAL')
+            'Mentor'    => config('app.roles.mentor'),
+            'Core'      => config('app.roles.core'),
+            'Senior'    => config('app.roles.senior'),
+            'Sinag'     => config('app.roles.sinag'),
+            'Trial'     => config('app.roles.trial')
         ];
         return view('regear.index', ['tiers' => $tiers]);
     }
@@ -48,15 +44,14 @@ class RegearController extends Controller
         if (Auth::user()->is_regear_officer && $regearInfo->status == 2) {
             $regearInfo->regeared_by = Auth::user()->id;
             $regearInfo->remarks = $request->input('remarks');
-            $member = User::where('ao_character_id', $regearInfo->character_id)->first();
             $prompt = "<@" . $member->id . ">'s regear request for Battle ID # `" . $regearInfo->battle_id . "` ";
             if ($request->input("reject")){
                 $regearInfo->status = -1;
-                DiscordAlert::message($prompt . "has been rejected. Reason: " . $regearInfo->remarks);
+                $prompt = $prompt . "has been rejected. Reason: " . $regearInfo->remarks;
             } else {
                 $regearInfo->status = 1;
                 $regearInfo->remarks = $request->input('remarks');
-                DiscordAlert::message( $prompt . "has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks);
+                $prompt =  $prompt . "has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks;
             }
 
             if (App::environment('production')) {
@@ -66,11 +61,6 @@ class RegearController extends Controller
 
             $regearInfo->save();
             return response('success');
-        }
-        else {
-            $regearInfo->status = 2;
-            $regearInfo->save();
-            return redirect()->back();
         }
 
 

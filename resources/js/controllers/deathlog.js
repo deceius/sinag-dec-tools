@@ -3,14 +3,19 @@ export default () => ({
     filter: {
         'ign': '',
     },
-    data: [],
+    result: [],
+    albionId: '',
     init(albionId) {
+        let url = '/deathlog?';
+        this.albionId = albionId;
+        this.loadDeathLog(url);
+    },
+    loadDeathLog(url) {
+        url = url + "&id=" + this.albionId;
         this.isLoading = true;
-        let url = '/deathlog?id=' + albionId;
         axios.get(url).then(
             response => {
-                this.data = response.data.deaths;
-                console.log(this.data);
+                this.result = response.data.result;
                 this.isLoading = false;
             }
         ).catch(error => {
@@ -18,6 +23,7 @@ export default () => ({
             }
         );
     }
+
 
 
 });

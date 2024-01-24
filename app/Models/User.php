@@ -84,41 +84,41 @@ class User extends Authenticatable
 
     function getIsOfficerAttribute(){
         $roles = explode(",", $this->roles);
-        $regearOfficerRole = env('OFFICER_REGEAR_DISCORD_ROLE');
-        $buildsOfficerRole = env('OFFICER_BUILDS_DISCORD_ROLE');
+        $regearOfficerRole = config('app.discord_roles.officer.regear');
+        $buildsOfficerRole = config('app.discord_roles.officer.builds');
 
         return in_array($regearOfficerRole, $roles) || in_array($buildsOfficerRole, $roles);
     }
 
     function getIsBuildOfficerAttribute(){
         $roles = explode(",", $this->roles);
-        $buildsOfficerRole = env('OFFICER_BUILDS_DISCORD_ROLE');
+        $buildsOfficerRole = config('app.discord_roles.officer.builds');
 
         return in_array($buildsOfficerRole, $roles);
     }
 
     function getIsRegearOfficerAttribute(){
         $roles = explode(",", $this->roles);
-        $regearOfficerRole = env('OFFICER_REGEAR_DISCORD_ROLE');
+        $regearOfficerRole = config('app.discord_roles.officer.regear');
 
         return in_array($regearOfficerRole, $roles) ;
     }
 
     function getMemberTierAttribute(){
         $roles = explode(",", $this->roles);
-        if (in_array(env('MEMBER_ROLE_MENTOR'), $roles)) {
+        if (in_array(config('app.roles.mentor'), $roles)) {
             return "🎖️ Mentor";
         }
-        elseif (in_array(env('MEMBER_ROLE_CORE'), $roles)) {
+        elseif (in_array(config('app.roles.core'), $roles)) {
             return "⚔️ Core";
         }
-        elseif (in_array(env('MEMBER_ROLE_SENIOR'), $roles)) {
+        elseif (in_array(config('app.roles.senior'), $roles)) {
             return "🛡️ Senior";
         }
-        elseif (in_array(env('MEMBER_ROLE_SINAG'), $roles)) {
+        elseif (in_array(config('app.roles.sinag'), $roles)) {
             return "☀️ Sinag";
         }
-        elseif (in_array(env('MEMBER_ROLE_TRIAL'), $roles)) {
+        elseif (in_array(config('app.roles.trial'), $roles)) {
             return "🌱 Trial";
         }
         else {

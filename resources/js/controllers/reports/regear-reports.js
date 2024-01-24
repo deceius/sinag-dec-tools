@@ -11,12 +11,14 @@ export default () => ({
     data: [],
     losses: [],
     init() {
+        this.loadLosses('/reports/regear/fetch/losses');
+        this.loadPendingItems('/reports/regear/fetch/pendingitems');
+    },
+    loadPendingItems(url) {
         this.isLoading = true;
-        let url = '/reports/regear/fetch';
         axios.get(url).then(
             response => {
-                this.data = response.data.gears;
-                this.losses = response.data.losses;
+                this.data = response.data.result;
                 this.isLoading = false;
             }
         ).catch(error => {
@@ -24,7 +26,18 @@ export default () => ({
             }
         );
     },
-
+    loadLosses(url) {
+        this.isLoading = true;
+        axios.get(url).then(
+            response => {
+                this.losses = response.data.result;
+                this.isLoading = false;
+            }
+        ).catch(error => {
+               this.isLoading = false;
+            }
+        );
+    },
 
 
 });

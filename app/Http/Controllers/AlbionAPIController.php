@@ -28,7 +28,7 @@ class AlbionAPIController extends Controller
             $players = (array)json_decode($response->body())->players;
             $sinagMembers = [];
             foreach ($players as $player) {
-                if ($player->GuildId == env('INGAME_GUILD_ID', null)) {
+                if ($player->GuildId == config('app.ingame_guild_id')) {
                     array_push($sinagMembers, $player);
                 }
             }
@@ -59,7 +59,7 @@ class AlbionAPIController extends Controller
 
             }
         }
-        return [ 'deaths' => $deaths ];
+        return [ 'result' => $deaths ];
     }
 
     public function parseItems(Request $request) {
@@ -107,7 +107,7 @@ class AlbionAPIController extends Controller
                 $battle = Http::get($url);
                 $events = (array)json_decode($battle->body());
                 foreach ($events as $event) {
-                    if ($event->Victim->GuildId == env('INGAME_GUILD_ID', null)) {
+                    if ($event->Victim->GuildId == config('app.ingame_guild_id')) {
                         $rawData = [
                             'id' => $event->EventId,
                             'battle_id' => trim($battleId),
@@ -167,7 +167,7 @@ class AlbionAPIController extends Controller
 
     public function fetchDeathLog(Request $request)
     {
-        $url = "https://gameinfo-sgp.albiononline.com/api/gameinfo/battles?range=month&offset=0&limit=51&sort=recent&guildId=" . env('INGAME_GUILD_ID', null);
+        $url = "https://gameinfo-sgp.albiononline.com/api/gameinfo/battles?range=month&offset=0&limit=51&sort=recent&guildId=" . config('app.ingame_guild_id');
         $response = Http::get($url);
         $battles = (array)json_decode($response->body());
         $deaths = [];
@@ -180,7 +180,7 @@ class AlbionAPIController extends Controller
             $events = (array)json_decode($battle->body());
 
             foreach ($events as $event) {
-                if ($event->Victim->GuildId == env('INGAME_GUILD_ID', null)) {
+                if ($event->Victim->GuildId == config('app.ingame_guild_id')) {
                     $death = DeathInfo::firstOrCreate(
                         ['id' => $event->EventId],
                         [

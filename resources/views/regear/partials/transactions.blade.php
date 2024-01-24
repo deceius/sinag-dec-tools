@@ -104,7 +104,7 @@
                                                     <x-ui.icon-pill  x-show="item.status == -1">
                                                         <x-icons.button.close/>
                                                      </x-ui.icon-pill>
-                                                     <form method="post" :action="item.url + '/update'" x-show="item.status == 0">
+                                                     <form method="post" :action="item.url + '/update?req=1'" x-show="item.status == 0">
                                                         @csrf
                                                         @method('patch')
                                                         <x-ui.button.button-icon type="submit">
@@ -121,7 +121,7 @@
                 </div>
             </template>
             <div class="p-6 flex justify-end" x-show="result.last_page > 1">
-                <x-ui.pagination links="result.links"></x-ui.pagination>
+                <x-ui.pagination links="result.links" click-method="loadRegear(link.url)"></x-ui.pagination>
             </div>
 
         </x-slot>
