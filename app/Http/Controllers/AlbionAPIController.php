@@ -7,9 +7,11 @@ use App\Models\DeathInfo;
 use App\Models\ItemInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Spatie\DiscordAlerts\Facades\DiscordAlert;
 
 class AlbionAPIController extends Controller
@@ -38,8 +40,7 @@ class AlbionAPIController extends Controller
         $id = $request->input('id');
         $deaths = [];
         if ($id) {
-            $deaths = DeathInfo::where('character_id', $id)->orderBy('status', 'asc')->get();
-            $approvedGears = BuildInfo::all(['equipment'])->pluck('equipment')->toArray();
+            $deaths = DeathInfo::where('character_id', $id)->orderBy('status', 'asc')->orderBy('updated_at', 'desc')->paginate(5);
             foreach ($deaths as $death) {
                 $newGears = [];
                 $notAllowed = 0;
@@ -135,8 +136,11 @@ class AlbionAPIController extends Controller
 
         }
         $battleTotalCost = DeathInfo::whereIn('battle_id', $formattedBattleIds)->sum('regear_cost');
-        DiscordAlert::message("<@" . Auth()->user()->id . "> opened [regears](https://sinag.deceius.com) for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). The regears in the battleboard has an estimated cost (in buy orders) of " . number_format($battleTotalCost) . ". @everyone");
-
+        $prompt = "<@" . Auth()->user()->id . "> opened [regears](https://sinag.deceius.com) for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). The regears in the battleboard has an estimated cost (in buy orders) of " . number_format($battleTotalCost) . ". @everyone";
+        if (App::environment('production')) {
+            DiscordAlert::message($prompt);
+        }
+        Log::info($prompt);
     }
 
     public function fetchRegearCost($forRegears) {

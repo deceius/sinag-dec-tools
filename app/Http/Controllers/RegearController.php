@@ -10,8 +10,10 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Spatie\DiscordAlerts\Facades\DiscordAlert;
@@ -32,6 +34,17 @@ class RegearController extends Controller
     }
 
     public function processRegear(Request $request, DeathInfo $regearInfo) {
+
+        $member = User::where('ao_character_id', $regearInfo->character_id)->first();
+
+        if ($request->input('req') && $regearInfo->status == 0) {
+            $regearInfo->status = 2;
+            $regearInfo->save();
+            $prompt =  $member->ao_character_name . " regear request for Battle ID # `" . $regearInfo->battle_id . "` - sent.";
+            Log::info($prompt);
+            return redirect()->back();
+        }
+
         if (Auth::user()->is_regear_officer && $regearInfo->status == 2) {
             $regearInfo->regeared_by = Auth::user()->id;
             $regearInfo->remarks = $request->input('remarks');
@@ -46,13 +59,22 @@ class RegearController extends Controller
                 DiscordAlert::message( $prompt . "has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks);
             }
 
+            if (App::environment('production')) {
+                DiscordAlert::message($prompt);
+            }
+            Log::info($prompt);
+
             $regearInfo->save();
+            return response('success');
         }
         else {
             $regearInfo->status = 2;
             $regearInfo->save();
             return redirect()->back();
         }
+
+
+        return redirect()->back();
 
     }
 

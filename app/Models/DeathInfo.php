@@ -33,6 +33,7 @@ class DeathInfo extends Model
 
     protected $casts = [
         'timestamp' => 'datetime:Y-m-d H:i',
+        'updated_at' => 'datetime:Y-m-d H:i',
         'is_oc' => 'boolean'
     ];
 
