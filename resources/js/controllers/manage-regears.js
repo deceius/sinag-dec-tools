@@ -14,6 +14,15 @@ export default () => ({
         "Regeared" : "1",
         "Rejected": "-1",
     },
+    roleIcons: [
+        "⚒️", //"Off Tanks",
+        "🛡️", //"Def Tanks",
+        "✨", //"Healers",
+        "🔮", //"Supports",
+        "⚡", //"Debuff",
+        "🏹", //"RDPS",
+        "⚔️", //"MDPS",
+    ],
     isLoading: false,
     nameSearch: '',
     filter: {
@@ -85,7 +94,6 @@ export default () => ({
         );
     },
     reloadData(){
-        this.result = [];
         let url = '/officer/regear/fetch?' + this.processFilters();
         this.loadRegear(url);
     },
@@ -98,7 +106,15 @@ export default () => ({
         let url = '/officer/regear/fetch?';
         this.loadRegear(url);
     },
+    fetchRoleIcon(index){
+        if (index < 0) {
+            return "❌";
+        }
+
+        return this.roleIcons[index];
+    },
     loadRegear(url) {
+        this.isLoading = true;
         axios.get(url + "&" + this.processFilters()).then(
             response => {
                 this.result = response.data.deaths;

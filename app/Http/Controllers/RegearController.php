@@ -31,15 +31,11 @@ class RegearController extends Controller
 
         $member = User::where('ao_character_id', $regearInfo->character_id)->first();
 
-        if ($request->input('req')) {
+        if ($request->input('req') && $regearInfo->status == 0) {
             $regearInfo->status = 2;
             $regearInfo->save();
-            $prompt = "<@" . $member->id . ">'s regear request for Battle ID # `" . $regearInfo->battle_id . "` has been successfully sent. You will be pinged once this request has been processed.";
-            if (App::environment('production')) {
-                DiscordAlert::message($prompt);
-            } else {
-                Log::info($prompt);
-            }
+            $prompt =  $member->ao_character_name . " regear request for Battle ID # `" . $regearInfo->battle_id . "` - sent.";
+            Log::info($prompt);
             return redirect()->back();
         }
 
@@ -58,11 +54,15 @@ class RegearController extends Controller
 
             if (App::environment('production')) {
                 DiscordAlert::message($prompt);
-            } else {
-                Log::info($prompt);
             }
+            Log::info($prompt);
+
             $regearInfo->save();
+            return response('success');
         }
+
+
+        return redirect()->back();
 
     }
 
@@ -98,12 +98,9 @@ class RegearController extends Controller
                 $deaths->where('name', 'like', '%' . $request->input('name') . '%');
             }
 
-
             $deaths->groupBy('di.timestamp', 'di.battle_id', 'di.character_id');
 
-            // dd($deaths->toSql());
             $deaths = $deaths->paginate(10);
-            $approvedGears = []; //['HEAD_LEATHER_SET3', '2H_AXE', 'HEAD_LEATHER_UNDEAD', '2H_DUALAXE_KEEPER', '2H_HAMMER_AVALON', 'HEAD_PLATE_SET2', 'CAPEITEM_FW_MARTLOCK', 'ARMOR_PLATE_KEEPER', 'ARMOR_LEATHER_HELL'];
             foreach ($deaths as $death) {
                 $newGears = [];
                 $notAllowed = 0;
@@ -123,13 +120,4 @@ class RegearController extends Controller
             }
         return [ 'deaths' => $deaths, 'unfiltered' => $unfiltered ];
     }
-
-    public function store(Request $request)
-    {
-
-        DiscordAlert::message("A regear has been filed by <@" . Auth()->user()->id . '>. check it out here: ' . url('/regear?id=') . '12');
-        // return ['data' => $request->all()];
-    }
-
-
 }

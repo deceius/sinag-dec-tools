@@ -3,12 +3,12 @@
 <div {{ $attributes->merge(['class' => 'bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg']) }}>
     @isset($title)
     <div  {{ $title->attributes->merge(['class' => 'p-6 text-gray-400']) }}>
-        <div class="flex justify-between h-5 items-center">
-            <div class="flex space-x-2 items-center leading-tight font-semibold">
+        <div class="flex flex-col sm:flex-row justify-between lg:h-5 lg:items-center">
+            <div class="flex space-x-2 items-center leading-tight font-semibold max-sm:mb-2">
                     {{ $icon ?? '' }}
                     <span>{{ $title ?? '' }}</span>
             </div>
-            <div class="space-x-2 flex items-center">
+            <div class="lg:space-x-2 max-sm:space-y-2 flex flex-col sm:flex-row">
                 {{ $buttons ?? '' }}
             </div>
         </div>
