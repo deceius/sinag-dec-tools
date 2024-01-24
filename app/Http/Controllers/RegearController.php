@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 use Spatie\DiscordAlerts\Facades\DiscordAlert;
 
 class RegearController extends Controller
@@ -100,12 +98,9 @@ class RegearController extends Controller
                 $deaths->where('name', 'like', '%' . $request->input('name') . '%');
             }
 
-
             $deaths->groupBy('di.timestamp', 'di.battle_id', 'di.character_id');
 
-            // dd($deaths->toSql());
             $deaths = $deaths->paginate(10);
-            $approvedGears = []; //['HEAD_LEATHER_SET3', '2H_AXE', 'HEAD_LEATHER_UNDEAD', '2H_DUALAXE_KEEPER', '2H_HAMMER_AVALON', 'HEAD_PLATE_SET2', 'CAPEITEM_FW_MARTLOCK', 'ARMOR_PLATE_KEEPER', 'ARMOR_LEATHER_HELL'];
             foreach ($deaths as $death) {
                 $newGears = [];
                 $notAllowed = 0;
@@ -125,13 +120,4 @@ class RegearController extends Controller
             }
         return [ 'deaths' => $deaths, 'unfiltered' => $unfiltered ];
     }
-
-    public function store(Request $request)
-    {
-
-        DiscordAlert::message("A regear has been filed by <@" . Auth()->user()->id . '>. check it out here: ' . url('/regear?id=') . '12');
-        // return ['data' => $request->all()];
-    }
-
-
 }
