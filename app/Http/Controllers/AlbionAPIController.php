@@ -120,7 +120,7 @@ class AlbionAPIController extends Controller
                             'killer_equipment' => $this->parseEquipment($event->Killer->Equipment)->implode(","),
                             'death_fame' => $event->TotalVictimKillFame,
                             'timestamp' => $event->TimeStamp,
-                            'regear_cost' => $this->fetchRegearCost($this->parseEquipment($event->Victim->Equipment)),
+                            'regear_cost' => 0, // $this->fetchRegearCost($this->parseEquipment($event->Victim->Equipment)),
                         ];
                         $death = DeathInfo::firstOrCreate(
                             ['id' => $event->EventId],
@@ -135,8 +135,8 @@ class AlbionAPIController extends Controller
 
 
         }
-        $battleTotalCost = DeathInfo::whereIn('battle_id', $formattedBattleIds)->sum('regear_cost');
-        $prompt = "<@" . Auth()->user()->id . "> opened [regears](https://sinag.deceius.com) for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). The regears in the battleboard has an estimated cost (in buy orders) of " . number_format($battleTotalCost) . ". @everyone";
+        // $battleTotalCost = DeathInfo::whereIn('battle_id', $formattedBattleIds)->get()->count();
+        $prompt = "<@" . Auth()->user()->id . "> opened [regears](https://sinag.deceius.com) for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). @everyone";
         if (App::environment('production')) {
             DiscordAlert::message($prompt);
         }
