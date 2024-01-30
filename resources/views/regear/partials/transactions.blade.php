@@ -29,7 +29,7 @@
 
             <x-ui.form.select x-model="filter.role_id">
                 <template x-for="(role, index) in ['All Roles'].concat(roles)">
-                    <option x-bind:value="index" x-text="(index > 0 ? roleIcons[index - 1] + ' ' : '') + role"/>
+                    <option x-bind:value="index" x-text="role"/>
                 </template>
             </x-ui.form.select>
         </x-slot>
@@ -79,11 +79,19 @@
                                         <td class="border-t py-3 px-5 max-sm:hidden"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
                                         <td class="border-t py-3 px-5" >
                                             <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                                                <span x-text='fetchRoleIcon(item.role_id) + " " + item.name'/>
+                                                <div class="flex align-middle space-x-1">
+                                                    <x-custom.image-icon ::class="'role-' + fetchRoleIcon(item.role_id)"/>
+                                                    <span x-text='item.name'/>
+                                                </div>
                                                 <small class="font-light sm:hidden" x-text='item.timestamp'/>
                                              </div>
                                         </td>
-                                        <td class="border-t py-3 px-5 max-sm:hidden" x-text='item.member_info ? item.member_info.member_tier : ""'></td>
+                                        <td class="border-t py-3 px-5 max-sm:hidden">
+                                            <div class="flex align-middle space-x-1">
+                                                <x-custom.image-icon ::class="'icon-' + item.member_info.member_tier.toLowerCase()"/>
+                                                <span x-text='item.member_info ? item.member_info.member_tier : ""'/>
+                                            </div>
+                                        </td>
                                         {{-- <td class="border-t py-3 px-5" x-text='item.role_id == -1 ? "N/A" : roles[item.role_id]'></td> --}}
                                         <td class="border-t  py-1 px-5">
                                             <template x-for="equips in item.equipment.split(',')">

@@ -1,3 +1,75 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.icon-senior {
+    content: url('/roles/role-senior.png') ;
+    height: 16px;
+    width: auto;
+}
+
+.icon-sinag {
+    content: url('/roles/role-sinag.png') ;
+    height: 16px;
+    width: auto;
+}
+
+.icon-trial {
+    content: url('/roles/role-trial.png') ;
+    height: 16px;
+    width: auto;
+}
+
+.icon-mentor {
+    content: url('/roles/role-mentor.png') ;
+    height: 16px;
+    width: auto;
+}
+
+.icon-core {
+    content: url('/roles/role-core.png') ;
+    height: 16px;
+    width: auto;
+}
+
+.role-0 {
+    content: url('/roles/role_offtank.png') ;
+    height: 16px;
+    width: auto;
+}
+.role-1 {
+    content: url('/roles/role_deftank.png') ;
+    height: 16px;
+    width: auto;
+}
+.role-2 {
+    content: url('/roles/role_healer.png') ;
+    height: 16px;
+    width: auto;
+}
+.role-3 {
+    content: url('/roles/role_support.png') ;
+    height: 16px;
+    width: auto;
+}
+.role-4 {
+    content: url('/roles/role_debuff.png') ;
+    height: 16px;
+    width: auto;
+}
+.role-5 {
+    content: url('/roles/role_rdps.png') ;
+    height: 16px;
+    width: auto;
+}
+.role-6 {
+    content: url('/roles/role_mdps.png') ;
+    height: 16px;
+    width: auto;
+}
+.role-none {
+    content: url('/roles/role_none.png') ;
+    height: 16px;
+    width: auto;
+}

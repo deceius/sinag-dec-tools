@@ -14,15 +14,6 @@ export default () => ({
         "Regeared" : "1",
         "Rejected": "-1",
     },
-    roleIcons: [
-        "⚒️", //"Off Tanks",
-        "🛡️", //"Def Tanks",
-        "✨", //"Healers",
-        "🔮", //"Supports",
-        "⚡", //"Debuff",
-        "🏹", //"RDPS",
-        "⚔️", //"MDPS",
-    ],
     isLoading: false,
     nameSearch: '',
     filter: {
@@ -108,10 +99,10 @@ export default () => ({
     },
     fetchRoleIcon(index){
         if (index < 0) {
-            return "❌";
+            return "none";
         }
 
-        return this.roleIcons[index];
+        return index;
     },
     loadRegear(url) {
         this.isLoading = true;

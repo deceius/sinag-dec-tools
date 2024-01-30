@@ -107,19 +107,19 @@ class User extends Authenticatable
     function getMemberTierAttribute(){
         $roles = explode(",", $this->roles);
         if (in_array(config('app.roles.mentor'), $roles)) {
-            return "🎖️ Mentor";
+            return "Mentor";
         }
         elseif (in_array(config('app.roles.core'), $roles)) {
-            return "⚔️ Core";
+            return "Core";
         }
         elseif (in_array(config('app.roles.senior'), $roles)) {
-            return "🛡️ Senior";
+            return "Senior";
         }
         elseif (in_array(config('app.roles.sinag'), $roles)) {
-            return "☀️ Sinag";
+            return "Sinag";
         }
         elseif (in_array(config('app.roles.trial'), $roles)) {
-            return "🌱 Trial";
+            return "Trial";
         }
         else {
             return "";
