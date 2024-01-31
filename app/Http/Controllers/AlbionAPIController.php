@@ -102,7 +102,7 @@ class AlbionAPIController extends Controller
         $formattedBattleIds = [];
         foreach($battleIds as $battleId) {
             $battleIdExists = DeathInfo::where('battle_id', $battleId)->limit(1)->get();
-            if (!empty($battleIdExists)) {
+            if (!$battleIdExists->isEmpty()) {
                 Log::info("Battle ID: " . $battleId . " already exists.");
                 continue;
             }
