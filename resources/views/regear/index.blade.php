@@ -19,7 +19,7 @@
                             <x-ui.search-custom-icon placeholder="Enter Battle IDs..."
                             click-method="parseBattles()"
                             disabled="isLoading"
-                            model="filter.battleIds">
+                            model="battleIds">
                                 <x-icons.breadcrumb x-if="isLoading"/>
                             </x-ui.search-custom-icon>
                         </div>

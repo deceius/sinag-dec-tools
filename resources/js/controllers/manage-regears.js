@@ -1,4 +1,5 @@
 export default () => ({
+    battleIds: '',
     roles: [
         "Off Tanks",
         "Def Tanks",
@@ -34,7 +35,7 @@ export default () => ({
     ctaList: [],
     parseBattles() {
         this.isLoading = true;
-        let url = "/parseDeaths?battleIds=" + this.filter.battleIds;
+        let url = "/parseDeaths?battleIds=" + this.battleIds;
         axios.get(url).then(
             response => {
                 this.isLoading = false;
