@@ -146,12 +146,10 @@ class AlbionAPIController extends Controller
         Log::info(Auth()->user()->username . " fetched " . count($result) . " death events.");
         // $battleTotalCost = DeathInfo::whereIn('battle_id', $formattedBattleIds)->get()->count();
         $prompt = "<@" . Auth()->user()->id . "> opened [regears](https://sinag.deceius.com) for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). @everyone";
-        if (!empty($results)) {
-            if (App::environment('production')) {
-                DiscordAlert::message($prompt);
-            }
-            Log::info($prompt);
+        if (App::environment('production')) {
+            DiscordAlert::message($prompt);
         }
+        Log::info($prompt);
     }
 
     public function fetchRegearCost($forRegears) {
