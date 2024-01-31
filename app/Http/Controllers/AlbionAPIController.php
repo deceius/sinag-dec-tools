@@ -95,10 +95,17 @@ class AlbionAPIController extends Controller
         if (!$request->input('battleIds')) {
             return;
         }
+
+        Log::info(Auth()->user()->username . " attempts to open killboard for battle(s): " . $request->input('battleIds'));
         $result = [];
         $battleIds = explode(',', $request->input('battleIds'));
         $formattedBattleIds = [];
         foreach($battleIds as $battleId) {
+            $battleIdExists = DeathInfo::where('battle_id', $battleId)->limit(1)->get();
+            if (!empty($battleIdExists)) {
+                Log::info("Battle ID: " . $battleId . " already exists.");
+                continue;
+            }
             array_push($formattedBattleIds, trim($battleId));
             $offset = 0;
             $events = [];
@@ -135,12 +142,16 @@ class AlbionAPIController extends Controller
 
 
         }
+
+        Log::info(Auth()->user()->username . " fetched " . count($result) . " death events.");
         // $battleTotalCost = DeathInfo::whereIn('battle_id', $formattedBattleIds)->get()->count();
         $prompt = "<@" . Auth()->user()->id . "> opened [regears](https://sinag.deceius.com) for this [battleboard](https://east.albionbattles.com/multilog?ids=" . implode(",", $formattedBattleIds) . "). @everyone";
-        if (App::environment('production')) {
-            DiscordAlert::message($prompt);
+        if (!empty($results)) {
+            if (App::environment('production')) {
+                DiscordAlert::message($prompt);
+            }
+            Log::info($prompt);
         }
-        Log::info($prompt);
     }
 
     public function fetchRegearCost($forRegears) {
