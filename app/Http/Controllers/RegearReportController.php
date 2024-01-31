@@ -13,7 +13,13 @@ class RegearReportController extends Controller
     //
 
     public function index(Request $request) {
-        return view('reports.regear.index');
+        $result = DeathInfo::select('battle_id',
+                DB::raw('SUM(regear_cost) as cost'),
+                DB::raw('SUM(death_fame) as death_fame'),
+                DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as unit"),
+                DB::raw('COUNT(1) as death_count'))
+        ->first();
+        return view('reports.regear.index', ['unfiltered' => $result]);
     }
 
     public function fetchRoleRegearStats() {
@@ -24,6 +30,7 @@ class RegearReportController extends Controller
                 DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as unit"),
                 DB::raw('COUNT(1) as death_count'))
         ->groupBy('battle_id')
+        ->orderBy('battle_id', 'desc')
         ->paginate(5);
         return $result;
     }
