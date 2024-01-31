@@ -31,9 +31,9 @@
                                                 <th scope="col" class="text-start py-3 px-5">
                                                     {{ __('Qty. Lost') }}
                                                 </th>
-                                                {{-- <th scope="col" class="text-start py-3 px-5">
+                                                <th scope="col" class="text-start py-3 px-5">
                                                     {{ __('Est. Regear Cost') }}
-                                                </th> --}}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -43,7 +43,7 @@
                                                     <td class="border-t py-3 px-5" x-text='item.death_count'></td>
                                                     <td class="border-t py-3 px-5" x-text='item.death_fame.toLocaleString("en-US")'></td>
                                                     <td class="border-t py-3 px-5" x-text='item.unit.toLocaleString("en-US")'></td>
-                                                    {{-- <td class="border-t py-3 px-5" x-text='parseInt(item.cost).toLocaleString("en-US")'></td> --}}
+                                                    <td class="border-t py-3 px-5" x-text='parseInt(item.cost).toLocaleString("en-US")'></td>
                                                 </tr>
                                         </template>
                                         </tbody>

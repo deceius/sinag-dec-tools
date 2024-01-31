@@ -120,7 +120,7 @@ class AlbionAPIController extends Controller
                             'killer_equipment' => $this->parseEquipment($event->Killer->Equipment)->implode(","),
                             'death_fame' => $event->TotalVictimKillFame,
                             'timestamp' => $event->TimeStamp,
-                            'regear_cost' => 0, // $this->fetchRegearCost($this->parseEquipment($event->Victim->Equipment)),
+                            'regear_cost' =>  $this->fetchRegearCost($this->parseEquipment($event->Victim->Equipment)),
                         ];
                         $death = DeathInfo::firstOrCreate(
                             ['id' => $event->EventId],
