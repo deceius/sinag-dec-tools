@@ -101,11 +101,7 @@ class AlbionAPIController extends Controller
         $battleIds = explode(',', $request->input('battleIds'));
         $formattedBattleIds = [];
         foreach($battleIds as $battleId) {
-            $battleIdExists = DeathInfo::where('battle_id', $battleId)->limit(1)->get();
-            if (!$battleIdExists->isEmpty()) {
-                Log::info("Battle ID: " . $battleId . " already exists.");
-                continue;
-            }
+
             array_push($formattedBattleIds, trim($battleId));
             $offset = 0;
             $events = [];
