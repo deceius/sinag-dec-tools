@@ -83,7 +83,7 @@
                                                     <x-custom.image-icon ::class="'role-' + fetchRoleIcon(item.role_id)"/>
                                                     <span x-text='item.name'/>
                                                 </div>
-                                                <small class="font-light sm:hidden" x-text='item.timestamp'/>
+                                                <span class="font-light text-sm sm:hidden" x-text='item.timestamp'/>
                                              </div>
                                         </td>
                                         <td class="border-t py-3 px-5 max-sm:hidden">

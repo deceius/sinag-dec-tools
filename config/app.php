@@ -185,7 +185,7 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
-    'version' => '2.5.1',
+    'version' => '2.6.1',
     'version_name' => 'Clarent',
 
     'ingame_guild_id' => env('INGAME_GUILD_ID', null),
