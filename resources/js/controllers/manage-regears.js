@@ -17,6 +17,7 @@ export default () => ({
     },
     isLoading: false,
     nameSearch: '',
+    battleIdSearch: '',
     filter: {
         'battle_id': '',
         'status': '',
@@ -60,8 +61,7 @@ export default () => ({
     processFilters(){
         let filters = (this.filter.status ? "status=" + this.filter.status + "&" : "");
         let roleId = parseInt(this.filter.role_id) - 1;
-        let battleIdFilterArray = this.filter.battle_id.split(" > ");
-        let battleId = battleIdFilterArray.length > 1 ? battleIdFilterArray[0] : "";
+        let battleId = this.battleIdSearch ? this.battleIdSearch : "";
         let tier = this.filter.tier ? this.filter.tier : "";
         let name = this.nameSearch ? this.nameSearch : "";
         filters = filters +  (roleId >= 0 ? "role_id=" + (roleId) + "&"  : "");

@@ -76,7 +76,6 @@ class RegearController extends Controller
             });
 
 
-            $unfiltered = DeathInfo::select(DB::raw("CONCAT(battle_id, ' > ', DATE_FORMAT(timestamp, '%Y-%m-%d')) as battle_time"))->groupBy("battle_time")->orderBy('timestamp', 'desc')->limit('20')->get();
             if ($request->input('status')) {
                 $deaths->where('status', $request->input('status'));
             }
@@ -85,7 +84,7 @@ class RegearController extends Controller
             }
 
             if ($request->input('battle_id') != null) {
-                $deaths->where('battle_id', $request->input('battle_id'));
+                $deaths->where('battle_id', 'like', '%' . $request->input('battle_id') . '%');
             }
             $deaths->join('users', 'ao_character_id', '=', 'character_id');
 
@@ -118,6 +117,6 @@ class RegearController extends Controller
                 $death->member_info = $death->memberInfo;
 
             }
-        return [ 'deaths' => $deaths, 'unfiltered' => $unfiltered ];
+        return [ 'deaths' => $deaths ];
     }
 }

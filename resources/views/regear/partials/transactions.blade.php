@@ -8,11 +8,7 @@
         </x-slot>
         <x-slot:buttons>
             <x-ui.form.input.text placeholder="Filter Name..." x-model="nameSearch" @input.debounce="reloadData()" />
-            <x-ui.form.select x-model="filter.battle_id">
-                <template x-for="cta in ['All Battles'].concat(Object.keys(ctaList))">
-                    <option x-bind:value="cta" x-text="cta"/>
-                </template>
-            </x-ui.form.select>
+            <x-ui.form.input.text placeholder="Filter Battle ID..." x-model="battleIdSearch" @input.debounce="reloadData()" />
 
             <x-ui.form.select x-model="filter.tier">
                 <option value="">All Tiers</option>

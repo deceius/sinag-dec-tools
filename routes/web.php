@@ -29,9 +29,9 @@ Route::get('/get-builds', [BuildController::class, 'index'])->name('builds.fetch
 
 Route::get('/home', function () {
     return view('home');
-})->middleware(['auth'])->name('home');
+})->middleware('auth', 'in_guild')->name('home');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'in_guild')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/member/{id}', [ProfileController::class, 'bindCharacter'])->name('profile.update');
     Route::get('/aosearch', [AlbionAPIController::class, 'searchIGN'])->name('ao.search');
@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/builds', function () { return view('builds.member-index'); })->name('builds');
 });
 
-Route::middleware('auth', 'officer')->group(function () {
+Route::middleware('auth', 'in_guild', 'officer')->group(function () {
     Route::get('/parseDeaths', [AlbionAPIController::class, 'fetchDeathLogByBattleId']);
     Route::get('/parseitems', [AlbionAPIController::class, 'parseItems'])->name('ao.parseitems');
     Route::get('/getitems', [AlbionAPIController::class, 'getItemList'])->name('ao.getitems');
