@@ -39,6 +39,8 @@ Route::middleware('auth', 'in_guild')->group(function () {
     Route::get('/deathlog', [AlbionAPIController::class, 'searchDeathLog'])->name('ao.death');
     Route::get('/fetchdeathlog', [AlbionAPIController::class, 'fetchDeathLog'])->name('ao.death');
 
+
+    Route::patch('/regear/{regearInfo}/request', [RegearController::class, 'requestRegear'])->name('request.regear');
     Route::patch('/regear/{regearInfo}/update', [RegearController::class, 'processRegear'])->name('process.regear');
 
 

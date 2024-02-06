@@ -27,17 +27,20 @@ class RegearController extends Controller
         return view('regear.index', ['tiers' => $tiers]);
     }
 
+    public function requestRegear(Request $request, DeathInfo $regearInfo) {
+
+        $member = User::where('ao_character_id', $regearInfo->character_id)->first();
+        $regearInfo->status = 2;
+        $regearInfo->save();
+        $prompt =  $member->ao_character_name . " regear request for Battle ID # `" . $regearInfo->battle_id . "` - sent.";
+        Log::info($prompt);
+        return redirect()->back();
+
+    }
+
     public function processRegear(Request $request, DeathInfo $regearInfo) {
 
         $member = User::where('ao_character_id', $regearInfo->character_id)->first();
-
-        if ($request->input('req') && $regearInfo->status == 0) {
-            $regearInfo->status = 2;
-            $regearInfo->save();
-            $prompt =  $member->ao_character_name . " regear request for Battle ID # `" . $regearInfo->battle_id . "` - sent.";
-            Log::info($prompt);
-            return redirect()->back();
-        }
 
         if (Auth::user()->is_regear_officer && $regearInfo->status == 2) {
             $regearInfo->regeared_by = Auth::user()->id;

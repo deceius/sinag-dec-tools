@@ -52,7 +52,7 @@
                                         <td class="py-3 px-5 max-sm:hidden " x-text='item.updated_at'></td>
                                         <td class="py-3 px-5  max-sm:hidden" x-text='item.regearing_officer ? item.regearing_officer.username : ""'></td>
                                             <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
-                                                <form method="post" :action="item.url + '/update?req=1'" >
+                                                <form method="post" :action="item.url + '/request'" >
                                                     @csrf
                                                     @method('patch')
                                                     <x-ui.button type="submit" style="success" text="Request" x-show="item.status == 0">
