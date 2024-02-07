@@ -3,9 +3,6 @@
         <x-ui.header title="{{ __('Regear Summary') }}"/>
     </x-slot>
 
-    <div class="p-4 bg-yellow-600 text-sm text-gray-200 leading-tight">
-        Due to SBI's encryption of the market data, most recent <b>Est. Regear Cost</b> does not reflect.
-    </div>
     <div class="py-12"  x-data="regearReports"  x-init="init()">
 
         <div class="max-w-full sm:px-6 lg:px-8 mb-6">

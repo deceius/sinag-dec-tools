@@ -18,15 +18,17 @@ class IsInGuild
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        $url = "https://gameinfo-sgp.albiononline.com/api/gameinfo/players/" . $user->ao_character_id;
-        $response = Http::get($url);
+        if ($user->ao_character_id) {
+            $url = "https://gameinfo-sgp.albiononline.com/api/gameinfo/players/" . $user->ao_character_id;
+            $response = Http::get($url);
 
-        $object = json_decode($response->body());
-        if ($object->GuildId == config('app.ingame_guild_id')) {
-            return $next($request);
+            $object = json_decode($response->body());
+            if ($object->GuildId != config('app.ingame_guild_id')) {
+                return redirect('/')->with('error', 'You are not a member of SINAG in-game.');
+            }
         }
 
-        return redirect('/')->with('error', 'You are not a member of SINAG in-game.');
+        return $next($request);
 
     }
 }
