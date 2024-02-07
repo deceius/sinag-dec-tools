@@ -30,7 +30,7 @@ class RegearReportController extends Controller
                 DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as unit"),
                 DB::raw('COUNT(1) as death_count'))
         ->groupBy('battle_id')
-        ->orderBy('created_at', 'desc')
+        ->orderBy('battle_id', 'desc')
         ->paginate(5);
         return $result;
     }
