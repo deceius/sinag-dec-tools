@@ -68,7 +68,7 @@ return [
     |
     */
 
-    'scopes' => env('LARASCORD_SCOPE', 'identify&email'),
+    'scopes' => env('LARASCORD_SCOPE', 'identify'),
 
     /*
     |--------------------------------------------------------------------------
