@@ -38,7 +38,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="border-t-2 border-gray-700 text-start">
+                                            <tr class="border-t-2 border-gray-700 text-start font-medium bg-gray-900">
                                                 <td class="border-t py-3 px-5" x-text='"All CTAs"'/>
                                                 <td class="border-t py-3 px-5 text-end" >{{ number_format($unfiltered->death_count, 0) }}</td>
                                                 <td class="border-t py-3 px-5 text-end" >{{ number_format($unfiltered->death_fame, 0) }}</td>
