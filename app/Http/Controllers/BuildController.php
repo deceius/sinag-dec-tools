@@ -35,6 +35,11 @@ class BuildController extends Controller
         return view('builds.edit', ['buildInfo' => $buildInfo]);
     }
 
+    public function delete(Request $request, BuildInfo $buildInfo) {
+        $buildInfo->delete();
+        return redirect()->back();
+    }
+
     /**
      * Display the user's profile form.
      */

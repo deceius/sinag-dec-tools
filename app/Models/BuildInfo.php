@@ -17,6 +17,7 @@ class BuildInfo extends Model
 
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i',
+        'updated_at' => 'datetime:Y-m-d H:i',
     ];
     protected $appends = [
         'consumable_list',

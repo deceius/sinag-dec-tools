@@ -75,7 +75,7 @@
                                         <td class="border-t py-3 px-5 max-sm:hidden"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
                                         <td class="border-t py-3 px-5" >
                                             <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                                                <div class="flex align-middle space-x-1">
+                                                <div class="flex  items-center space-x-1">
                                                     <x-custom.image-icon ::class="'role-' + fetchRoleIcon(item.role_id)"/>
                                                     <span x-text='item.name'/>
                                                 </div>
@@ -83,7 +83,7 @@
                                              </div>
                                         </td>
                                         <td class="border-t py-3 px-5 max-sm:hidden">
-                                            <div class="flex align-middle space-x-1">
+                                            <div class="flex  items-center space-x-1">
                                                 <x-custom.image-icon ::class="'icon-' + item.member_info.member_tier.toLowerCase()"/>
                                                 <span x-text='item.member_info ? item.member_info.member_tier : ""'/>
                                             </div>

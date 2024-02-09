@@ -16,7 +16,7 @@
                         {{ __('Home') }}
                     </x-ui.nav.link>
                     <x-ui.nav.link :href="route('builds')" :active="request()->routeIs('builds')">
-                        {{ __('ZvZ Builds') }}
+                        {{ __('Sinag Builds') }}
                     </x-ui.nav.link>
                     <x-ui.nav.link :href="route('market')" :active="request()->routeIs('market')">
                         {{ __('Price Checker') }}
@@ -110,6 +110,9 @@
 
             <x-ui.nav.responsive :href="route('market')" :active="request()->routeIs('market')">
                 {{ __('Price Checker') }}
+            </x-ui.nav.responsive>
+            <x-ui.nav.responsive :href="route('builds')" :active="request()->routeIs('builds')">
+                {{ __('Sinag Builds') }}
             </x-ui.nav.responsive>
             @if(Auth::user()->is_officer)
                 @if(Auth::user()->is_regear_officer)

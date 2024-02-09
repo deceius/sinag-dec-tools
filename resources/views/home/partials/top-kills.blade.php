@@ -7,7 +7,7 @@
             <x-icons.master-table/>
         </x-slot>
         <x-slot:buttons>
-            <span x-show="isLoading" class="animate-spin mr-2 max-sm:hidden"><x-icons.button.refresh /></span>
+            <span x-show="isLoading" class="flex items-center animate-spin mr-2 max-sm:hidden"><x-icons.button.refresh /></span>
         </x-slot>
         <x-slot:content>
             <div class="overflow-x-auto" x-show="!killsData">

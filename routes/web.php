@@ -66,5 +66,6 @@ Route::middleware('auth', 'in_guild', 'officer')->group(function () {
 
     Route::get('/officer/build/create', [BuildController::class, 'create'])->name('build.create');
     Route::get('/officer/build/{buildInfo}/edit', [BuildController::class, 'edit'])->name('build.edit');
+    Route::post('/officer/build/{buildInfo}/delete', [BuildController::class, 'delete'])->name('build.delete');
     Route::post('/officer/build/save', [BuildController::class, 'store'])->name('build.save');
 });

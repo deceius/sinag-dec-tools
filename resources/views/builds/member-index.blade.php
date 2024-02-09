@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot:header>
-        <x-ui.header title="{{ __('ZvZ Builds') }}">
+        <x-ui.header title="{{ __('Sinag Builds') }}">
             <x-slot:icon>
                 <x-icons.branch-group/>
             </x-slot>
