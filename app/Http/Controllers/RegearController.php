@@ -52,7 +52,7 @@ class RegearController extends Controller
             } else {
                 $regearInfo->status = 1;
                 $regearInfo->remarks = $request->input('remarks');
-                $prompt =  $prompt . "has been fulfilled by <@" . Auth()->user()->id . ">. Please check out chest: " . $regearInfo->remarks;
+                $prompt =  $prompt . "has been fulfilled by <@" . Auth()->user()->id . ">.  " . (!empty($regearInfo->remarks) ? "Please check it out on chest: " . $regearInfo->remarks : "Please check it out on your designated chest.");
             }
 
             if (App::environment('production')) {
