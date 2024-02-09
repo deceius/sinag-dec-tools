@@ -1,5 +1,5 @@
 <section x-data="builds" x-init="init()">
-    <x-ui.card.table class="mt-6">
+    <x-ui.card class="mt-6">
         <x-slot:title>
             {{ __('Build Generator') }}
         </x-slot>
@@ -12,72 +12,40 @@
             </x-ui.button>
         </x-slot>
         <x-slot:content>
-                <div class="overflow-x-auto" >
-                    <table id="table" class="min-w-full table-auto">
-                            <thead class="font-medium">
-                                <tr class=" border-gray-700">
-                                    <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Role') }}
-                                    </th>
-                                    <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Equipment') }}
-                                    </th>
-                                    <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Others') }}
-                                    </th>
-                                    <th scope="col" class="text-start py-3 px-5">
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr class="border-t-2 border-gray-700  text-start ">
-                                    <td class="border-t py-3 px-5 align-top">
-                                        <x-ui.form.select x-model="data.role_id">
-                                            <template x-for="(role, index) in roles">
-                                                <option x-bind:value="index" x-text="role" :selected="data.role_id == index"/>
-                                            </template>
-                                        </x-ui.form.select>
-                                    </td>
-                                    <td class="border-t py-3 px-5 align-top">
-                                        <template x-for="item in equipment">
-                                            <div class="mb-2">
-                                                <img x-show="item.items.length == 0" class="opacity-25 grayscale" x-bind:src="`https://render.albiononline.com/v1/item/QUESTITEM_TOKEN_ADC_FRAME?size=32`">
-                                                <div :class="{'animate-pulse': isLoading}">
-                                                    <template x-for="item_id in item.items">
-                                                        <img x-on:click="removeItem(item, item_id)" :class="{'opacity-25 grayscale': item_id.length === 0 }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ item_id ? item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32`" tooltip="item.type">
-                                                    </template>
-                                                </div>
-                                                <x-ui.search model="item.filter" click-method="load(item)" x-bind:placeholder="item.type" x-bind:disabled="item.disabled"/>
-                                            </div>
-                                        </template>
-                                    </td>
-                                    <td class="border-t py-3 px-5 align-top">
-                                        <template x-for="item in consumables">
-                                            <div class="mb-2">
-                                                <img x-show="item.items.length == 0" class="opacity-25 grayscale" x-bind:src="`https://render.albiononline.com/v1/item/QUESTITEM_TOKEN_ADC_FRAME?size=32`">
-                                                <div :class="{'animate-pulse': isLoading}">
-                                                    <template x-for="item_id in item.items">
-                                                        <img x-on:click="removeItem(item, item_id)" :class="{'opacity-25 grayscale':  item_id.length === 0 }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ item_id ? item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32`" tooltip="item.type">
-                                                    </template>
-                                                </div>
-                                                <x-ui.search model="item.filter" click-method="load(item)" x-bind:placeholder="item.type" x-bind:disabled="item.disabled"/>
-                                            </div>
-                                        </template>
-                                    </td>
-                                </tr>
-                                <tr class="border-t-2 border-transparent  text-start ">
-                                    <td class="border-t py-3 px-5 align-top" colspan="4">
-                                        <x-ui.form.input.text placeholder="Notes" x-model="data.notes" class="min-w-full"/>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
+            <x-ui.form.select x-model="data.role_id" class="mb-2">
+                <template x-for="(role, index) in roles">
+                    <option x-bind:value="index" x-text="role" :selected="data.role_id == index"/>
+                </template>
+            </x-ui.form.select>
+            <div class="grid grid-cols-3 max-sm:grid-cols-1">
+                <div>
+                    <template x-for="item in equipment">
+                        <div class="mb-2">
+                            <x-ui.search model="item.filter" click-method="load(item, true)" x-bind:placeholder="item.type" x-bind:disabled="item.disabled"/>
+                            <img x-show="item.items.length == 0" class="opacity-25 grayscale inline" x-bind:src="`https://render.albiononline.com/v1/item/QUESTITEM_TOKEN_ADC_FRAME?size=32`">
+                            <div :class="{'animate-pulse': isLoading}" class="inline">
+                                <template x-for="item_id in item.items">
+                                    <img x-on:click="removeItem(item, item_id)" :class="{'opacity-25 grayscale': item_id.length === 0 }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ item_id ? item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32`" tooltip="item.type">
+                                </template>
+                            </div>
+                        </div>
+                    </template>
                 </div>
-
-
+               <div>
+                <template x-for="item in consumables">
+                    <div class="mb-2">
+                        <x-ui.search model="item.filter" click-method="load(item)" x-bind:placeholder="item.type" x-bind:disabled="item.disabled"/>
+                        <img x-show="item.items.length == 0" class="opacity-25 grayscale inline" x-bind:src="`https://render.albiononline.com/v1/item/QUESTITEM_TOKEN_ADC_FRAME?size=32`">
+                        <div :class="{'animate-pulse': isLoading}" class="inline">
+                            <template x-for="item_id in item.items">
+                                <img x-on:click="removeItem(item, item_id)" :class="{'opacity-25 grayscale':  item_id.length === 0 }" class="inline" x-bind:src="`https://render.albiononline.com/v1/item/${ item_id ? item_id : 'QUESTITEM_TOKEN_ADC_FRAME'}?size=32`" tooltip="item.type">
+                            </template>
+                        </div>
+                    </div>
+                </template>
+               </div>
+            </div>
+            <x-ui.form.input.text placeholder="Notes" x-model="data.notes" class="min-w-full"/>
         </x-slot>
     </x-ui.card>
 

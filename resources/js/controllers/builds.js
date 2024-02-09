@@ -108,9 +108,9 @@ export default () => ({
             }
         );
     },
-    load(item){
+    load(item, isEquip = false){
         this.isLoading = true;
-        let url = '/getitems?keyword=' + item.filter;
+        let url = '/getitems?keyword=' + item.filter + (isEquip ? '&equip=1' : '');
         axios.get(url).then(
             response => {
                 item.filter = '';

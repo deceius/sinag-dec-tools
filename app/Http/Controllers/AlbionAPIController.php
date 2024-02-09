@@ -78,12 +78,23 @@ class AlbionAPIController extends Controller
     }
 
     public function getItemList(Request $request) {
+        $keyword = $request->input('keyword');
+        $isElder = $request->input('equip') ? true : false;
+        if (!$keyword) {
+            return ['item' => null];
+        }
         if ($request->ajax()) {
-            $keyword = $request->input('keyword');
             if (empty($keyword) || strlen($keyword) < 3) {
                 return abort(500, 'error');
             }
-            $item = ItemInfo::where('item_name', 'LIKE', '%'.$keyword.'%')->orWhere('item_id', 'LIKE', '%'.$keyword.'%')->first();
+            $whereClauses = [['item_name', 'LIKE', '%'.$keyword.'%']];
+            if ($isElder) {
+                array_push($whereClauses, ['item_id', 'LIKE', 'T8_%']);
+            }
+
+
+            $item = ItemInfo::where($whereClauses)->orWhere('item_id', 'LIKE', '%'.$keyword.'%');
+            $item = $item->first();
             if (!$item) {
                 return abort(404, 'error');
             }
