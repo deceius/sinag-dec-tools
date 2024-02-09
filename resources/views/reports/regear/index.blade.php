@@ -23,16 +23,16 @@
                                                 <th scope="col" class="text-start py-3 px-5">
                                                     {{ __('Battle ID') }}
                                                 </th>
-                                                <th scope="col" class="text-start py-3 px-5">
+                                                <th scope="col" class="text-end py-3 px-5">
                                                     {{ __('Deaths') }}
                                                 </th>
-                                                <th scope="col" class="text-start py-3 px-5">
+                                                <th scope="col" class="text-end py-3 px-5">
                                                     {{ __('Total Death Fame') }}
                                                 </th>
-                                                <th scope="col" class="text-start py-3 px-5">
+                                                <th scope="col" class="text-end py-3 px-5">
                                                     {{ __('Qty. Lost') }}
                                                 </th>
-                                                <th scope="col" class="text-start py-3 px-5">
+                                                <th scope="col" class="text-end py-3 px-5">
                                                     {{ __('Est. Regear Cost') }}
                                                 </th>
                                             </tr>
@@ -40,18 +40,18 @@
                                         <tbody>
                                             <tr class="border-t-2 border-gray-700 text-start">
                                                 <td class="border-t py-3 px-5" x-text='"All CTAs"'/>
-                                                <td class="border-t py-3 px-5" >{{ $unfiltered->death_count }}</td>
-                                                <td class="border-t py-3 px-5" >{{ number_format($unfiltered->death_fame, 0) }}</td>
-                                                <td class="border-t py-3 px-5" >{{ $unfiltered->unit }}</td>
-                                                <td class="border-t py-3 px-5" >{{ number_format($unfiltered->cost, 0) }}</td>
+                                                <td class="border-t py-3 px-5 text-end" >{{ number_format($unfiltered->death_count, 0) }}</td>
+                                                <td class="border-t py-3 px-5 text-end" >{{ number_format($unfiltered->death_fame, 0) }}</td>
+                                                <td class="border-t py-3 px-5 text-end" >{{ number_format($unfiltered->unit, 0) }}</td>
+                                                <td class="border-t py-3 px-5 text-end" >{{ number_format($unfiltered->cost, 0) }}</td>
                                             </tr>
                                         <template x-for="item in losses.data">
                                                 <tr class="border-t-2 border-gray-700 text-start">
                                                     <td class="border-t py-3 px-5"><a class="underline text-indigo-600" target="_blank" x-bind:href="'https://east.albionbattles.com/multilog?ids=' + item.battle_id" x-text="item.battle_id"></a></td>
-                                                    <td class="border-t py-3 px-5" x-text='item.death_count'></td>
-                                                    <td class="border-t py-3 px-5" x-text='item.death_fame.toLocaleString("en-US")'></td>
-                                                    <td class="border-t py-3 px-5" x-text='item.unit.toLocaleString("en-US")'></td>
-                                                    <td class="border-t py-3 px-5" x-text='parseInt(item.cost).toLocaleString("en-US")'></td>
+                                                    <td class="border-t py-3 px-5 text-end" x-text='item.death_count.toLocaleString("en-US")'></td>
+                                                    <td class="border-t py-3 px-5 text-end" x-text='item.death_fame.toLocaleString("en-US")'></td>
+                                                    <td class="border-t py-3 px-5 text-end" x-text='item.unit.toLocaleString("en-US")'></td>
+                                                    <td class="border-t py-3 px-5 text-end" x-text='parseInt(item.cost).toLocaleString("en-US")'></td>
                                                 </tr>
                                         </template>
                                         </tbody>
@@ -95,7 +95,7 @@
                                                 <th scope="col" class="text-start py-3 px-5">
                                                     {{ __('Name') }}
                                                 </th>
-                                                <th scope="col" class="text-start py-3 px-5">
+                                                <th scope="col" class="text-end py-3 px-5">
                                                     {{ __('Count') }}
                                                 </th>
                                             </tr>
@@ -109,7 +109,7 @@
                                                     </td>
                                                     <td class="border-t py-1 px-5" x-text='key'></td>
                                                     <td class="border-t py-1 px-5" x-text='item.name'></td>
-                                                    <td class="border-t py-1 px-5" x-text='item.items.length'></td>
+                                                    <td class="border-t py-1 px-5 text-end" x-text='item.items.length'></td>
                                                 </tr>
                                         </template>
                                         </tbody>
