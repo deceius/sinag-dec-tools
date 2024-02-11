@@ -9,6 +9,7 @@ export default () => ({
         'battleIds': '',
     },
     data: [],
+    totalPendingRegearItems: 0,
     losses: [],
     init() {
         this.loadLosses('/reports/regear/fetch/losses');
@@ -19,10 +20,14 @@ export default () => ({
         axios.get(url).then(
             response => {
                 this.data = response.data.result;
+                console.log(this.data);
+                this.totalPendingRegearItems = Object.values(this.data).reduce((accumulator, currentValue) => accumulator + currentValue.items.length, 0)
+
                 this.isLoading = false;
             }
         ).catch(error => {
                this.isLoading = false;
+               console.log(error);
             }
         );
     },

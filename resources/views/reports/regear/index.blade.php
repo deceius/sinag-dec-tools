@@ -101,7 +101,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            <tr class="border-t-2 border-gray-700 text-start  bg-gray-900">
+                                                <td class="border-t py-3 px-5"/>
+                                                <td class="border-t py-3 px-5"/>
+                                                <td class="border-t py-3 px-5 " x-text='"Total Item Count"'/>
+                                                <td class="border-t py-3 px-5 text-end" x-text='totalPendingRegearItems.toLocaleString("en-US")'></td>
+                                            </tr>
                                         <template x-for="(item, key) in data">
                                                 <tr class="border-t-2 border-gray-700 text-start" :class="{'opacity-50' : item.status == 0}">
                                                     <td class="py-1 px-5">
