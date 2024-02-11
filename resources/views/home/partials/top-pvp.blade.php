@@ -34,12 +34,10 @@
                                         <td class="border-t py-3 px-5">
                                             <div style="display: flex; flex-direction: column; align-items: flex-start;">
                                                <span x-text='item.Name'/>
-                                               <small x-text='"KD Ratio: " + item.FameRatio'/>
                                             </div>
+                                            <span class="font-light text-sm" x-text='"KD Ratio: " + item.FameRatio'/>
                                         </td>
                                         <td class="border-t py-3 px-5" x-text='item.KillFame.toLocaleString("en-US")'></td>
-
-
                                     </tr>
                             </template>
                             </tbody>

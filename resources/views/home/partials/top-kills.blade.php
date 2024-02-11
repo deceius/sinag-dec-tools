@@ -37,14 +37,14 @@
                                         <td class="border-t py-3 px-5">
                                             <div style="display: flex; flex-direction: column; align-items: flex-start;">
                                                <span x-text='item.Killer.Name'/>
-                                               <small x-text='item.Killer.GuildName'/>
                                             </div>
+                                            <span class="font-light text-sm" x-text='item.Killer.GuildName'/>
                                         </td>
                                         <td class="border-t py-3 px-5" >
                                             <div style="display: flex; flex-direction: column; align-items: flex-start;">
                                                 <span x-text='item.Victim.Name'/>
-                                                <small x-text='item.Victim.GuildName'/>
                                              </div>
+                                             <span class="font-light text-sm" x-text='item.Victim.GuildName'/>
                                         </td>
                                         <td class="border-t py-3 px-5" x-text='item.TotalVictimKillFame.toLocaleString("en-US")'></td>
 

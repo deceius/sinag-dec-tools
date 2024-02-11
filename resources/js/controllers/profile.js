@@ -5,6 +5,7 @@ export default () => ({
     },
     data: [],
     init(albionId) {
+        if (!albionId) { return; }
         this.isLoading = true;
         let url = '/loadchar?id=' + albionId;
         axios.get(url).then(
