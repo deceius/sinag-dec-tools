@@ -75,7 +75,8 @@ class User extends Authenticatable
         'member_tier',
         'is_officer',
         'is_build_officer',
-        'is_regear_officer'
+        'is_regear_officer',
+        'has_black_market_access'
     ];
 
     public function getUrlAttribute() {
@@ -88,6 +89,13 @@ class User extends Authenticatable
         $buildsOfficerRole = config('app.discord_roles.officer.builds');
 
         return in_array($regearOfficerRole, $roles) || in_array($buildsOfficerRole, $roles);
+    }
+
+    function getHasBlackMarketAccessAttribute(){
+        $roles = explode(",", $this->roles);
+        $bmAccessRole = config('app.roles.blck_market');
+
+        return in_array($bmAccessRole, $roles);
     }
 
     function getIsBuildOfficerAttribute(){
