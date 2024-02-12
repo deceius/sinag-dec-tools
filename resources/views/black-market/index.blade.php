@@ -76,10 +76,10 @@
                                 class="min-w-full text-center text-sm border-gray-700">
                                 <thead class="font-medium">
                                 <tr>
-                                    <th scope="col"  width='120px' class="border-b border-gray-700 px-6 py-3 text-center">
+                                    <th scope="col"  width='120px' class="border-b border-gray-700 px-6 py-3 text-start">
                                     Item
                                     </th>
-                                    <th scope="col" class="border-b border-gray-700 px-6 py-3">
+                                    <th scope="col" class="border-b border-gray-700 text-start px-6 py-3">
                                         Item ID
                                     </th>
                                     <th scope="col" class="border-b border-gray-700 px-6 py-3 text-right">
