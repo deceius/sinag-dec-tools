@@ -5,7 +5,9 @@
             {{ __('Black Market') }}
         </h2>
     </x-slot>
-
+    <div class="p-4 bg-red-600 font-semibold text-sm text-gray-200 leading-tight">
+       If you can access this, then what you're seeing is the black market price checker. Don't tell anyone.
+    </div>
     <div class="py-12">
         <div class="max-w-full sm:px-6 lg:px-8 space-y-6" x-data="blackmarket" x-init="init()">
             <div class="p-4 sm:p-8 bg-gray-800 shadow sm:rounded-lg">
