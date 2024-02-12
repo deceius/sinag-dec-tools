@@ -196,6 +196,7 @@ return [
         'senior' => env('MEMBER_ROLE_SENIOR', 0),
         'sinag' => env('MEMBER_ROLE_SINAG', 0),
         'trial' => env('MEMBER_ROLE_TRIAL', 0),
+        'blck_market' => env('ROLE_BLCK_MARKET', 0),
     ],
 
     'discord_roles' => [

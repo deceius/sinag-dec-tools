@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\IsBlackMarket;
 use App\Http\Middleware\IsInGuild;
 use App\Http\Middleware\IsOfficer;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'officer' => IsOfficer::class,
-        'in_guild' => IsInGuild::class
+        'in_guild' => IsInGuild::class,
+        'blck_market' => IsBlackMarket::class
     ];
 }
