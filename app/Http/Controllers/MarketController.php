@@ -64,6 +64,7 @@ class MarketController extends Controller
 
     public function bmIndex(Request $request) {
 
+        Log::channel('bm')->info(Auth::user()->username . " have accessed the black market.");
         $tiers = [1, 2, 3, 4, 5, 6, 7, 8];
         $enchantments = [0, 1, 2, 3, 4];
         if ($request->ajax()) {
@@ -128,7 +129,6 @@ class MarketController extends Controller
             $collection = MarketPrice::hydrate($object);
             return ['market_data' => $collection];
         }
-        Log::channel('bm')->info(Auth::user()->username . " have accessed the black market.");
         return view('black-market.index', [
             'enchantments' => $enchantments,
             'tiers' => $tiers]);
