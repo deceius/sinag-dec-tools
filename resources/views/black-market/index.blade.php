@@ -5,8 +5,8 @@
             {{ __('Black Market') }}
         </h2>
     </x-slot>
-    <div class="p-4 bg-red-600 font-semibold text-sm text-gray-200 leading-tight">
-       If you can access this, then what you're seeing is the black market price checker. Don't tell anyone.
+    <div class="p-4 bg-red-600 text-sm text-gray-200 leading-tight">
+       Welcome to the secret module of SINAG web tool. This was supposed to be a "personal use only" module, but here we are. Few people are given access, so don't tell anyone.
     </div>
     <div class="py-12">
 
