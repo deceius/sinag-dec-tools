@@ -9,7 +9,47 @@
        If you can access this, then what you're seeing is the black market price checker. Don't tell anyone.
     </div>
     <div class="py-12">
-        <div class="max-w-full sm:px-6 lg:px-8 space-y-6" x-data="blackmarket" x-init="init()">
+
+
+        <div class="max-w-full sm:px-6 lg:px-8 space-y-6" x-data="blackmarket" x-init="init(true)">
+
+
+            <x-ui.card.table>
+                <x-slot:title>
+                    {{ __('Gold Prices') }}
+                </x-slot>
+                <x-slot:icon>
+                    <x-icons.master-table/>
+                </x-slot>
+                <x-slot:content>
+                    <div class="overflow-x-auto" >
+                        <table id="table" class="min-w-full text-start text-sm border-gray-700">
+                                <thead class="font-medium">
+                                <tr>
+                                    @foreach ($gold as $item)
+                                    <th class="whitespace-nowrap border-t border-gray-700 px-6 py-3  text-start">{{ date('Y-m-d H:i', strtotime($item->timestamp)) }}</th>
+
+                                    @endforeach
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        @foreach ($gold as $item)
+                                        <td class="whitespace-nowrap border-t border-gray-700 px-6 py-3  text-start">{{ number_format($item->price, 0) }}</td>
+
+                                        @endforeach
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+
+
+                </x-slot>
+            </x-ui.card>
+
+
             <div class="p-4 sm:p-8 bg-gray-800 shadow sm:rounded-lg">
                 <form @submit.prevent=""  action="{{ url('market') }}">
                     <div class="flex flex-col sm:flex-row md:space-x-4">
@@ -27,6 +67,7 @@
                     </div>
                 </form>
             </div>
+
             <x-ui.card.table>
 
                 <x-slot:content>

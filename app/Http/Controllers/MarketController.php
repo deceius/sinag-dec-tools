@@ -129,8 +129,13 @@ class MarketController extends Controller
             $collection = MarketPrice::hydrate($object);
             return ['market_data' => $collection];
         }
+        $goldUrl = 'https://east.albion-online-data.com/api/v2/stats/gold?count=5';
+        $goldResponse = Http::get($goldUrl);
+        $goldObject = (array)json_decode($goldResponse->body());
+
         return view('black-market.index', [
             'enchantments' => $enchantments,
+            'gold' => $goldObject,
             'tiers' => $tiers]);
 }
 
