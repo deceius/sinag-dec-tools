@@ -7,8 +7,10 @@ use App\Models\Items;
 use App\Models\MarketPrice;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 use function PHPUnit\Framework\isEmpty;
@@ -126,6 +128,7 @@ class MarketController extends Controller
             $collection = MarketPrice::hydrate($object);
             return ['market_data' => $collection];
         }
+        Log::channel('bm')->info(Auth::user()->username . " have accessed the black market.");
         return view('black-market.index', [
             'enchantments' => $enchantments,
             'tiers' => $tiers]);
