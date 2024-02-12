@@ -8,6 +8,7 @@ import manageRegears from './controllers/manage-regears';
 import market from './controllers/market';
 import regearReports from './controllers/reports/regear-reports';
 import home from './controllers/home';
+import blackMarket from './controllers/black-market';
 
 window.Alpine = Alpine;
 
@@ -17,6 +18,7 @@ Alpine.data('profile', profile);
 Alpine.data('deathlog', deathlog);
 Alpine.data('manageRegears', manageRegears);
 Alpine.data('market', market);
+Alpine.data('blackmarket', blackMarket);
 Alpine.data('home', home);
 
 

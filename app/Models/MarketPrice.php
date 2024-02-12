@@ -25,7 +25,7 @@ class MarketPrice extends Model
         'buy_price_max_date'
     ];
 
-    protected $appends = ['has_prices'];
+    protected $appends = ['has_prices', 'item_name'];
 
     public function getEnchant(){
         if (!Str::contains($this->item_id, '@')){
@@ -35,6 +35,10 @@ class MarketPrice extends Model
         return $enchantLevel;
     }
 
+    public function getItemNameAttribute()
+    {
+        return ItemInfo::where('item_id', $this->item_id)->first()->item_name;
+    }
 
     protected function hasPrices(): Attribute
     {

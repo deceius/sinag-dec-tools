@@ -48,7 +48,9 @@ Route::middleware('auth', 'in_guild')->group(function () {
     Route::get('/get-builds', [BuildController::class, 'index'])->name('builds.fetch');
     Route::get('/builds', function () { return view('builds.member-index'); })->name('builds');
 });
-
+Route::middleware('auth', 'in_guild', 'blck_market')->group(function () {
+    Route::get('/black-market', [MarketController::class, 'bmIndex'])->name('black.market');
+});
 Route::middleware('auth', 'in_guild', 'officer')->group(function () {
     Route::get('/parseDeaths', [AlbionAPIController::class, 'fetchDeathLogByBattleId']);
     Route::get('/parseitems', [AlbionAPIController::class, 'parseItems'])->name('ao.parseitems');
