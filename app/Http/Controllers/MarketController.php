@@ -65,64 +65,16 @@ class MarketController extends Controller
     public function bmIndex(Request $request) {
 
         Log::channel('bm')->info(Auth::user()->username . " have accessed the black market.");
-        $tiers = [1, 2, 3, 4, 5, 6, 7, 8];
-        $enchantments = [0, 1, 2, 3, 4];
+        $tiers = ["All Tiers", 1, 2, 3, 4, 5, 6, 7, 8];
+        $enchantments = ["All Enchantments", 0, 1, 2, 3, 4];
         if ($request->ajax()) {
 
             $tier = $request->input('tier') ? $request->input('tier') : '';
             $enchant = $request->input('enchant') ? $request->input('enchant') : '';
+            $itemSearch = $request->input('keyword') ? $request->input('keyword') : '';
+            $value = '';
 
-
-            $itemDump = ItemInfo::where('item_id', 'like', 'T'. $tier .'%');
-            $itemDump->where('item_id', $enchant > 0 ? 'like' : 'not like', '%@' . ($enchant > 0 ? $enchant : '' ). '%');
-            $itemDump->where('item_id', 'not like', '%_BEAN');
-            $itemDump->where('item_id', 'not like', '%_WHEAT');
-            $itemDump->where('item_id', 'not like', '%_CABBAGE');
-            $itemDump->where('item_id', 'not like', '%_TURNIP');
-            $itemDump->where('item_id', 'not like', '%_CORN');
-            $itemDump->where('item_id', 'not like', '%_PUMPKIN');
-            $itemDump->where('item_id', 'not like', '%_COMFREY');
-            $itemDump->where('item_id', 'not like', '%_BURDOCK');
-            $itemDump->where('item_id', 'not like', '%_MEAT');
-            $itemDump->where('item_id', 'not like', '%_BUTTER');
-            $itemDump->where('item_id', 'not like', '%_ALCOHOL');
-            $itemDump->where('item_id', 'not like', '%_RELIC');
-            $itemDump->where('item_id', 'not like', '%_RUNE');
-            $itemDump->where('item_id', 'not like', '%_SOUL');
-            $itemDump->where('item_id', 'not like', '%_EGG');
-            $itemDump->where('item_id', 'not like', '%_MILK');
-            $itemDump->where('item_id', 'not like', '%_ESSENCE');
-            $itemDump->where('item_id', 'not like', 'TREASURE_%');
-            $itemDump->where('item_id', 'not like', '%_FARM_%');
-            $itemDump->where('item_id', 'not like', '%_FISH_%');
-            $itemDump->where('item_id', 'not like', '%_SKILLBOOK_%');
-            $itemDump->where('item_id', 'not like', '%_POTION%');
-            $itemDump->where('item_id', 'not like', '%_MEAL_%');
-            $itemDump->where('item_id', 'not like', '%_WOOD%');
-            $itemDump->where('item_id', 'not like', '%_ROCK%');
-            $itemDump->where('item_id', 'not like', '%_ORE%');
-            $itemDump->where('item_id', 'not like', '%_HIDE%');
-            $itemDump->where('item_id', 'not like', '%_FIBER%');
-            $itemDump->where('item_id', 'not like', '%_PLANKS%');
-            $itemDump->where('item_id', 'not like', '%_METALBAR%');
-            $itemDump->where('item_id', 'not like', '%_STONEBLOCK%');
-            $itemDump->where('item_id', 'not like', '%_ALCHEMY_%');
-            $itemDump->where('item_id', 'not like', '%_TRASH%');
-            $itemDump->where('item_id', 'not like', '%_CLOTH');
-            $itemDump->where('item_id', 'not like', '%_LEATHER');
-            $itemDump->where('item_id', 'not like', '%_SHARD_%');
-            $itemDump->where('item_id', 'not like', '%_ARTEFACT_%');
-            $itemDump->where('item_id', 'not like', '%_FURNITURE%');
-            $itemDump->where('item_id', 'not like', '%_JOURNAL_%');
-            $itemDump->where('item_id', 'not like', '%_LABOURER_%');
-            $itemDump->where('item_id', 'not like', '%_DUNGEON_%');
-            $itemDump->where('item_id', 'not like', '%_LOOT%');
-            $itemDump->where('item_id', 'not like', '%_BP');
-            $itemDump->where('item_id', 'not like', '%_LEVEL%');
-            $itemDump->where('item_id', 'not like', '%_TOKEN_%');
-            $itemDump->where('item_id', 'not like', '%_MOUNT_%');
-            $itemDump->where('item_id', 'not like', '%_TRACKING');
-            $value = implode(",", collect($itemDump->get())->pluck('item_id')->all());
+            $value = $this->searchItem($itemSearch, $tier, $enchant, true);
             $url = 'https://east.albion-online-data.com/api/v2/stats/prices/'.$value.'?locations=Black Market';
             $response = Http::get($url);
             $object = (array)json_decode($response->body());
@@ -140,7 +92,7 @@ class MarketController extends Controller
 }
 
 
-    function searchItem($searchWord, $tier = "", $enchant = "")
+    function searchItem($searchWord, $tier = "", $enchant = "", $isBlackMarket = false)
     {
         $itemDump = ItemInfo::where('item_name', 'like', '%'.$searchWord.'%');
         if (!empty($tier)){
@@ -148,6 +100,55 @@ class MarketController extends Controller
         }
         if (!empty($enchant)){
             $itemDump->where('item_id', 'like', '%@'.$enchant);
+        }
+        if ($isBlackMarket) {
+            $itemDump->where('item_id', 'not like', '%_BEAN');
+                $itemDump->where('item_id', 'not like', '%_WHEAT');
+                $itemDump->where('item_id', 'not like', '%_CABBAGE');
+                $itemDump->where('item_id', 'not like', '%_TURNIP');
+                $itemDump->where('item_id', 'not like', '%_CORN');
+                $itemDump->where('item_id', 'not like', '%_PUMPKIN');
+                $itemDump->where('item_id', 'not like', '%_COMFREY');
+                $itemDump->where('item_id', 'not like', '%_BURDOCK');
+                $itemDump->where('item_id', 'not like', '%_MEAT');
+                $itemDump->where('item_id', 'not like', '%_BUTTER');
+                $itemDump->where('item_id', 'not like', '%_ALCOHOL');
+                $itemDump->where('item_id', 'not like', '%_RELIC');
+                $itemDump->where('item_id', 'not like', '%_RUNE');
+                $itemDump->where('item_id', 'not like', '%_SOUL');
+                $itemDump->where('item_id', 'not like', '%_EGG');
+                $itemDump->where('item_id', 'not like', '%_MILK');
+                $itemDump->where('item_id', 'not like', '%_ESSENCE');
+                $itemDump->where('item_id', 'not like', 'TREASURE_%');
+                $itemDump->where('item_id', 'not like', '%_FARM_%');
+                $itemDump->where('item_id', 'not like', '%_FISH_%');
+                $itemDump->where('item_id', 'not like', '%_SKILLBOOK_%');
+                $itemDump->where('item_id', 'not like', '%_POTION%');
+                $itemDump->where('item_id', 'not like', '%_MEAL_%');
+                $itemDump->where('item_id', 'not like', '%_WOOD%');
+                $itemDump->where('item_id', 'not like', '%_ROCK%');
+                $itemDump->where('item_id', 'not like', '%_ORE%');
+                $itemDump->where('item_id', 'not like', '%_HIDE%');
+                $itemDump->where('item_id', 'not like', '%_FIBER%');
+                $itemDump->where('item_id', 'not like', '%_PLANKS%');
+                $itemDump->where('item_id', 'not like', '%_METALBAR%');
+                $itemDump->where('item_id', 'not like', '%_STONEBLOCK%');
+                $itemDump->where('item_id', 'not like', '%_ALCHEMY_%');
+                $itemDump->where('item_id', 'not like', '%_TRASH%');
+                $itemDump->where('item_id', 'not like', '%_CLOTH');
+                $itemDump->where('item_id', 'not like', '%_LEATHER');
+                $itemDump->where('item_id', 'not like', '%_SHARD_%');
+                $itemDump->where('item_id', 'not like', '%_ARTEFACT_%');
+                $itemDump->where('item_id', 'not like', '%_FURNITURE%');
+                $itemDump->where('item_id', 'not like', '%_JOURNAL_%');
+                $itemDump->where('item_id', 'not like', '%_LABOURER_%');
+                $itemDump->where('item_id', 'not like', '%_DUNGEON_%');
+                $itemDump->where('item_id', 'not like', '%_LOOT%');
+                $itemDump->where('item_id', 'not like', '%_BP');
+                $itemDump->where('item_id', 'not like', '%_LEVEL%');
+                $itemDump->where('item_id', 'not like', '%_TOKEN_%');
+                $itemDump->where('item_id', 'not like', '%_MOUNT_%');
+                $itemDump->where('item_id', 'not like', '%_TRACKING');
         }
         return implode(",", collect($itemDump->get())->pluck('item_id')->all());
     }

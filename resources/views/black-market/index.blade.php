@@ -49,27 +49,28 @@
                 </x-slot>
             </x-ui.card>
 
+            <x-ui.card.table>
+                <x-slot:title>
+                    {{ __('Black Market Items') }}
+                </x-slot>
+                <x-slot:icon>
+                    <x-icons.master-table/>
+                </x-slot>
+                <x-slot:buttons>
+                    <x-ui.form.input.text x-model="filters.keyword"  placeholder="Search Item..." class="w-full lg:mt-0 mt-4 " />
 
-            <div class="p-4 sm:p-8 bg-gray-800 shadow sm:rounded-lg">
-                <form @submit.prevent=""  action="{{ url('market') }}">
-                    <div class="flex flex-col sm:flex-row md:space-x-4">
                         <x-ui.form.select x-model="filters.tier" class="lg:mt-0 mt-4 ">
                             @foreach ($tiers as $value)
-                                <option value="{{ $value }}">{{ 'Tier ' . $value }}</option>
+                                <option value="{{ $loop->index }}">{{ ($loop->index ? 'Tier ' : '') . $value }}</option>
                             @endforeach
                         </x-ui.form.select>
                         <x-ui.form.select x-model="filters.enchant" class="lg:mt-0 mt-4 ">
                             @foreach ($enchantments as $value)
-                                <option value="{{ $value }}">{{ $value }}</option>
+                                <option value="{{ $loop->index }}">{{ $value }}</option>
                             @endforeach
                         </x-ui.form.select>
                         <x-ui.button x-on:click="init()" class="text-center lg:mt-0 mt-4 " text="Search"/>
-                    </div>
-                </form>
-            </div>
-
-            <x-ui.card.table>
-
+                </x-slot>
                 <x-slot:content>
                     <div class="overflow-x-auto" >
                         <table id="table"
