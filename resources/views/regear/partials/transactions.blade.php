@@ -4,7 +4,7 @@
            <span x-text="'Regear List ' + (result.total ? '(' + result.total + ' total)'  : '')"/>
         </x-slot>
         <x-slot:icon>
-            <x-icons.master-table/>
+            <x-icons.list/>
         </x-slot>
         <x-slot:buttons>
             <x-ui.form.input.text placeholder="Filter Name..." x-model="nameSearch" @input.debounce="reloadData()" />

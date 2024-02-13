@@ -4,7 +4,7 @@
             {{ __('AO Character Stats') }}
         </x-slot>
         <x-slot:icon>
-            <x-icons.master-table/>
+            <x-icons.user-circle/>
         </x-slot>
         <x-slot:content>
             <div class="overflow-x-auto m-5" x-show="data.Name == null">

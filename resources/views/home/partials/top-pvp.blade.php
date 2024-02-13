@@ -4,7 +4,7 @@
             {{ __('SINAG Top 5 PvP G.O.A.T.') }}
         </x-slot>
         <x-slot:icon>
-            <x-icons.master-table/>
+            <x-icons.fire-solid/>
         </x-slot>
         <x-slot:buttons>
             <span x-show="isLoading" class="flex items-center animate-spin mr-2 max-sm:hidden"><x-icons.button.refresh /></span>

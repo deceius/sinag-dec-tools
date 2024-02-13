@@ -12,7 +12,7 @@
                         {{ __('Regear Costs') }}
                     </x-slot>
                     <x-slot:icon>
-                        <x-icons.master-table/>
+                        <x-icons.info/>
                     </x-slot>
                     <x-slot:content>
                         <template x-if="true">
@@ -76,7 +76,7 @@
                         {{ __('Member Death Stats') }}
                     </x-slot>
                     <x-slot:icon>
-                        <x-icons.master-table/>
+                        <x-icons.identification/>
                     </x-slot>
                     <x-slot:buttons>
                         <x-ui.form.select x-model="filter.status">
@@ -141,7 +141,7 @@
                         {{ __('Pending Regear Count') }}
                     </x-slot>
                     <x-slot:icon>
-                        <x-icons.master-table/>
+                        <x-icons.list/>
                     </x-slot>
                     <x-slot:content>
                         <div class="overflow-x-auto" x-show="!data && isLoading">

@@ -19,7 +19,7 @@
                     {{ __('Gold Prices') }}
                 </x-slot>
                 <x-slot:icon>
-                    <x-icons.master-table/>
+                    <x-icons.circle-stack/>
                 </x-slot>
                 <x-slot:content>
                     <div class="overflow-x-auto" >
@@ -54,7 +54,7 @@
                     {{ __('Black Market Items') }}
                 </x-slot>
                 <x-slot:icon>
-                    <x-icons.master-table/>
+                    <x-icons.branch/>
                 </x-slot>
                 <x-slot:buttons>
                     <x-ui.form.input.text x-model="filters.keyword"  placeholder="Search Item..." class="w-full lg:mt-0 mt-4 " />

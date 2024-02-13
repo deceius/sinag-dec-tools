@@ -10,7 +10,7 @@
                 <div  class="p-6 text-gray-400">
                     <div class="flex justify-between h-5 items-center">
                         <div class="flex space-x-2 items-center leading-tight font-semibold">
-                                <x-icons.clipboard/>
+                                <x-icons.unlock/>
                                 <span>Open Regears</span>
                         </div>
                         <div class="space-x-1 flex items-center" >

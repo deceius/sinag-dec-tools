@@ -4,7 +4,14 @@
             {{ __('Request Regears') }}
         </x-slot>
         <x-slot:icon>
-            <x-icons.master-table/>
+            <x-icons.request/>
+        </x-slot>
+        <x-slot:buttons>
+            <x-ui.button.link href="{{ route('build.create') }}" style="success" text="{{ __('OC Break Request') }}">
+                <x-slot:icon>
+                    <x-icons.button.bolt/>
+                </x-slot>
+            </x-ui.button.link>
         </x-slot>
         <x-slot:content>
             <div class="overflow-x-auto" x-show="!result.data">

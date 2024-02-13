@@ -42,6 +42,7 @@ Route::middleware('auth', 'in_guild')->group(function () {
 
     Route::patch('/regear/{regearInfo}/request', [RegearController::class, 'requestRegear'])->name('request.regear');
     Route::patch('/regear/{regearInfo}/update', [RegearController::class, 'processRegear'])->name('process.regear');
+    Route::get('/regear/oc-break', function () { return view('regear.oc-create'); })->name('oc.request.regear');
 
 
     Route::get('/market', [MarketController::class, 'index'])->name('market');
