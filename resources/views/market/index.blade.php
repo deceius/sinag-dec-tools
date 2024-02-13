@@ -66,7 +66,7 @@
                                 <tbody>
                                     <template x-if="isLoading">
                                         <tr>
-                                            <td class="whitespace-nowrap border-t border-gray-700 p-6" colspan="6">
+                                            <td class="whitespace-nowrap border-t border-gray-700 p-6" colspan="7">
                                                 <div class="p-6 content-center w-full">
                                                     <img src="/assets/sinag-logo.png" class="mx-auto h-9 w-auto fill-current text-gray-200 animate-ping">
                                                 </div>
