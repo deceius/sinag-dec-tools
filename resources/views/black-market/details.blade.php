@@ -2,6 +2,8 @@
 <x-app-layout>
     <x-slot:cdn>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/plugin/customParseFormat.min.js"></script>
     </x-slot>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-200 leading-tight">
@@ -48,7 +50,8 @@
                         x: {
                             ticks: {
                                 callback: function(value, index, ticks) {
-                                    return  new Date(this.getLabelForValue(value)).toLocaleDateString('en-US');
+                                    return dayjs(this.getLabelForValue(value), "yyyy-MM-dd HH:mm:ss")
+                                    .format('MM-DD hh:mm');
                                 }
                             }
                         },

@@ -7,7 +7,7 @@
     </x-slot>
     <div class="py-4 sm:px-6 lg:px-8 bg-gray-700 text-sm text-gray-300 leading-tight">
        <p class="mb-1">Welcome to the secret module of SINAG web tool. This was supposed to be a "personal use only" module, but here we are. Few people are given access, so don't tell anyone.</p>
-       <p>Historical sell orders (for the last 2 weeks) are viewable via clicking the item name. If no data is returned, then nobody have sold the item for the mentioned time frame.</p>
+       <p>Historical sell orders (for the last 24 hours) are viewable via clicking the item name. If no data is returned, then nobody have sold the item for the mentioned time frame.</p>
     </div>
     <div class="py-12">
 

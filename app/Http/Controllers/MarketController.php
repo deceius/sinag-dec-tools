@@ -104,7 +104,7 @@ public function bmDetails(Request $request) {
     ];
     $itemId = $request->input('id') ? $request->input('id') : '';
     $quality = $request->input('q') ? $request->input('q') : '';
-    $url = "https://west.albion-online-data.com/api/v2/stats/charts/" . $itemId . "?time-scale=24   &locations=Black%20Market&qualities=" . $quality;
+    $url = "https://west.albion-online-data.com/api/v2/stats/charts/" . $itemId . "?time-scale=6&locations=Black%20Market&qualities=" . $quality;
 
     $response = Http::get($url);
     $object = (array)json_decode($response->body());
