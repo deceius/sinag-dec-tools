@@ -70,15 +70,15 @@ export default () => ({
         this.data.consumables = strConsumables.join(',');
         console.log(this.data);
 
-        let url = "/officer/build/save";
-        axios.post(url, this.data).then(
-            response => {
-                location.href = '/officer/build/index';
-            }
-        ).catch(error => {
-            console.log(error);
-            }
-        );
+        // let url = "/officer/build/save";
+        // axios.post(url, this.data).then(
+        //     response => {
+        //         location.href = '/officer/build/index';
+        //     }
+        // ).catch(error => {
+        //     console.log(error);
+        //     }
+        // );
     },
     load(item, isEquip = false){
         this.isLoading = true;
