@@ -60,6 +60,7 @@ Route::middleware('auth', 'in_guild', 'officer')->group(function () {
     Route::get('reports/regear', [RegearReportController::class, 'index'])->name('reports.regear.index');
     Route::get('reports/regear/fetch/losses', [RegearReportController::class, 'fetchGuildLosses'])->name('reports.regear.fetch.losses');
     Route::get('reports/regear/fetch/pendingitems', [RegearReportController::class, 'fetchPendingRegears'])->name('reports.regear.fetch.pendingitems');
+    Route::get('reports/regear/fetch/deathstats', [RegearReportController::class, 'fetchDeathStats'])->name('reports.regear.fetch.pendingitems');
 
     Route::get('/officer/regear/index', [RegearController::class, 'index'])->name('officer.regear.index');
     Route::get('/officer/regear/fetch', [RegearController::class, 'fetchAllRegears'])->name('regear.fetch');

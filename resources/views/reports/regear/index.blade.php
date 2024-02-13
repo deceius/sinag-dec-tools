@@ -68,6 +68,72 @@
                 </x-ui.card>
             </section>
         </div>
+
+        <div class="max-w-full sm:px-6 lg:px-8 mb-6">
+            <section>
+                <x-ui.card.table>
+                    <x-slot:title>
+                        {{ __('Member Death Stats') }}
+                    </x-slot>
+                    <x-slot:icon>
+                        <x-icons.master-table/>
+                    </x-slot>
+                    <x-slot:buttons>
+                        <x-ui.form.select x-model="filter.status">
+                            <template x-for="(status, name) in status">
+                                <option x-bind:value="status" x-text="name"/>
+                            </template>
+                        </x-ui.form.select>
+                    </x-slot:buttons>
+                    <x-slot:content>
+                        <template x-if="true">
+                            <div class="overflow-x-auto">
+                                <table id="table" class="min-w-full table-auto" :class="{ 'opacity-50' : isLoading}">
+                                        <thead class="font-medium">
+                                            <tr class="border-gray-700">
+                                                <th scope="col" class="text-start py-3 px-5">
+                                                    {{ __('Name') }}
+                                                </th>
+                                                <th scope="col" class="text-end py-3 px-5">
+                                                    {{ __('Deaths') }}
+                                                </th>
+                                                <th scope="col" class="text-end py-3 px-5">
+                                                    {{ __('Death Fame') }}
+                                                </th>
+                                                <th scope="col" class="text-end py-3 px-5">
+                                                    {{ __('Items Lost') }}
+                                                </th>
+
+                                                <th scope="col" class="text-end py-3 px-5">
+                                                    {{ __('Total Cost') }}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <template x-for="item in deathStats.data">
+                                                <tr class="border-t-2 border-gray-700 text-start">
+                                                    <td class="border-t py-3 px-5 text-start" x-text='item.name'></td>
+                                                    <td class="border-t py-3 px-5 text-end" x-text='item.death_count.toLocaleString("en-US")'></td>
+                                                    <td class="border-t py-3 px-5 text-end" x-text='item.death_fame.toLocaleString("en-US")'></td>
+                                                    <td class="border-t py-3 px-5 text-end" x-text='item.items_lost.toLocaleString("en-US")'></td>
+                                                    <td class="border-t py-3 px-5 text-end" x-text='parseInt(item.cost).toLocaleString("en-US")'></td>
+                                                </tr>
+                                        </template>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="p-6 flex justify-end" x-show="deathStats.last_page > 1">
+                                        <x-ui.pagination links="deathStats.links" click-method="loadDeathStats(link.url)"></x-ui.pagination>
+                                    </div>
+                            </div>
+                        </template>
+
+
+                    </x-slot>
+                </x-ui.card>
+            </section>
+        </div>
+
         <div class="max-w-full sm:px-6 lg:px-8">
             <section>
                 <x-ui.card.table>

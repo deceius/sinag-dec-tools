@@ -48,6 +48,25 @@ class RegearReportController extends Controller
         return ['result' => $result];
     }
 
+    public function fetchDeathStats(Request $request) {
+
+        $status = $request->input('status') ? $request->input('status') : '';
+        $result = DeathInfo::select('character_id',
+                'name',
+                DB::raw('SUM(death_fame) as death_fame'),
+                DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as items_lost"),
+                DB::raw('COUNT(1) as death_count'),
+                DB::raw('SUM(regear_cost) as cost'))
+        ->groupBy('character_id')
+        ->orderBy('death_count', 'desc');
+
+        if (!empty($status)) {
+            $result->where('status', $status);
+        }
+        $result = $result->paginate(10);
+
+        return ['result' => $result];
+    }
     public function fetchPendingRegears(Request $request) {
         $result = [];
         $deathlogs = DeathInfo::where('status', 2)->get();
