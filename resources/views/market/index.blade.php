@@ -74,7 +74,7 @@
                                         </tr>
                                     </template>
                                     <tr x-show="!data.length && !isLoading">
-                                        <td class="whitespace-nowrap border-t border-gray-700 p-6" colspan="6">
+                                        <td class="whitespace-nowrap border-t border-gray-700 p-6" colspan="7">
                                             <div class="p-6 content-center w-full">
                                                 No Data.
                                             </div>
