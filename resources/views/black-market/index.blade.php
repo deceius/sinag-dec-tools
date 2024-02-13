@@ -78,7 +78,7 @@
                                 <thead class="font-medium">
                                 <tr>
                                     <th scope="col"  width='120px' class="border-b border-gray-700 px-6 py-3 text-start">
-                                    Item
+                                    &nbsp;
                                     </th>
                                     <th scope="col" class="border-b border-gray-700 text-start px-6 py-3">
                                         Item ID
@@ -88,6 +88,12 @@
                                     </th>
                                     <th scope="col" class="border-b border-gray-700 px-6 py-3 text-right">
                                         Max. BP
+                                    </th>
+                                    <th scope="col" class="border-b border-gray-700 px-6 py-3 text-right">
+                                        Min. SP
+                                    </th>
+                                    <th scope="col" class="border-b border-gray-700 px-6 py-3 text-right">
+                                        Max. SP
                                     </th>
                                 </tr>
                                 </thead>
@@ -116,6 +122,8 @@
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6 text-start" x-text='item.item_name'></td>
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.buy_price_min.toLocaleString("en-US")'></td>
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.buy_price_max.toLocaleString("en-US")'></td>
+                                            <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.sell_price_min.toLocaleString("en-US")'></td>
+                                            <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.sell_price_max.toLocaleString("en-US")'></td>
                                             </tr>
                                     </template>
                                 </tbody>

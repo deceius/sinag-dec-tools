@@ -41,9 +41,12 @@
                                 <thead class="font-medium">
                                 <tr>
                                     <th scope="col"  width='120px' class="border-b border-gray-700 px-6 py-3 text-center">
-                                    Item
+                                        &nbsp;
                                     </th>
-                                    <th scope="col" class="border-b border-gray-700 px-6 py-3 text-center">
+                                    <th scope="col" class="border-b border-gray-700 px-6 py-3 text-start">
+                                        Item ID
+                                    </th>
+                                    <th scope="col" class="border-b border-gray-700 px-6 py-3 text-start">
                                         City
                                     </th>
                                     <th scope="col" class="border-b border-gray-700 px-6 py-3 text-right">
@@ -82,12 +85,13 @@
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6">
                                                 <img x-bind:src="`https://render.albiononline.com/v1/item/${item.item_id}?size=64&quality=${item.quality}`" alt="">
                                             </td>
-                                            <td class="whitespace-nowrap border-t border-gray-700 px-6 text-center" x-text='item.city == "5003" ? "Brecilien" : item.city'></td>
+                                            <td class="whitespace-nowrap border-t border-gray-700 px-6 text-start" x-text='item.item_name'></td>
+                                            <td class="whitespace-nowrap border-t border-gray-700 px-6 text-start" x-text='item.city == "5003" ? "Brecilien" : item.city'></td>
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.buy_price_min.toLocaleString("en-US")'></td>
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.buy_price_max.toLocaleString("en-US")'></td>
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.sell_price_min.toLocaleString("en-US")'></td>
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.sell_price_max.toLocaleString("en-US")'></td>
-                                        </tr>
+                                            </tr>
                                     </template>
                                 </tbody>
                             </table>
