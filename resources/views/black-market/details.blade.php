@@ -14,7 +14,7 @@
         <p>Welcome to the secret module of SINAG web tool. This was supposed to be a "personal use only" module, but here we are. Few people are given access, so don't tell anyone.</p>
      </div>
     <div class="py-12">
-        <div class="max-w-full sm:px-6 lg:px-8 grid grid-cols-2 sm:grid-cols-1 gap-3">
+        <div class="max-w-full sm:px-6 lg:px-8 grid grid-cols-2 max-sm:grid-cols-1 gap-3">
             @foreach ($object as $item)
                 <x-ui.card>
                     <x-slot:title>
