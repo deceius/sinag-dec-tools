@@ -5,8 +5,9 @@
             {{ __('Black Market') }}
         </h2>
     </x-slot>
-    <div class="p-4 bg-red-600 text-sm text-gray-200 leading-tight">
-       Welcome to the secret module of SINAG web tool. This was supposed to be a "personal use only" module, but here we are. Few people are given access, so don't tell anyone.
+    <div class="py-4 sm:px-6 lg:px-8 bg-gray-700 text-sm text-gray-300 leading-tight">
+       <p class="mb-1">Welcome to the secret module of SINAG web tool. This was supposed to be a "personal use only" module, but here we are. Few people are given access, so don't tell anyone.</p>
+       <p>Historical sell orders (for the last 2 weeks) are viewable via clicking the item name. If no data is returned, then nobody have sold the item for the mentioned time frame.</p>
     </div>
     <div class="py-12">
 
@@ -119,7 +120,10 @@
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6">
                                                 <img x-bind:src="`https://render.albiononline.com/v1/item/${item.item_id}?size=48&quality=${item.quality}`" alt="">
                                             </td>
-                                            <td class="whitespace-nowrap border-t border-gray-700 px-6 text-start" x-text='item.item_name'></td>
+                                            <td class="whitespace-nowrap border-t border-gray-700 px-6 text-start">
+                                                <a class="underline text-indigo-600" x-bind:href="'/black-market/details?id=' + item.item_id" x-text="item.item_name"></a>
+
+                                            </td>
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.buy_price_min.toLocaleString("en-US")'></td>
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.buy_price_max.toLocaleString("en-US")'></td>
                                             <td class="whitespace-nowrap border-t border-gray-700 px-6 text-right" x-text='item.sell_price_min.toLocaleString("en-US")'></td>

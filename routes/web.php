@@ -51,6 +51,7 @@ Route::middleware('auth', 'in_guild')->group(function () {
 });
 Route::middleware('auth', 'in_guild', 'blck_market')->group(function () {
     Route::get('/black-market', [MarketController::class, 'bmIndex'])->name('black.market');
+    Route::get('/black-market/details', [MarketController::class, 'bmDetails'])->name('black.market.details');
 });
 Route::middleware('auth', 'in_guild', 'officer')->group(function () {
     Route::get('/parseDeaths', [AlbionAPIController::class, 'fetchDeathLogByBattleId']);

@@ -6,6 +6,9 @@ export default () => ({
         'tier' : 8,
         'enchant': 4
     },
+    openModal() {
+
+    },
     init() {
         if (this.filters.keyword.trim().length == 0 && (this.filters.tier <= 0 || this.filters.enchant <= 0)) {
             alert('Item keyword required if searching all tier and enchant.');

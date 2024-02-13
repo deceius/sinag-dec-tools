@@ -92,7 +92,29 @@ class MarketController extends Controller
 }
 
 
-    function searchItem($searchWord, $tier = "", $enchant = "", $isBlackMarket = false)
+public function bmDetails(Request $request) {
+
+    $chartData = [];
+    $qualityNames = [
+        1 => 'Normal',
+        2 => 'Good',
+        3 => 'Outstanding',
+        4 => 'Excellent',
+        5 => 'Masterpiece'
+    ];
+    $itemId = $request->input('id') ? $request->input('id') : '';
+    $quality = $request->input('q') ? $request->input('q') : '';
+    $url = "https://west.albion-online-data.com/api/v2/stats/charts/" . $itemId . "?time-scale=24   &locations=Black%20Market&qualities=" . $quality;
+
+    $response = Http::get($url);
+    $object = (array)json_decode($response->body());
+    $itemInfo = ItemInfo::where('item_id', $itemId)->first()->item_name;
+
+    // dd($object);
+    return view('black-market.details', compact('object', 'itemInfo', 'quality', 'qualityNames'));
+}
+
+function searchItem($searchWord, $tier = "", $enchant = "", $isBlackMarket = false)
     {
         $itemDump = ItemInfo::where('item_name', 'like', '%'.$searchWord.'%');
         if (!empty($tier)){
