@@ -68,9 +68,9 @@ class MarketController extends Controller
         $tiers = ["All Tiers", 1, 2, 3, 4, 5, 6, 7, 8];
         $enchantments = ["All Enchantments", 0, 1, 2, 3, 4];
         if ($request->ajax()) {
-
             $tier = $request->input('tier') ? $request->input('tier') : '';
-            $enchant = $request->input('enchant') ? $request->input('enchant') : '';
+            $enchant = $request->input('enchant') !== null ? $request->input('enchant') : '';
+
             $itemSearch = $request->input('keyword') ? $request->input('keyword') : '';
             $value = '';
 
@@ -114,15 +114,20 @@ public function bmDetails(Request $request) {
     return view('black-market.details', compact('object', 'itemInfo', 'quality', 'qualityNames'));
 }
 
-function searchItem($searchWord, $tier = "", $enchant = "", $isBlackMarket = false)
+function searchItem($searchWord, $tier = "", $enchant = null, $isBlackMarket = false)
     {
         $itemDump = ItemInfo::where('item_name', 'like', '%'.$searchWord.'%');
         if (!empty($tier)){
             $itemDump->where('item_id', 'like', 'T'.$tier.'%');
         }
-        if (!empty($enchant)){
-            $itemDump->where('item_id', 'like', '%@'.$enchant);
+        if($enchant){
+            $itemDump->where('item_id', 'like', '%@'. $enchant);
         }
+
+        if ($enchant === "0") {
+            $itemDump->where('item_id', 'not like', '%@%');
+        }
+
         if ($isBlackMarket) {
             $itemDump->where('item_id', 'not like', '%_BEAN');
                 $itemDump->where('item_id', 'not like', '%_WHEAT');
