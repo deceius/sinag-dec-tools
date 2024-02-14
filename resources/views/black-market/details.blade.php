@@ -1,10 +1,10 @@
 @section('title', 'SINAG Tools - Market Price Checker')
 <x-app-layout>
-    <x-slot:cdn>
+    @push('cdn')
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/plugin/customParseFormat.min.js"></script>
-    </x-slot>
+    @endpush
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-200 leading-tight">
             {{ __('Historical Sell Orders - ') . $itemInfo .  ($quality ? ' > Quality: ' . $quality : '') }}

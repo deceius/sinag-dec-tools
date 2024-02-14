@@ -1,3 +1,7 @@
+@push('cdn')
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+@endpush
 <section x-data="ocBreak" x-init="init()">
     <x-ui.card>
         <x-slot:title>
@@ -12,6 +16,19 @@
             </x-ui.button>
         </x-slot>
         <x-slot:content>
+
+        <form method="POST" action="{{ url('test-form')}}">
+            @csrf
+            <x-easy-mde name="about" :options="[
+                'maxHeight' => '480px',
+                'spellChecker' => false,
+                'status' => false,
+                'previewClass' => ['prose', 'bg-gray-800', 'pt-[60px]', 'max-w-full', 'p-6', 'border-white', 'border-2', 'rounded-lg'],
+                'toolbar' => [ 'bold', 'italic', 'strikethrough', '|', 'heading', 'quote', '|', 'link', 'image', 'unordered-list', 'ordered-list', 'code', 'horizontal-rule', 'table', '|', 'preview']
+                ]"/>
+            <x-ui.button type="submit" text="test"/>
+
+        </form>
             <div class="grid grid-cols-3 max-sm:grid-cols-1">
                 <div>
                     <template x-for="item in equipment">

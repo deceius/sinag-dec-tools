@@ -7,8 +7,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\RegearController;
 use App\Http\Controllers\RegearReportController;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Spatie\DiscordAlerts\Facades\DiscordAlert;
+use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,12 @@ Route::get('/get-builds', [BuildController::class, 'index'])->name('builds.fetch
 
 Route::get('/home', function () {
     return view('home');
+})->middleware('auth', 'in_guild')->name('home');
+
+
+Route::post('/test-form', function () {
+    $markdown = app(Spatie\LaravelMarkdown\MarkdownRenderer::class)->toHtml(request()->post()['about']);
+    return view('regear.partials.markdown-preview', compact('markdown'));
 })->middleware('auth', 'in_guild')->name('home');
 
 Route::middleware('auth', 'in_guild')->group(function () {
