@@ -80,7 +80,7 @@
     top: 0;
     left: 0;
     z-index: 10;
-    background: white;
+    background: rgb(17 24 39 / 1);
     opacity: 1;
     margin-left: 1px;
     margin-right: 1px;
@@ -88,6 +88,7 @@
     border-top-right-radius: 0.5em;
     border-top-left-radius: 0.5em;
     overflow: hidden;
+    color: rgb(156 163 175 / 1);
 }
 .editor-toolbar:hover {
     opacity: 1;
@@ -95,6 +96,13 @@
 .editor-preview {
     top: 50px;
 }
+
+.CodeMirror {
+    position: relative;
+    overflow: hidden;
+    background: rgb(17 24 39 / 1);
+}
+
 .CodeMirror, .CodeMirror-scroll {
     min-height: 100px;
     border-radius: 0.5rem;
@@ -104,8 +112,30 @@
     margin-top: -50px;
     padding: 60px 10px 10px 10px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    border-color: #e2e8f0;
+    border-color: rgb(55 65 81 / 1);
+    color: rgb(243 244 246 / 1);
 }
+
+.cm-s-easymde .CodeMirror-cursor{border-color:#ccc}
+span.CodeMirror-selectedtext {
+    background: 0 0;
+    color: #000;
+}
+.editor-toolbar i.separator {
+    display: inline-block;
+    width: 0;
+    border-left: 1px solid rgb(55 65 81 / 1);
+    border-right: 1px solid rgb(55 65 81 / 1);
+    color: transparent;
+    text-indent: -10px;
+    margin: 0 6px
+}
+
+.editor-toolbar button.active,.editor-toolbar button:hover {
+    background: transparent;
+    border-color: rgb(55 65 81 / 1);
+}
+
 .CodeMirror-focused {
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }

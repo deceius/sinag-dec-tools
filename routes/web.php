@@ -35,9 +35,10 @@ Route::get('/home', function () {
 
 
 Route::post('/test-form', function () {
+    $title = request()->post()['title'];
     $markdown = app(Spatie\LaravelMarkdown\MarkdownRenderer::class)->toHtml(request()->post()['about']);
-    return view('regear.partials.markdown-preview', compact('markdown'));
-})->middleware('auth', 'in_guild')->name('home');
+    return view('content.markdown-preview', compact('markdown', 'title'));
+})->middleware('auth', 'in_guild')->name('testform');
 
 Route::middleware('auth', 'in_guild')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -50,7 +51,7 @@ Route::middleware('auth', 'in_guild')->group(function () {
 
     Route::patch('/regear/{regearInfo}/request', [RegearController::class, 'requestRegear'])->name('request.regear');
     Route::patch('/regear/{regearInfo}/update', [RegearController::class, 'processRegear'])->name('process.regear');
-    Route::get('/regear/oc-break', function () { return view('regear.oc-create'); })->name('oc.request.regear');
+    Route::get('/content/create', function () { return view('content.create'); })->name('content.create');
 
 
     Route::get('/market', [MarketController::class, 'index'])->name('market');

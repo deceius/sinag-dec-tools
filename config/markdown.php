@@ -1,6 +1,7 @@
 <?php
 
 use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\Extension\TaskList\TaskListExtension;
 
 return [
     'code_highlighting' => [
@@ -65,7 +66,6 @@ return [
      */
     'extensions' => [
         //
-
        new TableExtension(),
     ],
 
