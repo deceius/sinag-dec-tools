@@ -143,12 +143,19 @@
                     <x-slot:icon>
                         <x-icons.list/>
                     </x-slot>
+                    <x-slot:buttons>
+                        <x-ui.form.select x-model="filter.tier" class="lg:mt-0 mt-4 ">
+                            @foreach ($tiers as $key => $value)
+                                <option value="{{ $value }}">{{ $key }}</option>
+                            @endforeach
+                        </x-ui.form.select>
+                    </x-slot:buttons>
                     <x-slot:content>
                         <div class="overflow-x-auto" x-show="!data && isLoading">
                             &nbsp;
                         </div>
                         <template x-if="true">
-                            <div class="overflow-x-auto">
+                            <div class="overflow-x-auto" :class="{'animate-pulse opacity-50': isLoading}" >
                                 <table id="table" class="min-w-full table-auto">
                                         <thead class="font-medium">
                                             <tr class="border-gray-700">

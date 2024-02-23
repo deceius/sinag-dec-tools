@@ -8,7 +8,8 @@ export default () => ({
     isLoading: false,
     filter: {
         'battleIds': '',
-        'status': 0
+        'status': 0,
+        'tier': ''
     },
     data: [],
     totalPendingRegearItems: 0,
@@ -20,6 +21,9 @@ export default () => ({
         this.loadDeathStats('/reports/regear/fetch/deathstats');
         this.$watch('filter.status', () => {
             this.loadDeathStats('/reports/regear/fetch/deathstats?');
+        });
+        this.$watch('filter.tier', () => {
+            this.loadPendingItems('/reports/regear/fetch/pendingitems?tier=' + this.filter.tier);
         });
     },
     loadDeathStats(url) {
@@ -38,10 +42,10 @@ export default () => ({
     },
     loadPendingItems(url) {
         this.isLoading = true;
+        this.totalPendingRegearItems = [];
         axios.get(url).then(
             response => {
                 this.data = response.data.result;
-                console.log(this.data);
                 this.totalPendingRegearItems = Object.values(this.data).reduce((accumulator, currentValue) => accumulator + currentValue.items.length, 0)
 
                 this.isLoading = false;
