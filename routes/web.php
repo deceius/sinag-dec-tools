@@ -37,7 +37,6 @@ Route::middleware('auth', 'in_guild')->group(function () {
     Route::get('/aosearch', [AlbionAPIController::class, 'searchIGN'])->name('ao.search');
     Route::get('/loadchar', [AlbionAPIController::class, 'loadCharacter'])->name('ao.loadchar');
     Route::get('/deathlog', [AlbionAPIController::class, 'searchDeathLog'])->name('ao.death');
-    Route::get('/fetchdeathlog', [AlbionAPIController::class, 'fetchDeathLog'])->name('ao.death');
 
 
     Route::patch('/regear/{regearInfo}/request', [RegearController::class, 'requestRegear'])->name('request.regear');
@@ -73,4 +72,7 @@ Route::middleware('auth', 'in_guild', 'officer')->group(function () {
     Route::get('/officer/build/{buildInfo}/edit', [BuildController::class, 'edit'])->name('build.edit');
     Route::post('/officer/build/{buildInfo}/delete', [BuildController::class, 'delete'])->name('build.delete');
     Route::post('/officer/build/save', [BuildController::class, 'store'])->name('build.save');
+
+
+    Route::get('/parseCTABattleInfo', [AlbionAPIController::class, 'parsePreviousCTABattles'])->name('parse.battleinfo');
 });

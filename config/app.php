@@ -185,8 +185,8 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
-    'version' => '3.1.1',
-    'version_name' => 'Oathkeeper',
+    'version' => '4.0.0',
+    'version_name' => 'Dawnsong',
 
     'ingame_guild_id' => env('INGAME_GUILD_ID', null),
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BattleInfo;
 use App\Models\BuildInfo;
 use App\Models\DeathInfo;
 use App\Models\ItemInfo;
@@ -121,6 +122,7 @@ class AlbionAPIController extends Controller
                 $battle = Http::get($url);
                 $events = (array)json_decode($battle->body());
                 foreach ($events as $event) {
+                    $this->handleEvent($event, trim($battleId));
                     if ($event->Victim->GuildId == config('app.ingame_guild_id')) {
                         $rawData = [
                             'id' => $event->EventId,
@@ -181,45 +183,6 @@ class AlbionAPIController extends Controller
 
     }
 
-    public function fetchDeathLog(Request $request)
-    {
-        $url = "https://gameinfo-sgp.albiononline.com/api/gameinfo/battles?range=month&offset=0&limit=51&sort=recent&guildId=" . config('app.ingame_guild_id');
-        $response = Http::get($url);
-        $battles = (array)json_decode($response->body());
-        $deaths = [];
-
-        foreach ($battles as $battle) {
-            $url = "https://gameinfo-sgp.albiononline.com/api/gameinfo/events/battle/". $battle->id ."?offset=0&limit=51";
-
-            $battle = Http::get($url);
-
-            $events = (array)json_decode($battle->body());
-
-            foreach ($events as $event) {
-                if ($event->Victim->GuildId == config('app.ingame_guild_id')) {
-                    $death = DeathInfo::firstOrCreate(
-                        ['id' => $event->EventId],
-                        [
-                            'id' => $event->EventId,
-                            'character_id' => $event->Victim->Id,
-                            'name' => $event->Victim->Name,
-                            'guild' => $event->Victim->GuildName,
-                            'equipment' => $this->parseEquipment($event->Victim->Equipment)->implode(","),
-                            'killer_name' => $event->Killer->Name,
-                            'killer_guild' => $event->Killer->GuildName,
-                            'killer_equipment' => $this->parseEquipment($event->Killer->Equipment)->implode(","),
-                            'death_fame' => $event->TotalVictimKillFame,
-                            'timestamp' => $event->TimeStamp,
-                        ]);
-
-                }
-            }
-        }
-
-
-        return ['deaths' => DeathInfo::all() ];
-    }
-
     function parseEquipment($equipment) {
         return collect([
             $equipment->MainHand ? $equipment->MainHand->Type : "!no_equip",
@@ -240,6 +203,49 @@ class AlbionAPIController extends Controller
             $response = Http::get($url);
             $object = (array)json_decode($response->body());
             return ['character' => $object];
+        }
+    }
+
+    function handleEvent($event, $battleId) {
+        Log::info('Event Logged :: ' . $event->EventId);
+        $battleInfo = BattleInfo::firstOrCreate(
+            ['id' => $event->EventId],
+            [
+                'id' => $event->EventId,
+                'battle_id' => $battleId,
+
+                'killer_character_id' => $event->Killer->Id,
+                'killer_name' => $event->Killer->Name,
+                'killer_guild' => $event->Killer->GuildName,
+                'killer_guild_id' => $event->Killer->GuildId,
+                'killer_equipment' => $this->parseEquipment($event->Killer->Equipment)->implode(","),
+
+                'victim_character_id' => $event->Victim->Id,
+                'victim_name' => $event->Victim->Name,
+                'victim_guild' => $event->Victim->GuildName,
+                'victim_guild_id' => $event->Victim->GuildId,
+                'victim_equipment' => $this->parseEquipment($event->Victim->Equipment)->implode(","),
+
+                'kill_fame' => $event->TotalVictimKillFame,
+                'timestamp' => $event->TimeStamp,
+            ]);
+    }
+
+    public function parsePreviousCTABattles(Request $request) {
+        $battleIds = DeathInfo::groupBy('battle_id')->pluck('battle_id')->toArray();
+        foreach($battleIds as $battleId) {
+            $offset = 0;
+            $events = [];
+            do {
+                $url = "https://gameinfo-sgp.albiononline.com/api/gameinfo/events/battle/". trim($battleId) ."?offset=" . $offset ."&limit=51";
+                $battle = Http::get($url);
+                $events = (array)json_decode($battle->body());
+                foreach ($events as $event) {
+                    $this->handleEvent($event, trim($battleId));
+                }
+
+                $offset += 51;
+            } while (count($events) > 1);
         }
     }
 

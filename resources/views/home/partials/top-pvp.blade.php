@@ -1,7 +1,7 @@
 <section>
     <x-ui.card.table class="mb-6">
         <x-slot:title>
-            {{ __('SINAG Top 5 PvP G.O.A.T.') }}
+            {{ __('SINAG Top 5 CTA Damage Dealers') }}
         </x-slot>
         <x-slot:icon>
             <x-icons.fire-solid/>
@@ -22,7 +22,7 @@
                                         {{ __('Name') }}
                                     </th>
                                     <th scope="col" class="text-start py-3 px-5">
-                                        {{ __('Total Kill Fame') }}
+                                        {{ __('Kill Fame') }}
                                     </th>
 
                                 </tr>
@@ -33,11 +33,16 @@
                                     <tr class="border-t-2 border-gray-700 text-start" >
                                         <td class="border-t py-3 px-5">
                                             <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                                               <span x-text='item.Name'/>
+                                               <span x-text='item.name'/>
                                             </div>
-                                            <span class="font-light text-sm" x-text='"KD Ratio: " + item.FameRatio'/>
+                                            <span class="font-light text-sm" x-text='"KD Ratio: " + item.c_ratio'/>
                                         </td>
-                                        <td class="border-t py-3 px-5" x-text='item.KillFame.toLocaleString("en-US")'></td>
+                                        <td class="border-t py-3 px-5">
+                                            <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                                                <span x-text='item.kf.toLocaleString("en-US")'/>
+                                            </div>
+                                            <span class="font-light text-sm" x-text='"Fame Ratio: " + item.f_ratio'/>
+                                        </td>
                                     </tr>
                             </template>
                             </tbody>

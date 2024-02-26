@@ -19,7 +19,6 @@ class DeathInfo extends Model
         'killer_name',
         'killer_guild',
         'killer_equipment',
-        'killer_guild',
         'death_fame',
         'regeared_by',
         'allowed_gears',
