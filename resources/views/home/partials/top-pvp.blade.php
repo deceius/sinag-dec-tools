@@ -1,7 +1,7 @@
 <section>
     <x-ui.card.table class="mb-6">
         <x-slot:title>
-            {{ __('SINAG Top 5 CTA Damage Dealers') }}
+            {{ __('SINAG Top 5 CTA DPS of All Time') }}
         </x-slot>
         <x-slot:icon>
             <x-icons.fire-solid/>
