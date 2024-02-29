@@ -17,23 +17,22 @@
                      <x-icons.clipboard/>
                  </x-slot>
                 <x-slot:buttons>
-                    <x-ui.form.input.text x-model="filter.keyword" value="{{ $searchKeyword }}" type="text" placeholder="Search Item..." class="w-full lg:mt-0 mt-4 " />
-                            <x-ui.form.select x-model="filter.city" class="lg:mt-0 mt-4 ">
+                    <x-ui.form.input.text x-model="search" type="text" placeholder="Search Item..." @input.debounce="filter()" class="w-full lg:mt-0 mt-4 " />
+                            <x-ui.form.select x-model="filter.city" class="lg:mt-0 mt-4" x-on:change="filter()">
                                 @foreach ($cities as $key => $value)
                                     <option value="{{ $value }}" {{$value == $city ? 'selected' : '' }}>{{ $key }}</option>
                                 @endforeach
                             </x-ui.form.select>
-                            <x-ui.form.select x-model="filter.tier" class="lg:mt-0 mt-4 ">
+                            <x-ui.form.select x-model="filter.tier" class="lg:mt-0 mt-4 " x-on:change="filter()">
                                 @foreach ($tiers as $value)
                                     <option value="{{ $value }}" {{$value == $tier ? 'selected' : '' }}>{{ $value }}</option>
                                 @endforeach
                             </x-ui.form.select>
-                            <x-ui.form.select x-model="filter.enchantment" class="lg:mt-0 mt-4 ">
+                            <x-ui.form.select x-model="filter.enchantment" class="lg:mt-0 mt-4 " x-on:change="filter()">
                                 @foreach ($enchantments as $value)
                                     <option value="{{ $value }}" {{$value == $enchantment ? 'selected' : '' }}>{{ $value }}</option>
                                 @endforeach
                             </x-ui.form.select>
-                            <x-ui.button x-on:click="filter()" class="text-center lg:mt-0 mt-4 " text="Search"/>
                 </x-slot>
                 <x-slot:content>
                     <div class="overflow-x-auto" >

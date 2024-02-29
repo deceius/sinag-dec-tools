@@ -3,17 +3,18 @@
 export default () => ({
     isLoading: false,
     data: [],
+    search: '',
     filter: {
-        keyword: '',
         tier: '',
         city: '',
         enchantment: ''
     },
-
+    init() {
+    },
     filter() {
         this.isLoading = true;
         this.data = [];
-        let url = '/market?itemSearch=' + this.filter.keyword + '&locationSearch=' + (this.filter.city ?? '') + "&tierSearch=" + (this.filter.tier ?? '') + "&enchantmentSearch=" + (this.filter.enchantment ?? '');
+        let url = '/market?itemSearch=' + this.search + '&locationSearch=' + (this.filter.city ?? '') + "&tierSearch=" + (this.filter.tier ?? '') + "&enchantmentSearch=" + (this.filter.enchantment ?? '');
         axios.get(url).then(
             response => {
                 console.log(response.data.market_data[0]);
