@@ -81,6 +81,10 @@ class RegearController extends Controller
 
             if ($request->input('status')) {
                 $deaths->where('status', $request->input('status'));
+            } else  {
+                $deaths->where('status', '<>', 1);
+                $deaths->where('status', '<>', -1);
+
             }
             if ($request->input('role_id') != null) {
                 $deaths->where('role_id', $request->input('role_id'));
