@@ -33,8 +33,12 @@
                                                     {{ __('Qty. Lost') }}
                                                 </th>
                                                 <th scope="col" class="text-end py-3 px-5">
-                                                    {{ __('Est. Regear Cost') }}
+                                                    {{ __('Est. Cost') }}
                                                 </th>
+                                                <th scope="col" class="text-end py-3 px-5">
+                                                    {{ __('Regear Est. Cost') }}
+                                                </th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -44,6 +48,7 @@
                                                 <td class="border-t py-3 px-5 text-end" >{{ number_format($unfiltered->death_fame, 0) }}</td>
                                                 <td class="border-t py-3 px-5 text-end" >{{ number_format($unfiltered->unit, 0) }}</td>
                                                 <td class="border-t py-3 px-5 text-end" >{{ number_format($unfiltered->cost, 0) }}</td>
+                                                <td class="border-t py-3 px-5 text-end" >{{ number_format($unfiltered->regeared_cost, 0) }}</td>
                                             </tr>
                                         <template x-for="item in losses.data">
                                                 <tr class="border-t-2 border-gray-700 text-start">
@@ -52,6 +57,7 @@
                                                     <td class="border-t py-3 px-5 text-end" x-text='item.death_fame.toLocaleString("en-US")'></td>
                                                     <td class="border-t py-3 px-5 text-end" x-text='item.unit.toLocaleString("en-US")'></td>
                                                     <td class="border-t py-3 px-5 text-end" x-text='parseInt(item.cost).toLocaleString("en-US")'></td>
+                                                    <td class="border-t py-3 px-5 text-end" x-text='parseInt(item.regeared_cost).toLocaleString("en-US")'></td>
                                                 </tr>
                                         </template>
                                         </tbody>

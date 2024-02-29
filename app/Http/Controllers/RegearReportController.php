@@ -15,6 +15,7 @@ class RegearReportController extends Controller
     public function index(Request $request) {
         $result = DeathInfo::select('battle_id',
                 DB::raw('SUM(regear_cost) as cost'),
+                DB::raw('SUM(CASE WHEN status = 1 THEN regear_cost ELSE 0 END) as regeared_cost'),
                 DB::raw('SUM(death_fame) as death_fame'),
                 DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as unit"),
                 DB::raw('COUNT(1) as death_count'))
@@ -36,6 +37,7 @@ class RegearReportController extends Controller
         $result = [];
         $result = DeathInfo::select('battle_id',
                 DB::raw('SUM(regear_cost) as cost'),
+                DB::raw('SUM(CASE WHEN status = 1 THEN regear_cost ELSE 0 END) as regeared_cost'),
                 DB::raw('SUM(death_fame) as death_fame'),
                 DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as unit"),
                 DB::raw('COUNT(1) as death_count'))
@@ -49,6 +51,7 @@ class RegearReportController extends Controller
 
         $result = DeathInfo::select('battle_id',
                 DB::raw('SUM(regear_cost) as cost'),
+                DB::raw('SUM(CASE WHEN status = 1 THEN regear_cost ELSE 0 END) as regeared_cost'),
                 DB::raw('SUM(death_fame) as death_fame'),
                 DB::raw("SUM(LENGTH(REPLACE(equipment, '!no_equip,', '')) - LENGTH(REPLACE(REPLACE(equipment, ',', ''), '!no_equip', '')) + 1) as unit"),
                 DB::raw('COUNT(1) as death_count'))
