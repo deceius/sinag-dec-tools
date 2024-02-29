@@ -38,6 +38,18 @@ class RegearController extends Controller
 
     }
 
+    public function discardRegear(Request $request, DeathInfo $regearInfo) {
+
+        $member = User::where('ao_character_id', $regearInfo->character_id)->first();
+        $regearInfo->status = -1;
+        $regearInfo->remarks = "Request discarded by " . $regearInfo->name;
+        $regearInfo->save();
+        $prompt =  $member->ao_character_name . " regear discard for Battle ID # `" . $regearInfo->battle_id . "` - sent.";
+        Log::info($prompt);
+        return redirect()->back();
+
+    }
+
     public function processRegear(Request $request, DeathInfo $regearInfo) {
 
         $member = User::where('ao_character_id', $regearInfo->character_id)->first();

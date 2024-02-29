@@ -59,6 +59,8 @@
                                         <td class="py-3 px-5 max-sm:hidden " x-text='item.updated_at'></td>
                                         <td class="py-3 px-5  max-sm:hidden" x-text='item.regearing_officer ? item.regearing_officer.username : ""'></td>
                                             <td class=" whitespace-nowrap border-t py-3 px-5 text-end">
+
+                                                <div class="space-x-2 flex justify-end">
                                                 <form method="post" :action="item.url + '/request'" >
                                                     @csrf
                                                     @method('patch')
@@ -75,6 +77,15 @@
                                                         <x-icons.button.close/>
                                                      </x-ui.icon-pill>
                                                 </form>
+
+                                                <form method="post" :action="item.url + '/discard'"  x-show="item.status == 0">
+                                                    @csrf
+                                                    @method('patch')
+                                                    <x-ui.button type="submit" style="danger" text="Discard" x-show="item.status == 0">
+                                                        <x-slot:icon><x-icons.button.close/></x-slot>
+                                                    </x-ui.button>
+                                                </form>
+                                                </div>
                                             </td>
                                     </tr>
                             </template>

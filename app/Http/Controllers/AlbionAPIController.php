@@ -41,7 +41,7 @@ class AlbionAPIController extends Controller
         $id = $request->input('id');
         $deaths = [];
         if ($id) {
-            $deaths = DeathInfo::where('character_id', $id)->orderBy('status', 'asc')->orderBy('updated_at', 'desc')->paginate(5);
+            $deaths = DeathInfo::where('character_id', $id)->orderByRaw('FIELD(status, 0) desc')->orderBy('updated_at', 'desc')->paginate(5);
             foreach ($deaths as $death) {
                 $newGears = [];
                 $notAllowed = 0;
