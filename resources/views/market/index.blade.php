@@ -1,4 +1,4 @@
-@section('title', 'SINAG Tools - Market Price Checker')
+@section('title', 'OB Tools - Market Price Checker')
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-200 leading-tight">
@@ -68,7 +68,7 @@
                                         <tr>
                                             <td class="whitespace-nowrap border-t border-gray-700 p-6" colspan="7">
                                                 <div class="p-6 content-center w-full">
-                                                    <img src="/assets/sinag-logo.png" class="mx-auto h-9 w-auto fill-current text-gray-200 animate-ping">
+                                                    <img src="/assets/ob-logo.png" class="mx-auto h-9 w-auto fill-current text-gray-200 animate-ping">
                                                 </div>
                                             </td>
                                         </tr>

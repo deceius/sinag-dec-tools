@@ -194,7 +194,7 @@ return [
         'mentor' => env('MEMBER_ROLE_MENTOR', 0),
         'core' => env('MEMBER_ROLE_CORE', 0),
         'senior' => env('MEMBER_ROLE_SENIOR', 0),
-        'sinag' => env('MEMBER_ROLE_SINAG', 0),
+        'sinag' => env('MEMBER_ROLE_Oathbreakers', 0),
         'trial' => env('MEMBER_ROLE_TRIAL', 0),
         'blck_market' => env('ROLE_BLCK_MARKET', 0),
     ],

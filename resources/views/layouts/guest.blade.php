@@ -23,7 +23,7 @@
                     {!! session()->get('error') !!}
                 </div>
             @endif
-            @include('layouts.guest-navigation')
+            {{-- @include('layouts.guest-navigation') --}}
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -36,9 +36,8 @@
                 </header>
             @endif
 
-            <div class="p-4 bg-green-600 font-semibold text-sm text-gray-200 leading-tight">
-                Do you want to be a part of SINAG? Click <a class="underline text-gray-100" href="https://discord.gg/b79UkkQcNa" target="_blank">here</a> to join us at our Discord server.
-
+            <div class="p-4 bg-red-600 font-semibold text-sm text-gray-200 leading-tight">
+                We will break their oaths very soon. Stay tuned for updates.
             </div>
 
             <!-- Page Content -->

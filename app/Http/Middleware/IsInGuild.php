@@ -24,7 +24,7 @@ class IsInGuild
 
             $object = json_decode($response->body());
             if ($object->GuildId != config('app.ingame_guild_id')) {
-                return redirect('/')->with('error', 'You are not a member of SINAG in-game.');
+                return redirect('/')->with('error', 'You are not a member of the guild in-game.');
             }
         }
 

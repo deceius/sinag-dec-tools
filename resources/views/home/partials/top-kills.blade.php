@@ -1,7 +1,7 @@
 <section>
     <x-ui.card.table class="mb-6">
         <x-slot:title>
-            {{ __('SINAG Weekly Top 5 KF Kills') }}
+            {{ __('Oathbreakers Weekly Top 5 KF Kills') }}
         </x-slot>
         <x-slot:icon>
             <x-icons.fire-solid/>

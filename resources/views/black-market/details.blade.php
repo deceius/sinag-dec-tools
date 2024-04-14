@@ -1,4 +1,4 @@
-@section('title', 'SINAG Tools - Market Price Checker')
+@section('title', 'OB Tools - Market Price Checker')
 <x-app-layout>
     <x-slot:cdn>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -11,7 +11,7 @@
         </h2>
     </x-slot>
     <div class="py-4 sm:px-6 lg:px-8 bg-gray-700 text-sm text-gray-300 leading-tight">
-        <p>Welcome to the secret module of SINAG web tool. This was supposed to be a "personal use only" module, but here we are. Few people are given access, so don't tell anyone.</p>
+        <p>Welcome to the secret module of Oathbreakers web tool. This was supposed to be a "personal use only" module, but here we are. Few people are given access, so don't tell anyone.</p>
      </div>
     <div class="py-12">
         <div class="max-w-full sm:px-6 lg:px-8 grid grid-cols-2 max-sm:grid-cols-1 gap-3">
