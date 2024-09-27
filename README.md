@@ -10,3 +10,7 @@ This is intended to be used by being authenticated via joined Discord server and
 - Reports - lists backlog, losses in silver (in-game currency) and other stats related to in-game item logistics.
 - Market Price checker - a lookup for price trends, and estimated prices of in-game items.
 
+# Tech used:
+- PHP
+- Laravel
+- Alpine.js
