@@ -15,6 +15,3 @@ This is intended to be used by being authenticated via joined Discord server and
 - Laravel
 - Alpine.js
 
-
-# Link
-- https://aomarketcheck.deceius.com/ - A stripped down version of the tool; Only contains market price checker module.
